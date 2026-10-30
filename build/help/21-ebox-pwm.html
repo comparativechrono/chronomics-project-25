@@ -1,14 +1,14 @@
 <!-- id: h-ebox-pwm | title: Flexible motifs (PWMs) | group: 2 · Finding E-boxes | summary: Score promoters with the BMAL1 matrix to find real binding sites | keys: pwm pssm jaspar motif score bmal1 arntl log-odds threshold -->
 <h1><!--ICON:target-->Flexible motifs: position weight matrices</h1>
-<p class="lede">Proteins do not demand a perfect sequence. CLOCK:BMAL1 binds <code>CACGTG</code> best, but it also binds close relatives. To find those, you use a <b>position weight matrix</b> (PWM) — the standard tool for describing what a protein likes to bind.</p>
+<p class="lede">Proteins don't need a perfect sequence to bind. CLOCK:BMAL1 binds <code>CACGTG</code> best, but it also binds sequences that differ from it slightly. To find those, you use a <b>position weight matrix</b> (PWM), the standard way of describing which sequences a protein binds.</p>
 
 <h2>What a PWM is</h2>
-<p>A PWM comes from many real binding sites. For each position it records how often each letter appeared. We give you the experimentally measured matrix for <b>BMAL1</b> (called <i>Arntl</i>) from the <b>JASPAR</b> database (<!--CITE-SHORT: jaspar-->):</p>
+<p>A PWM is built from many known binding sites. For each position in the site, it records how often each base was found there. We have given you the experimentally measured matrix for <b>BMAL1</b> (listed as <i>Arntl</i>) from the <b>JASPAR</b> database (<!--CITE-SHORT: jaspar-->):</p>
 <pre class="code" data-run="term"><code>cat /data/examples/motif/ARNTL_MA0603.2.jaspar</code></pre>
-<p>Read down the columns: the matrix is 8 letters long, and its favourite letter at each position spells <code>GTCACGTG</code> — the E-box <code>CACGTG</code> with a little flank. A PWM lets a site score well even if it is not a perfect <code>CACGTG</code>.</p>
+<p>Read down the columns. The matrix is 8 bases long, and the most common base at each position spells <code>GTCACGTG</code>: the E-box <code>CACGTG</code> with two extra bases in front. With a PWM, a site can score well even if it isn't a perfect <code>CACGTG</code>.</p>
 
-<h2>Turn counts into scores, and scan</h2>
-<p>This builds a <b>log-odds</b> score (how much more a letter is liked than background), scores every window on both strands, and reports a <b>relative score</b> from 0 to 1 (1 = the matrix's perfect site). Run it in your Python notebook:</p>
+<h2>From counts to scores</h2>
+<p>The code below turns the counts into <b>log-odds</b> scores (how much more often each base appears in binding sites than in background DNA), scores every 8-base window on both strands, and gives each window a <b>relative score</b> from 0 to 1, where 1 is the best possible match to the matrix. Run it in your Python notebook:</p>
 <pre class="code" data-run="py"><code>import math
 # --- read the JASPAR count matrix ---
 counts = {}
@@ -37,7 +37,7 @@ comp = str.maketrans("ACGT","TGCA")
 def revcomp(s): return s.translate(comp)[::-1]
 def best_both(s): return max(relscore(s), relscore(revcomp(s)))</code></pre>
 
-<p>Now scan every promoter and keep windows scoring at least <b>0.85</b> (a common, fairly strict cut-off). Reuse the <code>read_fasta</code> and <code>records</code> from the previous step:</p>
+<p>Now scan every promoter and keep the windows that score at least <b>0.85</b>, a commonly used and fairly strict cut-off. This reuses <code>read_fasta</code> and <code>records</code> from the previous step:</p>
 <pre class="code" data-run="py"><code>THR = 0.85
 pwm_sites = []
 for header, seq in records:
@@ -62,12 +62,12 @@ print("PWM sites in the channelopathy genes:", len(chan_sites),
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>At score ≥ 0.85 you should find about <b>1240</b> sites, and this time about <b>28</b> of them fall in <b>13 of the 21</b> channelopathy genes — including the ones the exact search missed. The clock did not skip them after all; the exact-string search was simply too strict. (Your exact counts can shift a little if you change the step or the threshold — say which you used.) Save these sites too (<code>pwm_sites</code> → a BED file, as before).</p>
+  <p>With a cut-off of 0.85 you should find about <b>1240</b> sites. This time about <b>28</b> of them are in <b>13 of the 21</b> channelopathy genes, so the flexible search finds sites in genes that the exact search missed. (The numbers can shift slightly if you change how the scan moves along the sequence or the cut-off, so record which you used.) Save these sites as a BED file too, as you did for the exact matches.</p>
 </div>
 
 <div class="callout concept">
-  <div class="co-t">Think about the threshold</div>
-  <p>Lower the cut-off to 0.80 and you get many more sites; raise it to 0.90 and you get far fewer. There is no single "correct" value — it trades false positives against false negatives. When you report a result, you must state the threshold you used. Try two values and see how much your later conclusions depend on it.</p>
+  <div class="co-t">Choosing a cut-off</div>
+  <p>Lower the cut-off to 0.80 and you will get many more sites; raise it to 0.90 and you will get far fewer. There is no single correct value: a lower cut-off finds more true sites, but more false ones as well. Whatever you choose, state it when you report a result. Try two values and see how much your later conclusions depend on the choice.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-ebox-enrich">Next: are there more E-boxes than chance? →</button></div>

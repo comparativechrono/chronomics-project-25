@@ -1,12 +1,12 @@
 <!-- id: h-ebox-find | title: Find the E-boxes | group: 2 · Finding E-boxes | summary: Scan promoters for CACGTG and place them on the genome | keys: ebox cacgtg motif search python palindrome coordinates bed -->
 <h1><!--ICON:search-->Find the E-boxes</h1>
-<p class="lede">The canonical clock E-box is six letters: <code>CACGTG</code>. Your first real task is to find every one of them in the promoters, and write down exactly where each sits on the genome.</p>
+<p class="lede">The canonical clock E-box is the six bases <code>CACGTG</code>. The first task is to find every copy of it in the promoters and record where each one is on the genome.</p>
 
-<h2>One useful fact: CACGTG reads the same both ways</h2>
-<p><code>CACGTG</code> is a <b>palindrome</b> — its reverse complement is itself (C↔G, A↔T, read backwards). DNA has two strands, but because this motif is a palindrome you only have to search one of them and you have found it on both. That simplifies the code.</p>
+<h2>CACGTG reads the same on both strands</h2>
+<p><code>CACGTG</code> is a <b>palindrome</b>: its reverse complement (swap C with G and A with T, then read it backwards) is the same sequence. DNA has two strands, but because the motif is palindromic, searching one strand finds every copy on both. That keeps the code simple.</p>
 
 <h2>Scan every promoter</h2>
-<p>Open a Python notebook. This reads the promoter FASTA, finds every <code>CACGTG</code>, and turns each hit's position <i>within the promoter</i> into a position <i>on the chromosome</i> using the genomic start stored in the FASTA header:</p>
+<p>In a Python notebook, run the code below. It reads the promoter FASTA file, finds every <code>CACGTG</code>, and converts the position of each hit <i>within the promoter</i> into a position <i>on the chromosome</i>, using the genomic start stored in the FASTA header:</p>
 <pre class="code" data-run="py"><code>import re
 
 def read_fasta(path):
@@ -36,22 +36,22 @@ print("canonical E-boxes found:", len(eboxes))
 eboxes[:5]</code></pre>
 
 <h2>Save them as a BED file</h2>
-<p>Write the hits to your home folder so the terminal and the genome browser can use them:</p>
+<p>Write the hits to a file in your home folder, so that you can use them in the terminal and the genome browser:</p>
 <pre class="code" data-run="py"><code>with open("/home/user/eboxes_canonical.bed", "w") as f:
     for chrom, s, e, gene in eboxes:
         f.write(f"{chrom}\t{s}\t{e}\t{gene}|CACGTG\t0\t+\n")
 print("wrote /home/user/eboxes_canonical.bed")</code></pre>
 
 <h2>Now look at the channelopathy genes</h2>
-<p>How many of those E-boxes fall in your 21 close-focus genes? Load the gene list and check:</p>
+<p>How many of those E-boxes are in your 21 channelopathy genes? Load the gene list and check:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 chan = set(pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")["gene"])
 in_chan = [e for e in eboxes if e[3] in chan]
 print("canonical E-boxes in the 21 channelopathy genes:", len(in_chan))</code></pre>
 
 <div class="callout warn">
-  <div class="co-t">Checkpoint — and a surprise</div>
-  <p>You should find <b>205</b> canonical E-boxes across all 641 promoters, but <b>0</b> in the 21 channelopathy genes. That looks wrong — did the clock skip exactly the genes we care about? It did not. The exact string <code>CACGTG</code> is just very strict: real binding sites are often one letter off and still work. In the next step you will search the way biologists actually do, with a flexible <b>motif model</b>, and the channelopathy genes will light up.</p>
+  <div class="co-t">Checkpoint</div>
+  <p>You should find <b>205</b> canonical E-boxes across the 641 promoters, but <b>none</b> in the 21 channelopathy genes. That may look odd, but it doesn't mean the clock ignores these genes. Searching for the exact string <code>CACGTG</code> is very strict, and many working binding sites differ from it by a base. In the next step you will search with a flexible <b>motif model</b> instead, which is how binding sites are usually found, and the channelopathy genes will show up.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-ebox-pwm">Next: flexible motifs (PWMs) →</button></div>

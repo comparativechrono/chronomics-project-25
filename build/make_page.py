@@ -209,9 +209,9 @@ def cite_section(ids):
     known_programs(ids, 'CITE')
     progs = CITATIONS['programs']
     out = ['<h2 data-anchor="cite">References</h2>',
-           '<p>The papers behind this page – cite the ones you use in your report (all of them are in the '
-           '<a href="#h-reading">Reading list</a>' + (', and the versions of the programs in <a href="#h-tools">The tools</a>'
-                                                       if 'tools' in ids else '') + '):</p>',
+           '<p>The papers behind this page. Cite the ones you use in your report; they are all in the '
+           '<a href="#h-reading">Reading list</a>' + ('. <a href="#h-tools">The tools</a> shows how to find the versions of '
+                                                       'the programs to cite with them' if 'tools' in ids else '') + '.</p>',
            '<dl class="cite-list">']
     for i in ids:
         p = progs[i]

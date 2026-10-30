@@ -1,27 +1,27 @@
-<!-- id: h-data | title: The project data | group: Reference | summary: Every bundled file, what it is, and where it came from | keys: data files reference promoters variants conservation motif provenance -->
+<!-- id: h-data | title: The project data | group: Reference | summary: Every bundled file, what it is and where it came from | keys: data files reference promoters variants conservation motif provenance -->
 <h1><!--ICON:database-->The project data</h1>
-<p class="lede">Everything you need is in <code>/data/examples</code>, read-only. It was prepared from public sources (listed below) so you never have to download anything large. Here is each file.</p>
+<p class="lede">Everything you need is in <code>/data/examples</code>, which is read-only. It was prepared from the public sources listed below, so you never need to download anything large. These are the files:</p>
 
 <table class="table">
-<tr><th><code>genes/brain_channelopathy.tsv</code></th><td>21 green genes of the PanelApp "Brain channelopathy" panel, with Ensembl ID, chromosome, strand, TSS and promoter window.</td></tr>
-<tr><th><code>genes/epilepsy_all.tsv</code></th><td>All 641 genes of the project: the 632 green genes of "Early-onset or syndromic epilepsy" together with the 21 channelopathy genes, each once, without one mitochondrial gene; the <code>panel</code> column says which list each belongs to.</td></tr>
+<tr><th><code>genes/brain_channelopathy.tsv</code></th><td>The 21 green genes of the PanelApp "Brain channelopathy" panel, with Ensembl ID, chromosome, strand, TSS and promoter window.</td></tr>
+<tr><th><code>genes/epilepsy_all.tsv</code></th><td>All 641 genes in the project: the 632 green genes of the "Early-onset or syndromic epilepsy" panel plus the 21 channelopathy genes, each listed once, without one mitochondrial gene. The <code>panel</code> column says which list each gene comes from.</td></tr>
 <tr><th><code>genes/promoters.bed</code></th><td>The 641 promoter windows (TSS −1000/+500, 1501 bases each), as a BED file on GRCh38.</td></tr>
-<tr><th><code>reference/promoters.fa</code> (+ <code>.fai</code>)</th><td>The DNA of every promoter (forward strand). Each header records the gene, its chromosome:start-end and strand.</td></tr>
-<tr><th><code>variants/promoter_variants.vcf.gz</code> (+ <code>.tbi</code>)</th><td>Every single-letter variant in the promoters, from 1000 Genomes 30×, with overall and per-super-population allele frequencies in <code>INFO</code>.</td></tr>
-<tr><th><code>conservation/phylop_promoters.csv.gz</code></th><td>phyloP conservation (470-way mammalian and 100-way vertebrate) for every promoter base.</td></tr>
-<tr><th><code>motif/ARNTL_MA0603.2.jaspar</code></th><td>The BMAL1 (Arntl) binding matrix from JASPAR, for the PWM scan.</td></tr>
+<tr><th><code>reference/promoters.fa</code> (+ <code>.fai</code>)</th><td>The DNA sequence of every promoter (forward strand). Each header gives the gene, its chromosome:start-end, its strand and its TSS.</td></tr>
+<tr><th><code>variants/promoter_variants.vcf.gz</code> (+ <code>.tbi</code>)</th><td>Every single-base variant in the promoters, from the 1000 Genomes 30× data, with overall and super-population allele frequencies in <code>INFO</code>.</td></tr>
+<tr><th><code>conservation/phylop_promoters.csv.gz</code></th><td>phyloP conservation scores (470-way mammalian and 100-way vertebrate) for every promoter base.</td></tr>
+<tr><th><code>motif/ARNTL_MA0603.2.jaspar</code></th><td>The BMAL1 (Arntl) binding matrix from JASPAR, used for the PWM scan.</td></tr>
 </table>
 
 <h2>GRCh38 throughout</h2>
-<p>Every coordinate here is on the <b>GRCh38</b> human reference. If you ever bring in outside data, check it is GRCh38 too — mixing genome builds is a classic and silent source of wrong answers.</p>
+<p>All the coordinates here are on the <b>GRCh38</b> human reference genome. If you bring in data from elsewhere, check that it is on GRCh38 too. Mixing genome builds is a common cause of wrong answers, and nothing will warn you when it happens.</p>
 
-<h2>Where it came from</h2>
+<h2>Sources</h2>
 <ul>
-  <li>Gene panels — Genomics England PanelApp (<!--CITE-SHORT: panelapp-->).</li>
-  <li>Gene models, promoter coordinates and sequence — Ensembl / GENCODE (<!--CITE-SHORT: genes-->).</li>
-  <li>Variants — the 1000 Genomes Project 30× release, 3,202 genomes (<!--CITE-SHORT: data1000g-->).</li>
-  <li>Conservation — phyloP, Zoonomia 470-way (<!--CITE-SHORT: phylop-->).</li>
-  <li>Motif — JASPAR (<!--CITE-SHORT: jaspar-->).</li>
+  <li>Gene panels: Genomics England PanelApp (<!--CITE-SHORT: panelapp-->).</li>
+  <li>Gene models, promoter coordinates and sequence: Ensembl/GENCODE (<!--CITE-SHORT: genes-->).</li>
+  <li>Variants: the 1000 Genomes Project 30× release, 3,202 genomes (<!--CITE-SHORT: data1000g-->).</li>
+  <li>Conservation: phyloP, Zoonomia 470-way (<!--CITE-SHORT: phylop-->).</li>
+  <li>Motif: JASPAR (<!--CITE-SHORT: jaspar-->).</li>
 </ul>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-reading">Next: the reading list →</button></div>

@@ -1,24 +1,24 @@
-<!-- id: h-tools | title: The tools | group: Reference | summary: The programs you use, and how to get help on them | keys: tools programs samtools bcftools bedtools seqtk python r versions help -->
+<!-- id: h-tools | title: The tools | group: Reference | summary: The programs you use, and how to get help with them | keys: tools programs samtools bcftools bedtools seqtk python r versions help -->
 <h1><!--ICON:wrench-->The tools, and getting help</h1>
-<p class="lede">A short reference to the programs this project uses. They are the real tools, compiled to run in your browser (<!--CITE-SHORT: tools-->); your commands really run on real files, on this computer.</p>
+<p class="lede">A short reference to the programs used in this project. They are the standard tools, compiled to run in your browser (<!--CITE-SHORT: tools-->), so the commands you type run on the actual data files, on your own computer.</p>
 
 <table class="table">
-<tr><th><code>samtools faidx</code></th><td>Pull a named sequence (a promoter) out of a FASTA file.</td></tr>
-<tr><th><code>bcftools</code></th><td>Read, filter and query VCF variant files (<code>view</code>, <code>query</code>).</td></tr>
-<tr><th><code>bedtools intersect</code></th><td>Find overlaps between two sets of genomic regions (variants × E-boxes).</td></tr>
+<tr><th><code>samtools faidx</code></th><td>Pulls a named sequence (here, a promoter) out of a FASTA file.</td></tr>
+<tr><th><code>bcftools</code></th><td>Reads, filters and queries VCF variant files (<code>view</code>, <code>query</code>).</td></tr>
+<tr><th><code>bedtools intersect</code></th><td>Finds overlaps between two sets of genomic regions (here, variants and E-boxes).</td></tr>
 <tr><th><code>seqtk</code></th><td>Quick sequence statistics, such as GC content (<code>seqtk comp</code>).</td></tr>
-<tr><th>Python</th><td>In the Notebook tab: <code>pandas</code> for tables, <code>matplotlib</code> for plots, <code>scipy</code> for statistics. Your motif scanning and the catalogue live here.</td></tr>
-<tr><th>R</th><td>Also in the Notebook tab: <code>ggplot2</code> for publication-style figures and built-in statistical tests.</td></tr>
-<tr><th>Databases</th><td>Live Ensembl / NCBI lookups to check a gene or variant.</td></tr>
-<tr><th>Genome browser</th><td>IGV: your variants, E-boxes and conservation along the genome (<a href="#h-genome">The genome browser</a>).</td></tr>
+<tr><th>Python</th><td>In the Notebook tab: <code>pandas</code> for tables, <code>matplotlib</code> for plots and <code>scipy</code> for statistics. Most of the motif scanning and the catalogue are done in Python.</td></tr>
+<tr><th>R</th><td>Also in the Notebook tab: <code>ggplot2</code> for publication-quality figures, and R's built-in statistical tests.</td></tr>
+<tr><th>Databases</th><td>Live Ensembl and NCBI searches, for checking a gene or a variant.</td></tr>
+<tr><th>Genome browser</th><td>IGV, for viewing your variants, E-boxes and conservation along the genome (see <a href="#h-genome">The genome browser</a>).</td></tr>
 </table>
 
-<h2>Getting help on a program</h2>
-<p>In the terminal, <code>help</code> lists every program, and most take <code>--help</code> (bedtools prints its help as if it were an error, so <code>2&gt;&amp;1</code> sends it through <code>head</code> with the rest):</p>
+<h2>Getting help with a program</h2>
+<p>In the terminal, <code>help</code> lists every program, and most programs accept <code>--help</code>. (bedtools prints its help as if it were an error message, so <code>2&gt;&amp;1</code> is needed to pass it through <code>head</code> with everything else.)</p>
 <pre class="code" data-run="term"><code>help
 bcftools --help
 bedtools intersect --help 2&gt;&amp;1 | head -40</code></pre>
-<p>Record the version you used — it belongs in your methods:</p>
+<p>Record the versions you used, because they belong in your methods:</p>
 <pre class="code" data-run="term"><code>samtools --version | head -1
 bcftools --version | head -1
 bedtools --version</code></pre>

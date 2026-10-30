@@ -1,38 +1,38 @@
 <!-- id: h-genes | title: The gene lists | group: 1 · Genes and promoters | summary: Two PanelApp gene panels, and how to read them | keys: genes panelapp channelopathy epilepsy list ensembl -->
 <h1><!--ICON:list-->The gene lists</h1>
-<p class="lede">Before you can look for E-boxes, you need to know which genes to look at, and exactly where each one starts. Part 1 sets that up.</p>
+<p class="lede">Before you can look for E-boxes you need to know which genes to look at, and exactly where each one starts. That is what Part 1 is for.</p>
 
 <h2>Where the lists come from</h2>
-<p>Deciding which genes "cause" a disease is a job for experts, and Genomics England's <b>PanelApp</b> does exactly that: panels of genes rated by evidence, where <b>green</b> means well established (<!--CITE-SHORT: panelapp-->). We took the green genes from two panels and saved them for you:</p>
+<p>Deciding which genes cause a disease is a job for experts. Genomics England's <b>PanelApp</b> collects their judgements as gene panels, in which each gene is rated by the strength of the evidence and <b>green</b> means well established (<!--CITE-SHORT: panelapp-->). We took the green genes from two panels and saved them for you:</p>
 <ul>
-  <li><code>/data/examples/genes/brain_channelopathy.tsv</code> — 21 genes, your close-focus set.</li>
-  <li><code>/data/examples/genes/epilepsy_all.tsv</code> — <b>641</b> genes, your statistics set: the 632 green genes of the epilepsy panel together with the 21 channelopathy genes, each gene once (some are on both panels), and without one mitochondrial gene that has no nuclear promoter. Its <code>panel</code> column says <code>channelopathy</code> for the 21 and <code>epilepsy</code> for the other 620.</li>
+  <li><code>/data/examples/genes/brain_channelopathy.tsv</code>: the 21 channelopathy genes you will look at most closely.</li>
+  <li><code>/data/examples/genes/epilepsy_all.tsv</code>: all <b>641</b> genes, which you will use for the statistics. This is the 632 green genes of the epilepsy panel plus the 21 channelopathy genes, with each gene listed once (some are on both panels) and one mitochondrial gene left out because it has no nuclear promoter. The <code>panel</code> column says <code>channelopathy</code> for the 21 and <code>epilepsy</code> for the other 620.</li>
 </ul>
 
-<h2>Read a gene list</h2>
-<p>Open a Python notebook and load both lists:</p>
+<h2>Read the gene lists</h2>
+<p>In a Python notebook, load both lists:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 chan = pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")
 epi  = pd.read_csv("/data/examples/genes/epilepsy_all.tsv", sep="\t")
 print("channelopathy genes:", len(chan))
 print("epilepsy genes:", len(epi))
 chan</code></pre>
-<p>Each row has the gene symbol, its Ensembl identifier, the chromosome and strand, the <b>TSS</b> (transcription start site), and the promoter window we will use. The <code>strand</code> matters: a gene on the <code>-</code> strand is read right-to-left along the chromosome, so its promoter is on the higher-coordinate side of the TSS. The file has already taken care of that.</p>
+<p>Each row has the gene symbol, its Ensembl ID, the chromosome and strand, the <b>TSS</b> (transcription start site) and the promoter window we will use. The strand matters. A gene on the <code>-</code> strand is read from right to left along the chromosome, so its promoter lies on the higher-coordinate side of the TSS. The file already takes this into account.</p>
 
-<h2>Look at the spread</h2>
-<p>A quick plot — which chromosomes are these genes on?</p>
+<h2>Where are the genes?</h2>
+<p>A quick plot of which chromosomes the genes are on:</p>
 <pre class="code" data-run="py"><code>import matplotlib.pyplot as plt
 counts = epi["chrom"].value_counts()
 counts.plot(kind="bar", figsize=(9,3))
 plt.ylabel("genes"); plt.title("Epilepsy-panel genes by chromosome"); plt.tight_layout()</code></pre>
 
 <h2>Check one gene against the live database</h2>
-<p>It is good practice to confirm a file against its source. Use the <b>Databases</b> tab to look up <i>SCN1A</i> in Ensembl, and check the chromosome and strand match the table.</p>
+<p>It is good practice to check a file against its original source. Use the <b>Databases</b> tab to look up <i>SCN1A</i> in Ensembl, and check that the chromosome and strand match the table.</p>
 <div class="tryrow"><button class="do" type="button" data-api="ensembl:gene:SCN1A">Look up SCN1A in Ensembl</button> <button class="do" type="button" data-bench="apis">Open the Databases tab</button></div>
 
 <div class="callout concept">
   <div class="co-t">Think about</div>
-  <p>The channelopathy set has 21 genes; the full list has 641. Why keep both? When you later ask "are E-boxes more common than chance?", which set gives you a more trustworthy answer, and why? (Hint: how many E-boxes would you expect to even see in 21 short promoters?)</p>
+  <p>The channelopathy set has 21 genes and the full list has 641. Why keep both? When you later ask whether E-boxes are more common than chance, which set will give you a more reliable answer, and why? (Hint: how many E-boxes would you expect to see at all in 21 short promoters?)</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-promoters">Next: promoters and coordinates →</button></div>

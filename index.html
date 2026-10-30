@@ -46,19 +46,19 @@
       <div class="help-body" id="helpBody">
 <article class="help-page" id="h-home" data-title="Project guide" data-group="Start here" data-group-page="h-home" data-keys="home overview start contents map" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg>Clock E-boxes in brain genes</h1>
-<p class="lede">A guided research project. You will ask whether common human genetic variants disturb the switches the body clock uses to time brain genes — and whether those switches look protected by evolution. Everything runs in this page: a terminal, notebooks in Python and R, gene databases and a genome browser. Nothing to install.</p>
+<p class="lede">In this project you will look at whether common human genetic variants disrupt the DNA sequences the body clock uses to time brain genes, and whether those sequences appear to be protected by evolution. Everything runs in this web page: a terminal, Python and R notebooks, gene databases and a genome browser. You don't need to install anything.</p>
 
 <div class="callout concept">
-  <div class="co-t">The question, in one sentence</div>
-  <p>The clock protein pair <b>CLOCK:BMAL1</b> turns genes on by binding a short piece of DNA called an <b>E-box</b> (<code>CACGTG</code>). In the promoters of genes that cause <b>epilepsy and brain “channelopathies”</b>, how often do human variants break or make an E-box, are those variants rare or common, and do E-boxes sit at positions that evolution has kept unusually still?</p>
+  <div class="co-t">The question in brief</div>
+  <p>The clock proteins <b>CLOCK</b> and <b>BMAL1</b> work as a pair, switching genes on by binding a short DNA sequence called an <b>E-box</b> (<code>CACGTG</code>). In the promoters of genes that cause epilepsy and brain “channelopathies”, how often do human variants destroy or create an E-box? Are those variants rare or common? And do E-boxes sit at positions that have changed unusually little during evolution?</p>
 </div>
 
-<p>Work through the parts in order. Each page tells you what to do and has <b>▶ buttons</b> that type a command into the terminal or drop code into a notebook for you — read it, run it, and look at what comes back. There is no need to type everything from scratch, but you will understand more if you try.</p>
+<p>Work through the parts in order. Each page explains what to do, and most steps come with a box of code and a button that runs it in the terminal or adds it to your notebook. You don't have to type everything yourself, though you will learn more if you do. Read the code before you run it, and look carefully at what comes back.</p>
 
 <div class="help-topics">
 <section><h2><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v4M14 10v4M11 16v4"/></svg>1 · Genes and promoters</h2><ul>
 <li><a href="#h-genes">The gene lists<small>Two PanelApp gene panels, and how to read them</small></a></li>
-<li><a href="#h-promoters">Promoters and coordinates<small>TSS, the promoter window, BED, and pulling out sequence</small></a></li>
+<li><a href="#h-promoters">Promoters and coordinates<small>TSS, the promoter window, BED files and extracting sequence</small></a></li>
 </ul></section>
 <section><h2><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>2 · Finding E-boxes</h2><ul>
 <li><a href="#h-ebox-find">Find the E-boxes<small>Scan promoters for CACGTG and place them on the genome</small></a></li>
@@ -66,91 +66,91 @@
 <li><a href="#h-ebox-enrich">More than chance?<small>Test E-box enrichment against a CpG-aware expectation</small></a></li>
 </ul></section>
 <section><h2><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3c0 6 10 6 10 12s-10 3-10 6M17 3c0 6-10 6-10 12s10 3 10 6M8 7h8M8 17h8M9.5 12h5"/></svg>3 · Human variation</h2><ul>
-<li><a href="#h-variants">Human variation<small>VCF, the 1000 Genomes Project, and allele frequencies</small></a></li>
+<li><a href="#h-variants">Human variation<small>VCF, the 1000 Genomes Project and allele frequencies</small></a></li>
 <li><a href="#h-overlap">Variants that hit an E-box<small>Intersect variants with E-boxes and build the catalogue</small></a></li>
-<li><a href="#h-motifbreak">Scoring the damage<small>How much does each variant change the motif score?</small></a></li>
+<li><a href="#h-motifbreak">Scoring motif changes<small>How much does each variant change the motif score?</small></a></li>
 </ul></section>
 <section><h2><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4v16M4 8h6M4 16h6M10 6v4M10 14v4M10 6h8M10 10h5M10 14h7M10 18h9"/></svg>4 · Conservation and selection</h2><ul>
-<li><a href="#h-phylop">Conservation<small>phyloP, mammals, and reading conservation at a position</small></a></li>
-<li><a href="#h-selection">The selection test<small>E-boxes vs matched controls — conservation and variation</small></a></li>
+<li><a href="#h-phylop">Conservation<small>phyloP, mammals and reading conservation at a position</small></a></li>
+<li><a href="#h-selection">The selection test<small>E-boxes against matched controls: conservation and variation</small></a></li>
 </ul></section>
 <section><h2><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg>5 · Shortlist and write-up</h2><ul>
 <li><a href="#h-shortlist">Your shortlist<small>Rank candidate variants to take to the 100,000 Genomes Project</small></a></li>
 <li><a href="#h-writeup">Write it up<small>A reproducible report, and what to hand in</small></a></li>
-<li><a href="#h-next">Where next<small>Extensions if you have time or want more</small></a></li>
+<li><a href="#h-next">Where next<small>Extensions if you have time or want to do more</small></a></li>
 </ul></section>
 <section><h2><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg>Reference</h2><ul>
-<li><a href="#h-tools">The tools<small>The programs you use, and how to get help on them</small></a></li>
-<li><a href="#h-genome">The genome browser<small>The human genome, the project&#x27;s tracks, and adding your own</small></a></li>
-<li><a href="#h-data">The project data<small>Every bundled file, what it is, and where it came from</small></a></li>
+<li><a href="#h-tools">The tools<small>The programs you use, and how to get help with them</small></a></li>
+<li><a href="#h-genome">The genome browser<small>The human genome, the project&#x27;s tracks and adding your own</small></a></li>
+<li><a href="#h-data">The project data<small>Every bundled file, what it is and where it came from</small></a></li>
 <li><a href="#h-reading">Reading list<small>The key papers, grouped by topic</small></a></li>
 <li><a href="#h-ai">Using the AI assistant<small>How to use the AI tab well, and its limits</small></a></li>
-<li><a href="#h-glossary">Glossary<small>Plain definitions of the terms in this project</small></a></li>
+<li><a href="#h-glossary">Glossary<small>Plain definitions of the terms used in this project</small></a></li>
 </ul></section>
 </div>
 
 <h2>If you are new to all of this</h2>
-<p>That is expected. Start at <a href="#h-project">The research question</a> for the biology, then <a href="#h-setup">Your workbench</a> to learn the tools on a couple of small examples. After that, Part 1 begins the real work. You can always search this guide (top left) for a word like <i>promoter</i>, <i>bcftools</i> or <i>phyloP</i>.</p>
+<p>That's fine, and expected. Read <a href="#h-project">The research question</a> for the biology, then <a href="#h-setup">Your workbench</a>, which introduces the tools with a few small examples. Part 1 is where the project itself starts. You can search the guide at any time (top left) for a word such as <i>promoter</i>, <i>bcftools</i> or <i>phyloP</i>.</p>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-project">Start: the research question →</button></div>
 </article>
 <article class="help-page" id="h-project" data-title="The research question" data-group="Start here" data-group-page="h-home" data-keys="background hypothesis clock bmal1 ebox circadian epilepsy aim" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3c0 6 10 6 10 12s-10 3-10 6M17 3c0 6-10 6-10 12s10 3 10 6M8 7h8M8 17h8M9.5 12h5"/></svg>The research question</h1>
-<p class="lede">The background you need, and the exact question you will answer. Read this once; come back to it whenever you want to remember <i>why</i> a step matters.</p>
+<p class="lede">The background you need, and the question you will answer. Come back to this page whenever you lose track of why a step matters.</p>
 
-<h2>1 · Almost every cell keeps time</h2>
-<p>Humans have a circadian clock in nearly every cell. At its core, two proteins — <b>CLOCK</b> and <b>BMAL1</b> — join together and switch other genes on. They do this by sticking to a short, specific run of DNA letters in front of a gene, called an <b>E-box</b>. The strongest circadian E-box is the six-letter palindrome <b>CACGTG</b>. Genes with an E-box in their promoter can be turned up and down across the 24-hour day; a large fraction of the genome is timed this way (<a href="https://doi.org/10.1038/nrg.2016.150" target="_blank" rel="noopener">Takahashi 2017</a>; <a href="https://doi.org/10.1016/j.tcb.2013.07.002" target="_blank" rel="noopener">Partch et al. 2014</a>; <a href="https://doi.org/10.1126/science.1226339" target="_blank" rel="noopener">Koike et al. 2012</a>; <a href="https://doi.org/10.1146/annurev-neuro-060909-153128" target="_blank" rel="noopener">Mohawk et al. 2012</a>).</p>
+<h2>1 · The circadian clock</h2>
+<p>Nearly every cell in the body has its own circadian clock. At its centre are two proteins, <b>CLOCK</b> and <b>BMAL1</b>, which pair up and switch other genes on. They do this by binding a short DNA sequence near the start of a gene, called an <b>E-box</b>. The strongest circadian E-box is the six-base palindrome <b>CACGTG</b>. Genes with an E-box in their promoter can be turned up and down over the 24-hour day, and a large fraction of the genome is controlled in this way (<a href="https://doi.org/10.1038/nrg.2016.150" target="_blank" rel="noopener">Takahashi 2017</a>; <a href="https://doi.org/10.1016/j.tcb.2013.07.002" target="_blank" rel="noopener">Partch et al. 2014</a>; <a href="https://doi.org/10.1126/science.1226339" target="_blank" rel="noopener">Koike et al. 2012</a>; <a href="https://doi.org/10.1146/annurev-neuro-060909-153128" target="_blank" rel="noopener">Mohawk et al. 2012</a>).</p>
 
 <div class="callout concept">
-  <div class="co-t">Promoter, TSS and E-box — the words you need</div>
+  <div class="co-t">Promoter, TSS and E-box</div>
   <ul>
     <li>A gene is <b>transcribed</b> (copied into RNA) starting at its <b>transcription start site (TSS)</b>.</li>
-    <li>The <b>promoter</b> is the stretch of DNA just before the TSS where the switches that control the gene sit. In this project we use the window from <b>1000 letters before to 500 letters after</b> each TSS.</li>
-    <li>An <b>E-box</b> is one such switch: the sequence <code>CACGTG</code> that CLOCK:BMAL1 binds. If a variant changes those letters, the switch may stop working.</li>
+    <li>The <b>promoter</b> is the stretch of DNA around the TSS that holds most of the sequences controlling the gene. In this project we use the region from <b>1000 bases before</b> each TSS to <b>500 bases after</b> it.</li>
+    <li>An <b>E-box</b> is one of those control sequences: <code>CACGTG</code>, the site CLOCK:BMAL1 binds. A variant that changes any of its six bases may stop it working.</li>
   </ul>
 </div>
 
-<h2>2 · Chronomic medicine: the clock meets genetic disease</h2>
-<p>Our group studies what happens when the clock meets rare genetic disease — <b>chronomic medicine</b>. A variant that changes <i>when</i> a disease gene is switched on, rather than the protein it makes, could change how severe the disease is, or be missed entirely because it sits outside the protein-coding part of the gene. The group has already found that variants in E-boxes of the heart gene <i>SCN5A</i> may matter in the arrhythmia disorder Brugada syndrome (<span class="cite-nolink">Ampiah and Hearn 2025</span>; <a href="https://doi.org/10.1093/europace/euab116.001" target="_blank" rel="noopener">Seed and Hearn 2021</a>; <a href="https://doi.org/10.1101/2020.08.17.20176420" target="_blank" rel="noopener">Malik and Hearn 2020</a>; <a href="https://doi.org/10.1136/bmjccgg-2025-000014" target="_blank" rel="noopener">McGowen et al. 2025</a>; <a href="https://doi.org/10.3389/fphar.2022.867131" target="_blank" rel="noopener">Seed and Hearn 2022</a>). This project asks the same kind of question, but in the <b>brain</b>.</p>
+<h2>2 · Chronomic medicine</h2>
+<p>Our group works on what happens where the clock meets rare genetic disease, which we call <b>chronomic medicine</b>. A variant that changes <i>when</i> a disease gene is switched on, rather than the protein it makes, could make the disease milder or more severe. It could also be missed altogether, because it lies outside the protein-coding part of the gene. We have already found that variants in E-boxes of the heart gene <i>SCN5A</i> may matter in the arrhythmia disorder Brugada syndrome (<span class="cite-nolink">Ampiah and Hearn 2025</span>; <a href="https://doi.org/10.1093/europace/euab116.001" target="_blank" rel="noopener">Seed and Hearn 2021</a>; <a href="https://doi.org/10.1101/2020.08.17.20176420" target="_blank" rel="noopener">Malik and Hearn 2020</a>; <a href="https://doi.org/10.1136/bmjccgg-2025-000014" target="_blank" rel="noopener">McGowen et al. 2025</a>; <a href="https://doi.org/10.3389/fphar.2022.867131" target="_blank" rel="noopener">Seed and Hearn 2022</a>). This project asks the same kind of question about genes that matter in the <b>brain</b>.</p>
 
 <h2>3 · Why epilepsy and brain channelopathy genes?</h2>
-<p>Seizures are famously tied to the clock and to sleep: many epilepsies are worse at particular times of day or after sleep loss (<a href="https://doi.org/10.1126/scitranslmed.aat8806" target="_blank" rel="noopener">Ruben et al. 2018</a>; <a href="https://doi.org/10.1038/s41467-018-08259-7" target="_blank" rel="noopener">Jones et al. 2019</a>; <a href="https://doi.org/10.1101/2020.08.17.20176420" target="_blank" rel="noopener">Malik and Hearn 2020</a>; <a href="https://doi.org/10.1016/S1474-4422(18)30335-1" target="_blank" rel="noopener">Khan et al. 2018</a>). The genes behind many of these conditions are <b>ion channels</b> and transporters — so-called <b>channelopathies</b>. If the clock helps time these genes, their promoters should carry E-boxes, and the DNA letters of those E-boxes should be protected from change. That is what you will test.</p>
+<p>Seizures are closely linked to sleep and the clock: many epilepsies are worse at particular times of day or after a night of poor sleep (<a href="https://doi.org/10.1126/scitranslmed.aat8806" target="_blank" rel="noopener">Ruben et al. 2018</a>; <a href="https://doi.org/10.1038/s41467-018-08259-7" target="_blank" rel="noopener">Jones et al. 2019</a>; <a href="https://doi.org/10.1101/2020.08.17.20176420" target="_blank" rel="noopener">Malik and Hearn 2020</a>; <a href="https://doi.org/10.1016/S1474-4422(18)30335-1" target="_blank" rel="noopener">Khan et al. 2018</a>). Many of the genes behind these conditions encode <b>ion channels</b> and transporters, and the diseases they cause are known as <b>channelopathies</b>. If the clock helps to control when these genes are active, their promoters should contain E-boxes, and the bases in those E-boxes should be protected from change. That is what you will test.</p>
 <p>You will work with two gene lists, both from <b>Genomics England PanelApp</b> (<a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">Martin et al. 2019</a>):</p>
 <ul>
-  <li><b>Brain channelopathy</b> — 21 well-established ("green") genes, including <i>SCN1A</i>, <i>SCN8A</i>, <i>CACNA1A</i>, <i>KCNQ2</i> and <i>SLC2A1</i>. This is your close-focus set.</li>
-  <li><b>Early-onset or syndromic epilepsy</b> — 632 green genes. This larger set gives you the numbers to test ideas statistically.</li>
+  <li><b>Brain channelopathy</b>: 21 well-established ("green") genes, including <i>SCN1A</i>, <i>SCN8A</i>, <i>CACNA1A</i>, <i>KCNQ2</i> and <i>SLC2A1</i>. These are the genes you will look at most closely.</li>
+  <li><b>Early-onset or syndromic epilepsy</b>: 632 green genes. This larger set gives you enough data for statistical tests.</li>
 </ul>
 
-<h2>4 · Your hypothesis and your question</h2>
+<h2>4 · Hypothesis and questions</h2>
 <div class="callout info">
   <div class="co-t">Hypothesis</div>
-  <p>If CLOCK:BMAL1 timing matters for these genes, then E-boxes in their promoters will be (a) <b>present more often than chance</b>, (b) <b>unusually conserved</b> across mammals, and (c) <b>carry fewer and rarer human variants</b> than comparable positions — the signature of <b>purifying selection</b> removing changes that break the switch.</p>
+  <p>If timing by CLOCK:BMAL1 matters for these genes, the E-boxes in their promoters should (a) <b>occur more often than expected by chance</b>, (b) be <b>unusually well conserved</b> across mammals, and (c) <b>carry fewer, and rarer, human variants</b> than comparable positions. The last two together would be the signature of <b>purifying selection</b>, which removes changes that damage the site.</p>
 </div>
-<p>Concretely, you will answer:</p>
+<p>In practice, you will answer four questions:</p>
 <ol>
   <li>Where are the E-boxes in these promoters, and are there more than you would expect by chance?</li>
-  <li>Which human variants (from the 1000 Genomes Project) break or make an E-box, and how common are they in different populations?</li>
-  <li>Are E-box positions more conserved, and less variable, than matched control positions — as selection would predict?</li>
-  <li>Which variants are the best candidates to follow up in the 100,000 Genomes Project epilepsy patients?</li>
+  <li>Which human variants (from the 1000 Genomes Project) destroy or create an E-box, and how common are they in different populations?</li>
+  <li>Are E-box positions more conserved, and less variable, than matched control positions, as selection would predict?</li>
+  <li>Which variants are the best candidates to follow up in the epilepsy patients of the 100,000 Genomes Project?</li>
 </ol>
 
 <h2>5 · What you will produce</h2>
 <ul>
-  <li>A <b>catalogue</b> of E-box-changing variants in these promoters, with population frequencies.</li>
-  <li>A <b>figure and a statistic</b> for the conservation/selection test.</li>
-  <li>A ranked <b>shortlist</b> of candidate variants, and a short written report that someone else could reproduce.</li>
+  <li>A <b>catalogue</b> of the variants that change E-boxes in these promoters, with their frequencies in different populations.</li>
+  <li>A <b>figure and a statistical test</b> for conservation and selection.</li>
+  <li>A ranked <b>shortlist</b> of candidate variants, and a short written report that would let someone else reproduce your results.</li>
 </ul>
-<p>Every one of those is a real result, whichever way the numbers come out. A clean "no signal" answer, properly shown, is a finding too.</p>
+<p>Each of these is a result whichever way the numbers come out. If you find no signal, showing that clearly is still a finding.</p>
 
 <div class="callout warn">
-  <div class="co-t">A note on what this is and isn't</div>
-  <p>You are working only with <b>public reference data</b> (the 1000 Genomes Project) — never patient data. The 100,000 Genomes Project patient analysis would come later, inside the secure Genomics England Research Environment, and is not part of this page.</p>
+  <div class="co-t">Public data only</div>
+  <p>You will only use <b>public reference data</b> (the 1000 Genomes Project), never patient data. Any analysis of 100,000 Genomes Project patients would come later, inside the secure Genomics England Research Environment, and is not part of this guide.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-setup">Next: your workbench →</button></div>
 
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>The mammalian clock and E-boxes</dt>
 <dd>Takahashi JS (2017) Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics</i> 18: 164–179. <a href="https://doi.org/10.1038/nrg.2016.150" target="_blank" rel="noopener">doi:10.1038/nrg.2016.150</a></dd>
@@ -174,45 +174,45 @@
 </article>
 <article class="help-page" id="h-setup" data-title="Your workbench" data-group="Start here" data-group-page="h-home" data-keys="setup tools tabs terminal notebook files genome browser save ai data" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 17l6-5-6-5M12 19h8"/></svg>Your workbench</h1>
-<p class="lede">On the right are the tools you will use. They all share the same files, so something you make in the terminal can be read in a notebook a moment later. Spend ten minutes here before Part 1.</p>
+<p class="lede">The tools you will use are on the right. They all share the same files, so a file you make in the terminal can be opened in a notebook straight away. It is worth spending ten minutes on this page before you start Part 1.</p>
 
 <h2>The tabs</h2>
 <table class="table">
-<tr><th>Notebook</th><td>Write and run <b>Python</b> and <b>R</b> in cells, with plots and tables. This is where most of your analysis and figures will live.</td></tr>
-<tr><th>Terminal</th><td>A Linux command line with real genomics programs — <code>samtools</code>, <code>bcftools</code>, <code>bedtools</code>, <code>seqtk</code> — running in your browser.</td></tr>
-<tr><th>Files</th><td>Your home folder and the read-only project data. Viewers for tables, sequences and text; an editor.</td></tr>
-<tr><th>Databases</th><td>Live lookups in <b>Ensembl</b>, NCBI and others. You will use it to check a gene or a variant.</td></tr>
-<tr><th>Genome browser</th><td><b>IGV</b>: see your variants, E-boxes and conservation laid out along the real genome (<a href="#h-genome">how to use it</a>).</td></tr>
-<tr><th>AI</th><td>An optional assistant. See the rules below before you use it.</td></tr>
+<tr><th>Notebook</th><td>Write and run <b>Python</b> and <b>R</b> code in cells, with plots and tables. Most of your analysis and figures will be done here.</td></tr>
+<tr><th>Terminal</th><td>A Linux command line with standard genomics programs (<code>samtools</code>, <code>bcftools</code>, <code>bedtools</code> and <code>seqtk</code>), running in your browser.</td></tr>
+<tr><th>Files</th><td>Your home folder and the read-only project data, with viewers for tables, sequences and text, and an editor.</td></tr>
+<tr><th>Databases</th><td>Live searches of <b>Ensembl</b>, NCBI and other databases. You will use it to check genes and variants.</td></tr>
+<tr><th>Genome browser</th><td><b>IGV</b>, for looking at your variants, E-boxes and conservation scores along the genome (<a href="#h-genome">how to use it</a>).</td></tr>
+<tr><th>AI</th><td>An optional AI assistant. Read the rules below before you use it.</td></tr>
 </table>
 
-<h2>Where things live</h2>
-<p>Your own work goes in your home folder, <code>~</code>. The project data is read-only in <code>/data/examples</code>. Have a look:</p>
+<h2>Where your files are</h2>
+<p>Your own work goes in your home folder, <code>~</code>. The project data is in <code>/data/examples</code>, which is read-only. Have a look:</p>
 <pre class="code" data-run="term"><code>ls -R /data/examples</code></pre>
-<p>You should see folders for <code>genes</code>, <code>reference</code>, <code>variants</code>, <code>conservation</code> and <code>motif</code>. <a href="#h-data">The project data</a> describes every file. Peek at the channelopathy gene list:</p>
+<p>You should see folders called <code>genes</code>, <code>reference</code>, <code>variants</code>, <code>conservation</code> and <code>motif</code>. Every file is described in <a href="#h-data">The project data</a>. This shows the first few lines of the channelopathy gene list:</p>
 <pre class="code" data-run="term"><code>column -t -s$'\t' /data/examples/genes/brain_channelopathy.tsv | head</code></pre>
 
-<h2 data-anchor="warmups">Three small warm-ups</h2>
-<p><b>Terminal.</b> Pull one promoter's DNA out of the reference with <code>samtools</code>, then count how long it is (drop the header line, join the lines, count the letters):</p>
+<h2 data-anchor="warmups">Three quick exercises</h2>
+<p><b>Terminal.</b> Use <code>samtools</code> to pull one promoter's sequence out of the reference, then find its length. The second command drops the header line, joins the sequence lines together and counts the letters:</p>
 <pre class="code" data-run="term"><code>samtools faidx /data/examples/reference/promoters.fa SCN1A | head -3
 samtools faidx /data/examples/reference/promoters.fa SCN1A | grep -v "&gt;" | tr -d "\n" | wc -c</code></pre>
-<p><b>Notebook (Python).</b> Open a new Python notebook and read the gene list into a table:</p>
+<p><b>Notebook (Python).</b> In a Python notebook, read the gene list into a table:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 genes = pd.read_csv("/data/examples/genes/epilepsy_all.tsv", sep="\t")
 print(genes.shape)
 genes.head()</code></pre>
-<p><b>Genome browser.</b> Jump to the start of <i>SCN1A</i> to see where a promoter sits. The green box is the promoter window, the bars beneath it are the 1000 Genomes variants, and the blue track is conservation (it needs the internet, and can take a few seconds the first time):</p>
+<p><b>Genome browser.</b> Go to the start of <i>SCN1A</i> to see a promoter in its place on the genome. The green bar is the promoter window, the short marks below it are 1000 Genomes variants, and the track below those shows conservation. The genome browser needs an internet connection and can take a few seconds to load the first time.</p>
 <div class="tryrow"><button class="do" type="button" data-igv="chr2:166127220-166129320">Open the SCN1A promoter in the genome browser</button></div>
 
-<h2 data-anchor="kept">Keep your work</h2>
-<p>Everything you do is saved in <b>this browser on this computer</b> automatically. It is not on a server and nobody else can see it. To hand work in or move it: <b>Download</b> in the Notebook tab saves a notebook as <code>.ipynb</code>; <b>My files</b> (top right) downloads everything as a <code>.zip</code>. On a shared computer, download before you leave.</p>
+<h2 data-anchor="kept">Saving your work</h2>
+<p>Everything you do is saved automatically, but only in <b>this browser on this computer</b>. Nothing is stored on a server, and nobody else can see it. To hand work in or move it to another computer, use <b>Download</b> in the Notebook tab to save a notebook as an <code>.ipynb</code> file, or <b>My files</b> (top right) to download everything as a <code>.zip</code> file. On a shared computer, download your work before you leave.</p>
 
 <div class="callout warn">
-  <div class="co-t">If you use the AI assistant — three rules</div>
+  <div class="co-t">If you use the AI assistant</div>
   <ol>
-    <li><b>No personal or patient data</b> in the AI tab, ever. Public reference data only — which is all this project uses.</li>
-    <li><b>The result is yours.</b> An AI can be wrong and sound sure. Whatever you report, you must be able to point to the command and the output it came from.</li>
-    <li><b>Use it to understand, not to skip.</b> Ask it to explain an error or a line of code. If it writes code for you, read every line and run it yourself.</li>
+    <li><b>Never put personal or patient data into the AI tab.</b> This project uses only public reference data.</li>
+    <li><b>You are responsible for your results.</b> An AI can be wrong while sounding confident. For anything you report, you need to be able to point to the command you ran and the output it gave.</li>
+    <li><b>Use it to help you understand, not to skip the work.</b> Ask it to explain an error or a line of code. If it writes code for you, read every line before you run it.</li>
   </ol>
 </div>
 
@@ -220,44 +220,44 @@ genes.head()</code></pre>
 </article>
 <article class="help-page" id="h-genes" data-title="The gene lists" data-group="1 · Genes and promoters" data-group-page="h-genes" data-keys="genes panelapp channelopathy epilepsy list ensembl" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>The gene lists</h1>
-<p class="lede">Before you can look for E-boxes, you need to know which genes to look at, and exactly where each one starts. Part 1 sets that up.</p>
+<p class="lede">Before you can look for E-boxes you need to know which genes to look at, and exactly where each one starts. That is what Part 1 is for.</p>
 
 <h2>Where the lists come from</h2>
-<p>Deciding which genes "cause" a disease is a job for experts, and Genomics England's <b>PanelApp</b> does exactly that: panels of genes rated by evidence, where <b>green</b> means well established (<a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">Martin et al. 2019</a>). We took the green genes from two panels and saved them for you:</p>
+<p>Deciding which genes cause a disease is a job for experts. Genomics England's <b>PanelApp</b> collects their judgements as gene panels, in which each gene is rated by the strength of the evidence and <b>green</b> means well established (<a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">Martin et al. 2019</a>). We took the green genes from two panels and saved them for you:</p>
 <ul>
-  <li><code>/data/examples/genes/brain_channelopathy.tsv</code> — 21 genes, your close-focus set.</li>
-  <li><code>/data/examples/genes/epilepsy_all.tsv</code> — <b>641</b> genes, your statistics set: the 632 green genes of the epilepsy panel together with the 21 channelopathy genes, each gene once (some are on both panels), and without one mitochondrial gene that has no nuclear promoter. Its <code>panel</code> column says <code>channelopathy</code> for the 21 and <code>epilepsy</code> for the other 620.</li>
+  <li><code>/data/examples/genes/brain_channelopathy.tsv</code>: the 21 channelopathy genes you will look at most closely.</li>
+  <li><code>/data/examples/genes/epilepsy_all.tsv</code>: all <b>641</b> genes, which you will use for the statistics. This is the 632 green genes of the epilepsy panel plus the 21 channelopathy genes, with each gene listed once (some are on both panels) and one mitochondrial gene left out because it has no nuclear promoter. The <code>panel</code> column says <code>channelopathy</code> for the 21 and <code>epilepsy</code> for the other 620.</li>
 </ul>
 
-<h2>Read a gene list</h2>
-<p>Open a Python notebook and load both lists:</p>
+<h2>Read the gene lists</h2>
+<p>In a Python notebook, load both lists:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 chan = pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")
 epi  = pd.read_csv("/data/examples/genes/epilepsy_all.tsv", sep="\t")
 print("channelopathy genes:", len(chan))
 print("epilepsy genes:", len(epi))
 chan</code></pre>
-<p>Each row has the gene symbol, its Ensembl identifier, the chromosome and strand, the <b>TSS</b> (transcription start site), and the promoter window we will use. The <code>strand</code> matters: a gene on the <code>-</code> strand is read right-to-left along the chromosome, so its promoter is on the higher-coordinate side of the TSS. The file has already taken care of that.</p>
+<p>Each row has the gene symbol, its Ensembl ID, the chromosome and strand, the <b>TSS</b> (transcription start site) and the promoter window we will use. The strand matters. A gene on the <code>-</code> strand is read from right to left along the chromosome, so its promoter lies on the higher-coordinate side of the TSS. The file already takes this into account.</p>
 
-<h2>Look at the spread</h2>
-<p>A quick plot — which chromosomes are these genes on?</p>
+<h2>Where are the genes?</h2>
+<p>A quick plot of which chromosomes the genes are on:</p>
 <pre class="code" data-run="py"><code>import matplotlib.pyplot as plt
 counts = epi["chrom"].value_counts()
 counts.plot(kind="bar", figsize=(9,3))
 plt.ylabel("genes"); plt.title("Epilepsy-panel genes by chromosome"); plt.tight_layout()</code></pre>
 
 <h2>Check one gene against the live database</h2>
-<p>It is good practice to confirm a file against its source. Use the <b>Databases</b> tab to look up <i>SCN1A</i> in Ensembl, and check the chromosome and strand match the table.</p>
+<p>It is good practice to check a file against its original source. Use the <b>Databases</b> tab to look up <i>SCN1A</i> in Ensembl, and check that the chromosome and strand match the table.</p>
 <div class="tryrow"><button class="do" type="button" data-api="ensembl:gene:SCN1A">Look up SCN1A in Ensembl</button> <button class="do" type="button" data-bench="apis">Open the Databases tab</button></div>
 
 <div class="callout concept">
   <div class="co-t">Think about</div>
-  <p>The channelopathy set has 21 genes; the full list has 641. Why keep both? When you later ask "are E-boxes more common than chance?", which set gives you a more trustworthy answer, and why? (Hint: how many E-boxes would you expect to even see in 21 short promoters?)</p>
+  <p>The channelopathy set has 21 genes and the full list has 641. Why keep both? When you later ask whether E-boxes are more common than chance, which set will give you a more reliable answer, and why? (Hint: how many E-boxes would you expect to see at all in 21 short promoters?)</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-promoters">Next: promoters and coordinates →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>Gene panels (PanelApp)</dt>
 <dd>Martin AR, Williams E, Foulger RE, et al. (2019) PanelApp crowdsources expert knowledge to establish consensus diagnostic gene panels. <i>Nature Genetics</i> 51: 1560–1565. <a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">doi:10.1038/s41588-019-0528-2</a></dd>
@@ -268,36 +268,36 @@ plt.ylabel("genes"); plt.title("Epilepsy-panel genes by chromosome"); plt.tight_
 </article>
 <article class="help-page" id="h-promoters" data-title="Promoters and coordinates" data-group="1 · Genes and promoters" data-group-page="h-genes" data-keys="promoter tss bed coordinates samtools faidx fasta strand sequence" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v4M14 10v4M11 16v4"/></svg>Promoters and coordinates</h1>
-<p class="lede">An E-box is only a circadian switch if it sits in the right place — the promoter. Here you learn how genomic positions are written down, and how to pull a promoter's DNA out of the reference genome.</p>
+<p class="lede">An E-box can only act as a circadian switch if it is in the right place, which is the promoter. This page shows how positions in the genome are written down, and how to pull a promoter's DNA sequence out of the reference genome.</p>
 
 <h2>The promoter window</h2>
-<p>For every gene we defined the promoter as the window <b>from 1000 letters before the TSS to 500 after</b> — 1501 letters in all (the 1000 before, the TSS itself, and the 500 after), measured along the direction the gene is read. Those windows are saved as a <b>BED file</b>, the standard way to write "a stretch of a chromosome":</p>
+<p>For every gene we defined the promoter as the window from <b>1000 bases before the TSS to 500 bases after it</b>, measured in the direction the gene is read. That is 1501 bases in total: the 1000 before, the TSS itself and the 500 after. The windows are saved as a <b>BED file</b>, the standard format for describing stretches of a chromosome:</p>
 <pre class="code" data-run="term"><code>head /data/examples/genes/promoters.bed</code></pre>
 <div class="callout concept">
   <div class="co-t">Reading a BED line</div>
-  <p><code>chr2&#9;166127519&#9;166129020&#9;SCN1A&#9;0&#9;-</code> is the line for gene <i>SCN1A</i>, on chromosome 2 and the <code>-</code> strand. BED counts from <b>0</b> and its end is "one past the last base", so this window runs from base 166,127,520 to base 166,129,020 in the usual 1-based counting, and its length is simply end − start = 1501 bases. Many bioinformatics mistakes are off-by-one errors from mixing the two ways of counting — watch for it. (On the <code>-</code> strand the gene is read right to left, so the 1000 bases "before" its TSS, 166,128,020, are the ones to its right.)</p>
+  <p><code>chr2&#9;166127519&#9;166129020&#9;SCN1A&#9;0&#9;-</code> is the line for <i>SCN1A</i>, which is on chromosome 2, on the <code>-</code> strand. BED coordinates start from <b>0</b>, and the end position is one past the last base. So in the usual 1-based counting this window runs from base 166,127,520 to base 166,129,020, and its length is simply end − start = 1501 bases. Mixing up the two ways of counting causes a lot of off-by-one errors in bioinformatics, so watch out for it. (Because <i>SCN1A</i> is on the <code>-</code> strand and read from right to left, the 1000 bases "before" its TSS at 166,128,020 are the ones to the right of it.)</p>
 </div>
 
 <h2>Pull out a promoter's sequence</h2>
-<p>We also saved the DNA of every promoter as a FASTA file, <code>promoters.fa</code>, one record per gene. <code>samtools faidx</code> fetches one by name:</p>
+<p>We also saved the DNA sequence of every promoter in a FASTA file, <code>promoters.fa</code>, with one record per gene. <code>samtools faidx</code> fetches a record by name:</p>
 <pre class="code" data-run="term"><code>samtools faidx /data/examples/reference/promoters.fa SCN1A</code></pre>
-<p><code>samtools faidx</code> labels what it prints with the name only (<code>&gt;SCN1A</code>). The header line in the file itself says more — where the sequence came from: the chromosome, the genomic start and end (1-based), the strand and the TSS. Look at it with <code>grep</code>:</p>
+<p><code>samtools faidx</code> labels its output with the name only (<code>&gt;SCN1A</code>). The header line in the file itself says more about where the sequence came from: the chromosome, the genomic start and end (1-based), the strand and the TSS. You can see it with <code>grep</code>:</p>
 <pre class="code" data-run="term"><code>grep "^&gt;SCN1A " /data/examples/reference/promoters.fa</code></pre>
-<p>You will need that genomic start later to turn a position <i>within</i> the promoter into a position <i>on the chromosome</i>. (The sequence is always the forward strand of the chromosome, left to right, whichever strand the gene is on.)</p>
+<p>You will need the genomic start later, to convert a position <i>within</i> the promoter into a position <i>on the chromosome</i>. (The sequence is always given on the forward strand of the chromosome, reading left to right, whichever strand the gene is on.)</p>
 
 <h2>How GC-rich are these promoters?</h2>
-<p>Promoters near a TSS are often rich in C and G. That matters for E-boxes, because <code>CACGTG</code> is itself C/G-heavy. Measure it with <code>seqtk</code>:</p>
+<p>Promoters near a TSS are often rich in C and G. That matters for E-boxes, because <code>CACGTG</code> itself is mostly C and G. Measure it with <code>seqtk</code>:</p>
 <pre class="code" data-run="term"><code>seqtk comp /data/examples/reference/promoters.fa | awk '{gc+=$4+$5; tot+=$2} END{printf "overall GC = %.1f%%\n", 100*gc/tot}'</code></pre>
-<p>Keep that number in mind: when you ask whether E-boxes are "more common than chance", chance has to mean <i>chance given this GC content</i>, not a flat 25% per letter.</p>
+<p>Keep this number in mind. When you ask whether E-boxes are more common than chance, "chance" has to take this GC content into account; you can't assume that each base turns up 25% of the time.</p>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>There are <b>641</b> promoters (the 21 channelopathy and 632 epilepsy genes, de-duplicated, with one mitochondrial gene dropped), each <b>1501</b> bases long, and the overall GC content is about <b>59%</b>. If your numbers match, your reference and your coordinates line up and you are ready to hunt for E-boxes.</p>
+  <p>There are <b>641</b> promoters (the 21 channelopathy and 632 epilepsy genes, with duplicates removed and one mitochondrial gene dropped), each <b>1501</b> bases long, and the overall GC content is about <b>59%</b>. If your numbers match, your reference and coordinates are consistent and you are ready to look for E-boxes.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-ebox-find">Next: find the E-boxes →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>, and the versions of the programs in <a href="#h-tools">The tools</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>. <a href="#h-tools">The tools</a> shows how to find the versions of the programs to cite with them.</p>
 <dl class="cite-list">
 <dt>Gene models and annotation</dt>
 <dd>Frankish A, Diekhans M, Jungreis I, et al. (2021) GENCODE 2021. <i>Nucleic Acids Research</i> 49: D916–D923. <a href="https://doi.org/10.1093/nar/gkaa1087" target="_blank" rel="noopener">doi:10.1093/nar/gkaa1087</a></dd>
@@ -313,13 +313,13 @@ plt.ylabel("genes"); plt.title("Epilepsy-panel genes by chromosome"); plt.tight_
 </article>
 <article class="help-page" id="h-ebox-find" data-title="Find the E-boxes" data-group="2 · Finding E-boxes" data-group-page="h-ebox-find" data-keys="ebox cacgtg motif search python palindrome coordinates bed" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Find the E-boxes</h1>
-<p class="lede">The canonical clock E-box is six letters: <code>CACGTG</code>. Your first real task is to find every one of them in the promoters, and write down exactly where each sits on the genome.</p>
+<p class="lede">The canonical clock E-box is the six bases <code>CACGTG</code>. The first task is to find every copy of it in the promoters and record where each one is on the genome.</p>
 
-<h2>One useful fact: CACGTG reads the same both ways</h2>
-<p><code>CACGTG</code> is a <b>palindrome</b> — its reverse complement is itself (C↔G, A↔T, read backwards). DNA has two strands, but because this motif is a palindrome you only have to search one of them and you have found it on both. That simplifies the code.</p>
+<h2>CACGTG reads the same on both strands</h2>
+<p><code>CACGTG</code> is a <b>palindrome</b>: its reverse complement (swap C with G and A with T, then read it backwards) is the same sequence. DNA has two strands, but because the motif is palindromic, searching one strand finds every copy on both. That keeps the code simple.</p>
 
 <h2>Scan every promoter</h2>
-<p>Open a Python notebook. This reads the promoter FASTA, finds every <code>CACGTG</code>, and turns each hit's position <i>within the promoter</i> into a position <i>on the chromosome</i> using the genomic start stored in the FASTA header:</p>
+<p>In a Python notebook, run the code below. It reads the promoter FASTA file, finds every <code>CACGTG</code>, and converts the position of each hit <i>within the promoter</i> into a position <i>on the chromosome</i>, using the genomic start stored in the FASTA header:</p>
 <pre class="code" data-run="py"><code>import re
 
 def read_fasta(path):
@@ -349,27 +349,27 @@ print("canonical E-boxes found:", len(eboxes))
 eboxes[:5]</code></pre>
 
 <h2>Save them as a BED file</h2>
-<p>Write the hits to your home folder so the terminal and the genome browser can use them:</p>
+<p>Write the hits to a file in your home folder, so that you can use them in the terminal and the genome browser:</p>
 <pre class="code" data-run="py"><code>with open("/home/user/eboxes_canonical.bed", "w") as f:
     for chrom, s, e, gene in eboxes:
         f.write(f"{chrom}\t{s}\t{e}\t{gene}|CACGTG\t0\t+\n")
 print("wrote /home/user/eboxes_canonical.bed")</code></pre>
 
 <h2>Now look at the channelopathy genes</h2>
-<p>How many of those E-boxes fall in your 21 close-focus genes? Load the gene list and check:</p>
+<p>How many of those E-boxes are in your 21 channelopathy genes? Load the gene list and check:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 chan = set(pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")["gene"])
 in_chan = [e for e in eboxes if e[3] in chan]
 print("canonical E-boxes in the 21 channelopathy genes:", len(in_chan))</code></pre>
 
 <div class="callout warn">
-  <div class="co-t">Checkpoint — and a surprise</div>
-  <p>You should find <b>205</b> canonical E-boxes across all 641 promoters, but <b>0</b> in the 21 channelopathy genes. That looks wrong — did the clock skip exactly the genes we care about? It did not. The exact string <code>CACGTG</code> is just very strict: real binding sites are often one letter off and still work. In the next step you will search the way biologists actually do, with a flexible <b>motif model</b>, and the channelopathy genes will light up.</p>
+  <div class="co-t">Checkpoint</div>
+  <p>You should find <b>205</b> canonical E-boxes across the 641 promoters, but <b>none</b> in the 21 channelopathy genes. That may look odd, but it doesn't mean the clock ignores these genes. Searching for the exact string <code>CACGTG</code> is very strict, and many working binding sites differ from it by a base. In the next step you will search with a flexible <b>motif model</b> instead, which is how binding sites are usually found, and the channelopathy genes will show up.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-ebox-pwm">Next: flexible motifs (PWMs) →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>The mammalian clock and E-boxes</dt>
 <dd>Takahashi JS (2017) Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics</i> 18: 164–179. <a href="https://doi.org/10.1038/nrg.2016.150" target="_blank" rel="noopener">doi:10.1038/nrg.2016.150</a></dd>
@@ -380,15 +380,15 @@ print("canonical E-boxes in the 21 channelopathy genes:", len(in_chan))</code></
 </article>
 <article class="help-page" id="h-ebox-pwm" data-title="Flexible motifs (PWMs)" data-group="2 · Finding E-boxes" data-group-page="h-ebox-find" data-keys="pwm pssm jaspar motif score bmal1 arntl log-odds threshold" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg>Flexible motifs: position weight matrices</h1>
-<p class="lede">Proteins do not demand a perfect sequence. CLOCK:BMAL1 binds <code>CACGTG</code> best, but it also binds close relatives. To find those, you use a <b>position weight matrix</b> (PWM) — the standard tool for describing what a protein likes to bind.</p>
+<p class="lede">Proteins don't need a perfect sequence to bind. CLOCK:BMAL1 binds <code>CACGTG</code> best, but it also binds sequences that differ from it slightly. To find those, you use a <b>position weight matrix</b> (PWM), the standard way of describing which sequences a protein binds.</p>
 
 <h2>What a PWM is</h2>
-<p>A PWM comes from many real binding sites. For each position it records how often each letter appeared. We give you the experimentally measured matrix for <b>BMAL1</b> (called <i>Arntl</i>) from the <b>JASPAR</b> database (<a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">Castro-Mondragon et al. 2022</a>):</p>
+<p>A PWM is built from many known binding sites. For each position in the site, it records how often each base was found there. We have given you the experimentally measured matrix for <b>BMAL1</b> (listed as <i>Arntl</i>) from the <b>JASPAR</b> database (<a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">Castro-Mondragon et al. 2022</a>):</p>
 <pre class="code" data-run="term"><code>cat /data/examples/motif/ARNTL_MA0603.2.jaspar</code></pre>
-<p>Read down the columns: the matrix is 8 letters long, and its favourite letter at each position spells <code>GTCACGTG</code> — the E-box <code>CACGTG</code> with a little flank. A PWM lets a site score well even if it is not a perfect <code>CACGTG</code>.</p>
+<p>Read down the columns. The matrix is 8 bases long, and the most common base at each position spells <code>GTCACGTG</code>: the E-box <code>CACGTG</code> with two extra bases in front. With a PWM, a site can score well even if it isn't a perfect <code>CACGTG</code>.</p>
 
-<h2>Turn counts into scores, and scan</h2>
-<p>This builds a <b>log-odds</b> score (how much more a letter is liked than background), scores every window on both strands, and reports a <b>relative score</b> from 0 to 1 (1 = the matrix's perfect site). Run it in your Python notebook:</p>
+<h2>From counts to scores</h2>
+<p>The code below turns the counts into <b>log-odds</b> scores (how much more often each base appears in binding sites than in background DNA), scores every 8-base window on both strands, and gives each window a <b>relative score</b> from 0 to 1, where 1 is the best possible match to the matrix. Run it in your Python notebook:</p>
 <pre class="code" data-run="py"><code>import math
 # --- read the JASPAR count matrix ---
 counts = {}
@@ -417,7 +417,7 @@ comp = str.maketrans("ACGT","TGCA")
 def revcomp(s): return s.translate(comp)[::-1]
 def best_both(s): return max(relscore(s), relscore(revcomp(s)))</code></pre>
 
-<p>Now scan every promoter and keep windows scoring at least <b>0.85</b> (a common, fairly strict cut-off). Reuse the <code>read_fasta</code> and <code>records</code> from the previous step:</p>
+<p>Now scan every promoter and keep the windows that score at least <b>0.85</b>, a commonly used and fairly strict cut-off. This reuses <code>read_fasta</code> and <code>records</code> from the previous step:</p>
 <pre class="code" data-run="py"><code>THR = 0.85
 pwm_sites = []
 for header, seq in records:
@@ -442,17 +442,17 @@ print("PWM sites in the channelopathy genes:", len(chan_sites),
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>At score ≥ 0.85 you should find about <b>1240</b> sites, and this time about <b>28</b> of them fall in <b>13 of the 21</b> channelopathy genes — including the ones the exact search missed. The clock did not skip them after all; the exact-string search was simply too strict. (Your exact counts can shift a little if you change the step or the threshold — say which you used.) Save these sites too (<code>pwm_sites</code> → a BED file, as before).</p>
+  <p>With a cut-off of 0.85 you should find about <b>1240</b> sites. This time about <b>28</b> of them are in <b>13 of the 21</b> channelopathy genes, so the flexible search finds sites in genes that the exact search missed. (The numbers can shift slightly if you change how the scan moves along the sequence or the cut-off, so record which you used.) Save these sites as a BED file too, as you did for the exact matches.</p>
 </div>
 
 <div class="callout concept">
-  <div class="co-t">Think about the threshold</div>
-  <p>Lower the cut-off to 0.80 and you get many more sites; raise it to 0.90 and you get far fewer. There is no single "correct" value — it trades false positives against false negatives. When you report a result, you must state the threshold you used. Try two values and see how much your later conclusions depend on it.</p>
+  <div class="co-t">Choosing a cut-off</div>
+  <p>Lower the cut-off to 0.80 and you will get many more sites; raise it to 0.90 and you will get far fewer. There is no single correct value: a lower cut-off finds more true sites, but more false ones as well. Whatever you choose, state it when you report a result. Try two values and see how much your later conclusions depend on the choice.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-ebox-enrich">Next: are there more E-boxes than chance? →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>Transcription-factor motifs (JASPAR)</dt>
 <dd>Castro-Mondragon JA, Riudavets-Puig R, Rauluseviciute I, et al. (2022) JASPAR 2022: the 9th release of the open-access database of transcription factor binding profiles. <i>Nucleic Acids Research</i> 50: D165–D173. <a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">doi:10.1093/nar/gkab1113</a></dd>
@@ -465,13 +465,13 @@ print("PWM sites in the channelopathy genes:", len(chan_sites),
 </article>
 <article class="help-page" id="h-ebox-enrich" data-title="More than chance?" data-group="2 · Finding E-boxes" data-group-page="h-ebox-find" data-keys="enrichment expected chance cpg dinucleotide markov background baseline" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20V4M4 20h16"/><path d="M8 16l4-5 3 3 5-7"/></svg>Are there more E-boxes than chance?</h1>
-<p class="lede">Finding 205 E-boxes means nothing until you know how many you would expect by chance. Getting "chance" right is the whole game here — and it is where a careful scientist earns their result.</p>
+<p class="lede">Finding 205 E-boxes tells you little until you know how many you would expect by chance. Working out that expectation properly is the most important part of this step.</p>
 
-<h2>The trap: CACGTG hides a CpG</h2>
-<p>Look at the middle of <code>CA<b>CG</b>TG</code>: it contains the dinucleotide <b>CG</b> (a "CpG"). CpGs are special in two ways — they are rarer in the genome than you'd expect, <i>and</i> they mutate faster than other sites. So a naive expectation ("four letters, each 1-in-4, so CACGTG happens 1 in 4⁶") is wrong twice over. You must compare against a background that already knows this promoter's letter <b>and dinucleotide</b> composition.</p>
+<h2>CACGTG contains a CpG</h2>
+<p>The middle of <code>CA<b>CG</b>TG</code> is the dinucleotide <b>CG</b>, known as a CpG. CpGs behave differently from other DNA: they are rarer in the genome than you would expect, <i>and</i> they mutate faster than other sites. The simple expectation (four bases, each with a one in four chance, so <code>CACGTG</code> should turn up once in every 4⁶ positions) takes no account of either. You need to compare against a background that reflects these promoters' base composition <b>and</b> their dinucleotide composition.</p>
 
 <h2>A fair expectation</h2>
-<p>Fit a simple model to the promoters themselves — how often each letter follows each other letter — then ask how many <code>CACGTG</code> it predicts. Run in Python (reuse <code>records</code>):</p>
+<p>Fit a simple model to the promoters themselves, which records how often each base is followed by each other base, and ask how many copies of <code>CACGTG</code> it predicts. Run this in Python (it reuses <code>records</code>):</p>
 <pre class="code" data-run="py"><code>from collections import Counter
 pool = "".join(seq for _, seq in records)
 base = Counter(c for c in pool if c in "ACGT"); N = sum(base.values())
@@ -491,24 +491,24 @@ print(f"observed {observed} | expected ~{expected:.0f} | ratio {observed/expecte
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>You should see about <b>205 observed vs ~123 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are enriched roughly <b>1.7-fold</b> in these promoters, even after accounting for CpG content — a real signal that the clock pathway reaches these genes. (Try the same for <code>CACGTT</code>, a near-relative that CLOCK:BMAL1 binds weakly — is it enriched?)</p>
+  <p>You should see about <b>205 observed against ~123 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are roughly <b>1.7 times</b> more common in these promoters than expected, even after allowing for CpG content, which is a sign that the clock pathway reaches these genes. (Try the same calculation for <code>CACGTT</code>, a related sequence that CLOCK:BMAL1 binds only weakly. Is it enriched?)</p>
 </div>
 
 <div class="callout concept">
-  <div class="co-t">Why this matters more than the number</div>
-  <p>If you had used the naive 1-in-4⁶ expectation you would have claimed a much bigger enrichment — and a reviewer would have thrown it out, because CpG content alone could explain it. Choosing the honest baseline is the difference between a finding and an artefact. Write down, in your notes, exactly which baseline you used and why.</p>
+  <div class="co-t">Why the baseline matters</div>
+  <p>With the simple 1 in 4⁶ expectation you would have reported a much larger enrichment, and a reviewer would rightly have rejected it, because CpG content alone could explain it. A fair baseline is what separates a finding from an artefact. Write down in your notes which baseline you used and why.</p>
 </div>
 
-<h2>See one on the genome</h2>
-<p>Put your own E-boxes on the genome: this adds <code>~/eboxes_canonical.bed</code> (from the find step) to the genome browser as a track of its own. Then jump to one of them — the first in your list is in the <i>ACOX1</i> promoter — and see it sitting inside the promoter window, with the conservation track beneath it:</p>
+<h2>Look at an E-box on the genome</h2>
+<p>You can add your own E-boxes to the genome browser. The first button below shows <code>~/eboxes_canonical.bed</code> (from the find step) as a track of its own. The second takes you to the first E-box in your list, in the <i>ACOX1</i> promoter, where you can see it inside the promoter window with the conservation track below:</p>
 <div class="tryrow"><button class="do" type="button" data-igv-track="~/eboxes_canonical.bed">Show my E-boxes in the genome browser</button> <button class="do" type="button" data-igv="chr17:75979355-75979560">Go to the first E-box (ACOX1)</button></div>
-<p>For contrast, look at <i>SLC2A1</i> (GLUT1 — its deficiency causes epilepsy), one of the channelopathy genes whose promoter has no exact <code>CACGTG</code> at all:</p>
+<p>For comparison, look at <i>SLC2A1</i> (GLUT1, whose deficiency causes epilepsy). It is one of the channelopathy genes, and its promoter has no exact <code>CACGTG</code> at all:</p>
 <div class="tryrow"><button class="do" type="button" data-igv="chr1:42958068-42960168">Open the SLC2A1 promoter in the genome browser</button></div>
-<p>Any BED, VCF or bedGraph file in your home folder can be shown the same way, with <b>Add my files…</b> in the Genome browser tab (<a href="#h-genome">The genome browser</a>).</p>
+<p>You can show any BED, VCF or bedGraph file from your home folder in the same way, using <b>Add my files…</b> in the Genome browser tab (see <a href="#h-genome">The genome browser</a>).</p>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-variants">Start Part 3: human variation →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>The mammalian clock and E-boxes</dt>
 <dd>Takahashi JS (2017) Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics</i> 18: 164–179. <a href="https://doi.org/10.1038/nrg.2016.150" target="_blank" rel="noopener">doi:10.1038/nrg.2016.150</a></dd>
@@ -524,20 +524,20 @@ print(f"observed {observed} | expected ~{expected:.0f} | ratio {observed/expecte
 </article>
 <article class="help-page" id="h-variants" data-title="Human variation" data-group="3 · Human variation" data-group-page="h-variants" data-keys="vcf variant allele frequency 1000 genomes population bcftools af" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3c0 6 10 6 10 12s-10 3-10 6M17 3c0 6-10 6-10 12s10 3 10 6M8 7h8M8 17h8M9.5 12h5"/></svg>Human variation in the promoters</h1>
-<p class="lede">Now bring in real people. The 1000 Genomes Project sequenced the genomes of thousands of individuals from around the world. You have every variant that falls in your promoters — and you can ask how common each one is, and where.</p>
+<p class="lede">The 1000 Genomes Project sequenced the genomes of thousands of people from around the world. You have every variant it found in your promoters, so you can ask how common each one is, and in which populations.</p>
 
 <h2>The data</h2>
-<p>We pulled every single-letter variant (SNV) in the 641 promoters from the <b>1000 Genomes 30× data</b> — 3,202 genomes from 26 populations (<a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">1000 Genomes Project 2015</a>; <a href="https://doi.org/10.1016/j.cell.2022.08.004" target="_blank" rel="noopener">Byrska-Bishop et al. 2022</a>) — into one small file:</p>
+<p>We extracted every single-base variant (SNV) in the 641 promoters from the <b>1000 Genomes 30× data</b>, which covers 3,202 genomes from 26 populations (<a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">1000 Genomes Project 2015</a>; <a href="https://doi.org/10.1016/j.cell.2022.08.004" target="_blank" rel="noopener">Byrska-Bishop et al. 2022</a>), and saved them in one small file:</p>
 <pre class="code" data-run="term"><code>zcat /data/examples/variants/promoter_variants.vcf.gz | grep -v "^##" | head -5</code></pre>
-<p>This is a <b>VCF file</b>, the standard format for variants. Each line is one variant: its chromosome and position, the reference letter (<code>REF</code>), the alternative letter (<code>ALT</code>), and an <code>INFO</code> field. We put the useful numbers in <code>INFO</code>: <code>GENE</code>, the overall allele frequency <code>AF</code>, and the frequency in each of the five super-populations (<code>AF_AFR</code>, <code>AF_AMR</code>, <code>AF_EAS</code>, <code>AF_EUR</code>, <code>AF_SAS</code>).</p>
+<p>This is a <b>VCF file</b>, the standard format for variants. Each line is one variant, with its chromosome and position, the reference base (<code>REF</code>), the alternative base (<code>ALT</code>) and an <code>INFO</code> field. We have put the useful numbers in <code>INFO</code>: <code>GENE</code>, the overall allele frequency <code>AF</code>, and the frequency in each of the five super-populations (<code>AF_AFR</code>, <code>AF_AMR</code>, <code>AF_EAS</code>, <code>AF_EUR</code> and <code>AF_SAS</code>).</p>
 
 <div class="callout concept">
-  <div class="co-t">Allele frequency, and why populations matter</div>
-  <p><b>Allele frequency</b> is the fraction of chromosomes in a group that carry the alternative letter. <code>AF=0.5</code> means half; <code>AF=0.0003</code> means it was seen on just a couple of chromosomes. A variant can be common in one population and absent in another — which is why a single global number can mislead, and why the file keeps each super-population separately.</p>
+  <div class="co-t">Allele frequency</div>
+  <p>The <b>allele frequency</b> is the fraction of chromosomes in a group that carry the alternative base. <code>AF=0.5</code> means half of them; <code>AF=0.0003</code> means it was seen on only a couple of chromosomes. A variant can be common in one population and absent from another, so a single global figure can be misleading. That is why the file keeps the super-populations separate.</p>
 </div>
 
 <h2>Count and summarise with bcftools</h2>
-<p><code>bcftools</code> is the standard tool for VCFs. How many variants are there, and how many are rare?</p>
+<p><code>bcftools</code> is the standard tool for working with VCF files. How many variants are there, and how many are rare?</p>
 <pre class="code" data-run="term"><code>bcftools view -H /data/examples/variants/promoter_variants.vcf.gz | wc -l
 # how many are rare (overall AF &lt; 0.5%)?
 bcftools query -f '%INFO/AF\n' /data/examples/variants/promoter_variants.vcf.gz \
@@ -545,11 +545,11 @@ bcftools query -f '%INFO/AF\n' /data/examples/variants/promoter_variants.vcf.gz 
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>There are about <b>22,836</b> SNVs across the 641 promoters, and the large majority are <b>rare</b>. That skew — far more rare than common variants — is normal for functional regions, and it is a clue you will use in Part 4 when you test for selection.</p>
+  <p>There are <b>22,836</b> SNVs across the 641 promoters, and most of them are <b>rare</b>. Having many more rare variants than common ones is normal for functional regions, and it will matter again in Part 4, when you test for selection.</p>
 </div>
 
-<h2>Pull the variants into a notebook</h2>
-<p>Load the variants into Python as a table so you can join them to your E-boxes next. A notebook line that starts with <code>!</code> runs a terminal command, so <code>bcftools query</code> can write the columns you want into a plain table in your home folder, and pandas then reads it:</p>
+<h2>Load the variants into a notebook</h2>
+<p>To join the variants to your E-boxes in the next step, load them into Python as a table. A notebook line that starts with <code>!</code> runs a terminal command, so here <code>bcftools query</code> writes the columns you need to a plain table in your home folder, and pandas reads it in:</p>
 <pre class="code" data-run="py"><code>!bcftools query -f '%CHROM\t%POS\t%ID\t%REF\t%ALT\t%INFO/GENE\t%INFO/AF\t%INFO/AF_AFR\t%INFO/AF_AMR\t%INFO/AF_EAS\t%INFO/AF_EUR\t%INFO/AF_SAS\n' /data/examples/variants/promoter_variants.vcf.gz &gt; /home/user/promoter_variants.tsv
 import pandas as pd
 cols = ["chrom","pos","vid","ref","alt","gene","AF","AF_AFR","AF_AMR","AF_EAS","AF_EUR","AF_SAS"]
@@ -558,7 +558,7 @@ print(var.shape); var.head()</code></pre>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-overlap">Next: which variants hit an E-box? →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>1000 Genomes data</dt>
 <dd>The 1000 Genomes Project Consortium (2015) A global reference for human genetic variation. <i>Nature</i> 526: 68–74. <a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">doi:10.1038/nature15393</a></dd>
@@ -567,9 +567,9 @@ print(var.shape); var.head()</code></pre>
 </article>
 <article class="help-page" id="h-overlap" data-title="Variants that hit an E-box" data-group="3 · Human variation" data-group-page="h-variants" data-keys="bedtools intersect overlap disrupt break create catalogue population" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 10h11M4 14h16M4 18h9"/></svg>Variants that hit an E-box</h1>
-<p class="lede">You have E-boxes (positions on the genome) and variants (other positions on the genome). The question is simple: which variants land inside an E-box? That is a job for <code>bedtools</code>.</p>
+<p class="lede">You now have two sets of positions on the genome: your E-boxes and the variants. The question is which variants fall inside an E-box, and that is a job for <code>bedtools</code>.</p>
 
-<h2>Intersect, the standard way</h2>
+<h2>Finding overlaps with bedtools</h2>
 <p><code>bedtools intersect</code> finds overlaps between two sets of genomic regions. Overlap your canonical E-boxes with the variants:</p>
 <pre class="code" data-run="term"><code>cd ~
 bedtools intersect -a eboxes_canonical.bed -b /data/examples/variants/promoter_variants.vcf.gz -wa -wb \
@@ -579,12 +579,12 @@ bedtools intersect -a eboxes_canonical.bed -b /data/examples/variants/promoter_v
   | wc -l</code></pre>
 
 <div class="callout concept">
-  <div class="co-t">In a canonical E-box, every variant breaks it</div>
-  <p><code>CACGTG</code> is the <i>best</i> sequence. Any single-letter change inside it makes it something else, so every SNV that lands in a canonical E-box <b>weakens or destroys</b> the switch (you can confirm this with the PWM score in the next step). Occasionally a variant does the opposite — it turns a near-miss into a perfect <code>CACGTG</code>, <b>creating</b> a switch. Both are interesting.</p>
+  <div class="co-t">Any change to CACGTG weakens it</div>
+  <p><code>CACGTG</code> is the best possible sequence, so any single-base change inside it turns it into something weaker. Every SNV in a canonical E-box therefore <b>weakens or destroys</b> the site (you can check this with the PWM score in the next step). Occasionally a variant does the opposite and turns a near-match into a perfect <code>CACGTG</code>, <b>creating</b> a new site. Both kinds are interesting.</p>
 </div>
 
 <h2>Build your catalogue in Python</h2>
-<p>Join the variants table (<code>var</code>, from the last step) to your E-boxes so each E-box variant carries its gene and its population frequencies. One clean way: mark every genomic position that is inside a canonical E-box, then select variants at those positions:</p>
+<p>Join the variants table (<code>var</code>, from the last step) to your E-boxes, so that each E-box variant comes with its gene and its population frequencies. A simple way to do this is to mark every genomic position inside a canonical E-box, then pick out the variants at those positions:</p>
 <pre class="code" data-run="py"><code>ebox_pos = set()
 for chrom, s, e, gene in eboxes:          # from the find step (BED: 0-based s, end e)
     for p in range(s+1, e+1):             # 1-based genomic positions
@@ -596,18 +596,18 @@ print("variants inside a canonical E-box:", len(catalogue))
 catalogue.sort_values("AF", ascending=False).head(10)</code></pre>
 
 <h2>Look at the population columns</h2>
-<p>For each catalogue variant, compare <code>AF_AFR … AF_SAS</code>. Are any common in one group and rare in another? A variant that breaks a clock switch but is common somewhere is especially worth a look.</p>
+<p>For each variant in the catalogue, compare <code>AF_AFR … AF_SAS</code>. Are any of them common in one population and rare in another? A variant that disrupts a clock E-box but is common in some population deserves a closer look.</p>
 <pre class="code" data-run="py"><code>cols = ["gene","pos","ref","alt","AF","AF_AFR","AF_AMR","AF_EAS","AF_EUR","AF_SAS"]
 catalogue[cols].sort_values("AF", ascending=False).head(12)</code></pre>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>About <b>27</b> variants fall inside a canonical E-box. Most are rare — which is exactly what you would expect if breaking the switch is usually mildly harmful and selection keeps such variants down. You will test that properly in Part 4. Save your catalogue (<code>catalogue.to_csv("/home/user/catalogue.csv", index=False)</code>).</p>
+  <p><b>27</b> variants fall inside a canonical E-box. Most of them are rare, which is what you would expect if disrupting an E-box is usually mildly harmful, so that selection keeps such variants at low frequency. You will test this properly in Part 4. Save your catalogue with <code>catalogue.to_csv("/home/user/catalogue.csv", index=False)</code>.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-motifbreak">Next: score how much a variant changes the motif →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>1000 Genomes data</dt>
 <dd>The 1000 Genomes Project Consortium (2015) A global reference for human genetic variation. <i>Nature</i> 526: 68–74. <a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">doi:10.1038/nature15393</a></dd>
@@ -616,15 +616,15 @@ catalogue[cols].sort_values("AF", ascending=False).head(12)</code></pre>
 <dd>Castro-Mondragon JA, Riudavets-Puig R, Rauluseviciute I, et al. (2022) JASPAR 2022: the 9th release of the open-access database of transcription factor binding profiles. <i>Nucleic Acids Research</i> 50: D165–D173. <a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">doi:10.1093/nar/gkab1113</a></dd>
 </dl>
 </article>
-<article class="help-page" id="h-motifbreak" data-title="Scoring the damage" data-group="3 · Human variation" data-group-page="h-variants" data-keys="motifbreak delta ref alt score break create disruption pwm" hidden>
-<h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM4 20l10-10"/></svg>Scoring the damage a variant does</h1>
-<p class="lede">"Inside an E-box" is yes/no. Better is <i>how much</i> a variant changes the switch. Score the sequence with the reference letter, score it again with the variant's letter, and take the difference. This is exactly how published tools (like motifbreakR) work — and you can do it in a few lines.</p>
+<article class="help-page" id="h-motifbreak" data-title="Scoring motif changes" data-group="3 · Human variation" data-group-page="h-variants" data-keys="motifbreak delta ref alt score break create disruption pwm" hidden>
+<h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 4l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM4 20l10-10"/></svg>How much does a variant change the motif?</h1>
+<p class="lede">Whether a variant is inside an E-box is a yes-or-no question. It is more useful to know <i>how much</i> it changes the site. Score the sequence with the reference base, score it again with the variant's base, and take the difference. Published tools such as motifbreakR work in the same way, and you can do it in a few lines of code.</p>
 
-<h2>The idea</h2>
-<p>For a variant, slide the BMAL1 matrix across the DNA around it. In each window, compute the relative score with the <b>reference</b> letter and with the <b>alternative</b> letter. The window where the motif is strongest is the one that matters; the <b>change in score</b> (alt − ref) tells you whether the variant weakens the switch (negative), strengthens it, or does nothing.</p>
+<h2>How it works</h2>
+<p>For each variant, slide the BMAL1 matrix along the DNA around it. In each window, work out the relative score with the <b>reference</b> base and with the <b>alternative</b> base. The window where the motif scores highest is the one that matters, and the <b>change in score</b> (alt − ref) tells you whether the variant weakens the site (a negative change), strengthens it, or makes no difference.</p>
 
-<h2>Compute it</h2>
-<p>This reuses <code>w</code>, <code>relscore</code>, <code>best_both</code> and <code>L</code> from <a href="#h-ebox-pwm">the PWM step</a>, and <code>var</code> from <a href="#h-variants">the variants step</a>. First index the promoter sequences by gene:</p>
+<h2>The code</h2>
+<p>This reuses <code>w</code>, <code>relscore</code>, <code>best_both</code> and <code>L</code> from <a href="#h-ebox-pwm">the PWM step</a>, and <code>var</code> from <a href="#h-variants">the variants step</a>. First, index the promoter sequences by gene:</p>
 <pre class="code" data-run="py"><code>gene_seq = {}
 for header, seq in records:
     gene  = header.split()[0]
@@ -647,7 +647,7 @@ def motif_effect(gene, pos, ref, alt):
     rr, ra = best
     return round(rr,3), round(ra,3), round(ra-rr,3)</code></pre>
 
-<p>Apply it to every variant and classify each one (threshold 0.85, as before):</p>
+<p>Then apply it to every variant and classify each one, using the same 0.85 cut-off as before:</p>
 <pre class="code" data-run="py"><code>THR = 0.85
 rows = []
 for r in var.itertuples():
@@ -668,17 +668,17 @@ eff.sort_values("delta").head(10)        # the biggest disruptions</code></pre>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>You should find on the order of <b>212</b> variants that <b>break</b> a strong site and <b>210</b> that <b>create</b> one, plus many that weaken or strengthen. This is a far richer catalogue than the exact-match one, and it reaches the channelopathy genes. These "break" variants — especially in channelopathy genes — are your candidate list for Part 5.</p>
+  <p>You should find about <b>212</b> variants that <b>break</b> a strong site and about <b>210</b> that <b>create</b> one, plus a few dozen that weaken or strengthen one. This catalogue is much larger than the exact-match one, and it includes the channelopathy genes. The "break" variants, especially those in channelopathy genes, are your candidates for Part 5.</p>
 </div>
 
 <div class="callout concept">
   <div class="co-t">A caution</div>
-  <p>A score change is a <b>prediction</b>, not proof the switch is really used in the brain. CLOCK:BMAL1 may not even bind this particular site in neurons. That is why the next step — is the position conserved and depleted of variation? — adds independent evidence, and why the real test is in patients.</p>
+  <p>A change in score is a <b>prediction</b>. It doesn't show that the site is actually used in the brain, and CLOCK:BMAL1 may not bind this particular site in neurons at all. That is why the next part, which asks whether the position is conserved and short of variation, adds independent evidence, and why the final test has to be done in patients.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-phylop">Start Part 4: conservation →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>Transcription-factor motifs (JASPAR)</dt>
 <dd>Castro-Mondragon JA, Riudavets-Puig R, Rauluseviciute I, et al. (2022) JASPAR 2022: the 9th release of the open-access database of transcription factor binding profiles. <i>Nucleic Acids Research</i> 50: D165–D173. <a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">doi:10.1093/nar/gkab1113</a></dd>
@@ -691,17 +691,17 @@ eff.sort_values("delta").head(10)        # the biggest disruptions</code></pre>
 </dl>
 </article>
 <article class="help-page" id="h-phylop" data-title="Conservation" data-group="4 · Conservation and selection" data-group-page="h-phylop" data-keys="conservation phylop zoonomia evolution constraint mammals" hidden>
-<h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4v16M4 8h6M4 16h6M10 6v4M10 14v4M10 6h8M10 10h5M10 14h7M10 18h9"/></svg>Conservation: has evolution kept this letter still?</h1>
-<p class="lede">If an E-box really is an important switch, breaking it should have been bad for our ancestors too — so evolution should have kept those letters unchanged across species. A <b>conservation score</b> measures exactly that.</p>
+<h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4v16M4 8h6M4 16h6M10 6v4M10 14v4M10 6h8M10 10h5M10 14h7M10 18h9"/></svg>Conservation</h1>
+<p class="lede">If an E-box is an important control site, damaging it would have been harmful to our ancestors as well, so evolution should have kept its sequence the same across species. A <b>conservation score</b> measures this.</p>
 
 <h2>What phyloP is</h2>
-<p><b>phyloP</b> compares the same position across many species' genomes and asks whether it has changed <i>less</i> (conserved — positive score) or <i>more</i> (fast-evolving — negative score) than neutral DNA (<a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">Pollard et al. 2010</a>; <a href="https://doi.org/10.1126/science.abn3943" target="_blank" rel="noopener">Christmas et al. 2023</a>). We use the <b>470-way mammalian</b> alignment from the Zoonomia project, the state of the art for spotting constrained regulatory DNA (<a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">Pollard et al. 2010</a>; <a href="https://doi.org/10.1126/science.abn3943" target="_blank" rel="noopener">Christmas et al. 2023</a>). A score above ~2 means a position has been held unusually still across mammals.</p>
+<p><b>phyloP</b> compares the same position across the genomes of many species and asks whether it has changed <i>less</i> than neutral DNA (it is conserved, and gets a positive score) or <i>more</i> (it is evolving quickly, and gets a negative score) (<a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">Pollard et al. 2010</a>; <a href="https://doi.org/10.1126/science.abn3943" target="_blank" rel="noopener">Christmas et al. 2023</a>). We use the <b>470-way mammalian</b> alignment from the Zoonomia project, currently one of the best resources for finding constrained regulatory DNA (<a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">Pollard et al. 2010</a>; <a href="https://doi.org/10.1126/science.abn3943" target="_blank" rel="noopener">Christmas et al. 2023</a>). A score above about 2 means a position has changed unusually little across mammals.</p>
 
-<p>We saved phyloP for every base of every promoter so you don't have to download the huge genome-wide file:</p>
+<p>We saved the phyloP score for every base of every promoter, so you don't need to download the very large genome-wide file:</p>
 <pre class="code" data-run="term"><code>zcat /data/examples/conservation/phylop_promoters.csv.gz | head -3</code></pre>
 
-<h2>Read conservation at an E-box</h2>
-<p>Load the table and look at the scores under one of your E-boxes. Pick a canonical E-box from your list and read the six positions:</p>
+<h2>Conservation at an E-box</h2>
+<p>Load the table and look at the scores for the six positions of one of your canonical E-boxes:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 phylop = pd.read_csv("/data/examples/conservation/phylop_promoters.csv.gz")
 # a few promoters overlap (two genes that start close together), so some positions are listed twice: keep each once
@@ -710,16 +710,16 @@ phylop = phylop.drop_duplicates(["chrom","pos"]).set_index(["chrom","pos"]).sort
 chrom, s, e, gene = eboxes[0]          # first E-box (BED: 0-based s)
 for p in range(s+1, e+1):
     print(p, gene, phylop.loc[(chrom, p), "phyloP470"])</code></pre>
-<p>Are those six numbers high (conserved) or low? Try a few E-boxes, then a few random promoter positions, and get a feel for the difference before you measure it properly in the next step.</p>
+<p>Are those six numbers high (conserved) or low? Try a few more E-boxes, then a few random promoter positions, to get a feel for the difference before you measure it properly in the next step.</p>
 
 <div class="callout concept">
-  <div class="co-t">Why conservation adds something new</div>
-  <p>The PWM score (Part 3) is a <i>prediction</i> from a laboratory matrix. phyloP is <i>independent evidence</i> from evolution: it knows nothing about CLOCK:BMAL1, only about what has survived millions of years. When a predicted switch is also deeply conserved, the case that it is real gets much stronger.</p>
+  <div class="co-t">Why conservation helps</div>
+  <p>The PWM score from Part 3 is a <i>prediction</i> based on a matrix measured in the lab. phyloP is <i>independent evidence</i> from evolution: it knows nothing about CLOCK:BMAL1, only which positions have stayed the same over millions of years. If a predicted site is also highly conserved, the case that it is a working site is much stronger.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-selection">Next: the selection test →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>Conservation (phyloP, Zoonomia)</dt>
 <dd>Pollard KS, Hubisz MJ, Rosenbloom KR, Siepel A (2010) Detection of nonneutral substitution rates on mammalian phylogenies. <i>Genome Research</i> 20: 110–121. <a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">doi:10.1101/gr.097857.109</a></dd>
@@ -728,13 +728,13 @@ for p in range(s+1, e+1):
 </article>
 <article class="help-page" id="h-selection" data-title="The selection test" data-group="4 · Conservation and selection" data-group-page="h-phylop" data-keys="selection purifying control cpg conservation variation mann-whitney test statistics" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7.5 15h9"/></svg>The selection test</h1>
-<p class="lede">This is the heart of the project. If E-boxes are functional switches kept intact by selection, then compared with fair control positions they should be <b>more conserved</b> and carry <b>fewer, rarer variants</b>. Here you measure both — carefully.</p>
+<p class="lede">This is the central test of the project. If E-boxes are working control sites that selection keeps intact, then compared with fair control positions they should be <b>more conserved</b> and carry <b>fewer, rarer variants</b>. On this page you measure both.</p>
 
 <h2>Choosing a fair control</h2>
-<p>You cannot compare E-boxes with "all promoter DNA", because <code>CACGTG</code> contains a <b>CpG</b>, and CpGs behave differently from ordinary DNA (they mutate faster and are themselves often conserved near promoters). The fair comparison is <b>E-box positions versus other CpG positions in the same promoters</b>. Then any difference you see is about the E-box, not about CpGs in general.</p>
+<p>You can't simply compare E-boxes with all promoter DNA, because <code>CACGTG</code> contains a <b>CpG</b>, and CpGs behave differently from ordinary DNA: they mutate faster, and near promoters they are often conserved themselves. The fair comparison is between <b>E-box positions and other CpG positions in the same promoters</b>. Any difference you then see is down to the E-box, not to CpGs in general.</p>
 
-<h2>Tag every position</h2>
-<p>Mark each promoter base as <code>ebox</code>, <code>cpg_control</code> (a CpG not in an E-box), or <code>other</code>, and attach its phyloP score and whether a variant was seen there. Run in Python (reuses <code>records</code>, <code>eboxes</code>, <code>var</code>, and the <code>phylop</code> table):</p>
+<h2>Label every position</h2>
+<p>Label each promoter base as <code>ebox</code>, <code>cpg_control</code> (a CpG that is not in an E-box) or <code>other</code>, and add its phyloP score and whether a variant was seen there. Run this in Python (it reuses <code>records</code>, <code>eboxes</code>, <code>var</code> and the <code>phylop</code> table):</p>
 <pre class="code" data-run="py"><code>import pandas as pd, numpy as np
 ebox_pos = set()
 for chrom, s, e, gene in eboxes:
@@ -755,14 +755,14 @@ pos_df = pd.DataFrame(rows, columns=["chrom","pos","cls","variant"])
 pos_df = pos_df.merge(phylop.reset_index(), on=["chrom","pos"], how="left")
 pos_df["cls"].value_counts()</code></pre>
 
-<h2>Result 1 — conservation</h2>
+<h2>Result 1: conservation</h2>
 <pre class="code" data-run="py"><code>pos_df.groupby("cls")["phyloP470"].mean()</code></pre>
 
-<h2>Result 2 — how much variation</h2>
+<h2>Result 2: variation</h2>
 <pre class="code" data-run="py"><code>(pos_df.groupby("cls")["variant"].mean()*1000).round(2)   # segregating SNVs per 1000 bp</code></pre>
 
-<h2>Is the difference real? A statistical test</h2>
-<p>Compare the phyloP of E-box positions with CpG-control positions using a Mann–Whitney U test (it doesn't assume a bell-curve):</p>
+<h2>Is the difference real?</h2>
+<p>Compare the phyloP scores of E-box positions and CpG-control positions with a Mann–Whitney U test, which doesn't assume the scores are normally distributed:</p>
 <pre class="code" data-run="py"><code>from scipy.stats import mannwhitneyu
 a = pos_df.loc[pos_df.cls=="ebox", "phyloP470"].dropna()
 b = pos_df.loc[pos_df.cls=="cpg_control", "phyloP470"].dropna()
@@ -770,15 +770,15 @@ U, p = mannwhitneyu(a, b, alternative="greater")
 print(f"E-box median {a.median():.2f} vs CpG-control {b.median():.2f};  p = {p:.1e}")</code></pre>
 
 <div class="callout info">
-  <div class="co-t">Checkpoint — the result</div>
-  <p>You should find E-box positions are <b>much more conserved</b> (mean phyloP470 ≈ <b>2.7</b>) than control CpGs (≈ <b>−0.2</b>; the "other" promoter positions sit in between, ≈ 0.9); the Mann–Whitney test gives <b>p &lt; 1e-100</b>. And E-boxes carry <b>about half the variants per base</b> of control CpGs (≈ <b>22</b> vs ≈ <b>43</b> per 1000 bp). Both point the same way: <b>purifying selection</b> has been keeping these switches intact. That is your main finding.</p>
+  <div class="co-t">Checkpoint</div>
+  <p>E-box positions should be <b>much more conserved</b> than control CpGs: a mean phyloP470 of about <b>2.7</b>, against about <b>−0.2</b> for the controls, with the "other" promoter positions in between at about 0.9. The Mann–Whitney test gives <b>p &lt; 1e-100</b>. E-boxes also carry <b>about half as many variants per base</b> as control CpGs (about <b>22</b> against <b>43</b> per 1000 bp). Both results point the same way, to <b>purifying selection</b> keeping these sites intact, and this is your main finding.</p>
 </div>
 
-<h2>Draw it (R, for a publication-style figure)</h2>
-<p>First save the table from Python, so that R can read it (the two share your files):</p>
+<h2>Plot it in R</h2>
+<p>First save the table from Python, so that R can read it (they share your files):</p>
 <pre class="code" data-run="py"><code>pos_df[["cls","phyloP470"]].dropna().to_csv("/home/user/positions.csv", index=False)
 print("wrote /home/user/positions.csv")</code></pre>
-<p>Now make a boxplot in R — a good moment to meet <code>ggplot2</code>. A notebook runs one language, so <b>Add to notebook</b> puts this R code into an R notebook of its own (it opens one for you); the first run downloads R and ggplot2, which takes a minute:</p>
+<p>Now draw a boxplot in R, which is a good chance to try <code>ggplot2</code>. Each notebook runs one language, so <b>Add to notebook</b> puts this R code into a separate R notebook, which it opens for you. The first run downloads R and ggplot2, which takes about a minute:</p>
 <pre class="code" data-run="r"><code>install.packages("ggplot2")
 library(ggplot2)
 d &lt;- read.csv("/home/user/positions.csv")      # written by Python just now
@@ -787,13 +787,13 @@ ggplot(d, aes(cls, phyloP470, fill=cls)) + geom_boxplot(outlier.size=0.3) +
   theme_minimal() + theme(legend.position="none")</code></pre>
 
 <div class="callout concept">
-  <div class="co-t">Be honest about the confounds</div>
-  <p>E-boxes near a TSS could be conserved because <i>that part of the promoter</i> is conserved, not because it is an E-box. Your CpG-control helps, but write down this limitation. A stronger follow-up (Part 5) is to check whether the conserved, variation-depleted E-boxes are also the ones with the highest PWM scores — function predicting constraint.</p>
+  <div class="co-t">Confounding</div>
+  <p>E-boxes near a TSS might be conserved because <i>that part of the promoter</i> is conserved, rather than because they are E-boxes. The CpG control helps, but note this limitation in your write-up. A stronger follow-up (one of the extensions in Part 5) is to check whether the conserved E-boxes with little variation are also the ones with the highest PWM scores, which would mean that the strength of a site predicts how constrained it is.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-shortlist">Start Part 5: your shortlist →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>Conservation (phyloP, Zoonomia)</dt>
 <dd>Pollard KS, Hubisz MJ, Rosenbloom KR, Siepel A (2010) Detection of nonneutral substitution rates on mammalian phylogenies. <i>Genome Research</i> 20: 110–121. <a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">doi:10.1101/gr.097857.109</a></dd>
@@ -805,18 +805,18 @@ ggplot(d, aes(cls, phyloP470, fill=cls)) + geom_boxplot(outlier.size=0.3) +
 </article>
 <article class="help-page" id="h-shortlist" data-title="Your shortlist" data-group="5 · Shortlist and write-up" data-group-page="h-shortlist" data-keys="shortlist candidates ranking 100000 genomes priorities follow-up" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg>Your shortlist of candidates</h1>
-<p class="lede">You now have, for every promoter variant: whether it hits an E-box, how much it changes the motif score, how conserved the position is, and how common it is. Combine these into a ranked shortlist — the variants worth taking into the patient data.</p>
+<p class="lede">For every promoter variant you now know whether it is in an E-box, how much it changes the motif score, how conserved its position is and how common it is. Combine these into a ranked shortlist of the variants most worth following up in patient data.</p>
 
 <h2>What makes a strong candidate</h2>
 <ul>
-  <li><b>It really disrupts the switch</b> — in a canonical E-box, or a large negative PWM score change.</li>
-  <li><b>The position is conserved</b> — high phyloP, so evolution cares about it.</li>
-  <li><b>It is in a relevant gene</b> — a channelopathy or epilepsy gene, ideally your close-focus 21.</li>
-  <li><b>Its frequency is informative</b> — rare variants fit a "damaging" story; a common one that still disrupts a conserved switch is a puzzle worth explaining.</li>
+  <li><b>It clearly disrupts the site</b>: it is in a canonical E-box, or it causes a large drop in PWM score.</li>
+  <li><b>The position is conserved</b>: a high phyloP score suggests evolution has kept it the same.</li>
+  <li><b>It is in a relevant gene</b>: a channelopathy or epilepsy gene, ideally one of your 21 channelopathy genes.</li>
+  <li><b>Its frequency tells you something</b>: rare variants fit the idea that disrupting the site is harmful, while a common variant that disrupts a conserved site is a puzzle worth explaining.</li>
 </ul>
 
 <h2>Build the ranking</h2>
-<p>Join your motif-effect table (<code>eff</code>) to conservation and gene set, score, and sort. One simple, defensible score:</p>
+<p>Join your table of motif effects (<code>eff</code>) to the conservation scores and the gene list, give each variant a score, and sort. This is one simple scoring rule that is easy to justify:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 chan = set(pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")["gene"])
 ph = phylop.reset_index().rename(columns={"phyloP470":"phylop"})
@@ -830,21 +830,21 @@ shortlist[["gene","chrom","pos","ref","alt","AF","delta","phylop","channelopathy
 
 <div class="callout info">
   <div class="co-t">What a good shortlist looks like</div>
-  <p>Your top rows should be disrupting variants in conserved positions of channelopathy or epilepsy genes. In our run, candidates in genes such as <b>CHD4, CUX2, ARFGEF2, TRPM7</b> rose to the top. There is no single right ranking — the point is that your rule is <b>explicit and reproducible</b>, so someone else can see why a variant is on the list.</p>
+  <p>The top rows should be disrupting variants at conserved positions in channelopathy or epilepsy genes. When we ran it, candidates in genes such as <b>CHD4, CUX2, ARFGEF2 and TRPM7</b> came near the top. There is no single right ranking. What matters is that your rule is <b>explicit and reproducible</b>, so that someone else can see why each variant is on the list.</p>
 </div>
 
-<h2>Sanity-check your top hit</h2>
-<p>Take your number-one candidate and look at it three ways: its line in the VCF (frequencies), its position in the genome browser (is it really in a promoter E-box?), and the gene in Ensembl (what does the gene do?).</p>
+<h2>Check your top candidate</h2>
+<p>Look at your top candidate in three ways: its line in the VCF (its frequencies), its position in the genome browser (is it really in a promoter E-box?), and the gene in Ensembl (what does the gene do?).</p>
 <div class="tryrow"><button class="do" type="button" data-bench="igv">Open the genome browser</button> <button class="do" type="button" data-bench="apis">Open Databases (Ensembl)</button></div>
 
 <div class="callout concept">
-  <div class="co-t">What happens next (beyond this page)</div>
-  <p>In the real project these candidates would be tested in the <b>100,000 Genomes Project</b> epilepsy patients, inside Genomics England's secure environment: are disrupting E-box variants seen more often, or alongside more severe disease? That work needs information-governance training and is not done here — but your shortlist, and the reproducible method behind it, is exactly what makes it possible.</p>
+  <div class="co-t">What happens next</div>
+  <p>In the full project, these candidates would be tested in the epilepsy patients of the <b>100,000 Genomes Project</b>, inside Genomics England's secure environment. Are E-box-disrupting variants seen more often in patients, or in people with more severe disease? That work needs information governance training and isn't part of this guide, but it depends on a shortlist like yours, and on a reproducible method for making it.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-writeup">Next: write it up →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>From our group</dt>
 <dd>Ampiah M, Hearn T (2025) Investigation of the relationship between variants in SCN5A E-box motifs and phenotype in the 100KGP Brugada syndrome cohort. <i>European Journal of Human Genetics</i> 33: 227-227.</dd>
@@ -860,90 +860,90 @@ shortlist[["gene","chrom","pos","ref","alt","AF","delta","phylop","channelopathy
 </dl>
 </article>
 <article class="help-page" id="h-writeup" data-title="Write it up" data-group="5 · Shortlist and write-up" data-group-page="h-shortlist" data-keys="report writeup reproducible methods limitations results notes hand in" hidden>
-<h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18M12 8h4M12 12h4"/></svg>Write it up — so someone could repeat it</h1>
-<p class="lede">A result that cannot be repeated is not yet a result. Your write-up should let another person (or you, in six months) reproduce every number. Here is how to structure it, and what to hand in.</p>
+<h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18M12 8h4M12 12h4"/></svg>Writing it up</h1>
+<p class="lede">Your write-up should let someone else, or you in six months' time, reproduce every number in it. This page suggests a structure for the report and lists what to hand in.</p>
 
-<h2>Keep a running record as you go</h2>
-<p>Don't leave this to the end. In your notebook, after each step, write a short Markdown cell: what you did, which file and which command, and the number you got. Those cells <i>are</i> your methods section. The habit — recording how each result was produced — is the single most valued skill in computational biology (and the focus of our group's work on reproducibility).</p>
+<h2>Keep notes as you go</h2>
+<p>Don't leave this to the end. After each step, add a short Markdown cell to your notebook saying what you did, which file and command you used, and the number you got. Together, these notes become your methods section. Recording how every result was produced is one of the most valued habits in computational biology, and reproducibility is a particular interest of our group.</p>
 
 <h2>Structure of the report</h2>
 <table class="table">
-<tr><th>Introduction</th><td>The clock, E-boxes, and why epilepsy/channelopathy genes. One paragraph, citing the reading list.</td></tr>
-<tr><th>Methods</th><td>Gene panels (PanelApp, versions), promoter definition (TSS −1000/+500), E-box definition (exact <code>CACGTG</code> <i>and</i> PWM ≥ 0.85, say which matrix), variant source (1000 Genomes 30×), conservation (phyloP 470-way), and your control (CpG-matched). State every threshold.</td></tr>
-<tr><th>Results</th><td>Enrichment (observed vs expected), the catalogue size, the selection test (figure + statistic), and the shortlist. Report numbers with what they are compared to.</td></tr>
-<tr><th>Discussion</th><td>What it means, the confounds you noted, and what the 100KGP follow-up would test.</td></tr>
+<tr><th>Introduction</th><td>The clock, E-boxes, and why epilepsy and channelopathy genes. One paragraph, citing papers from the reading list.</td></tr>
+<tr><th>Methods</th><td>The gene panels (PanelApp, with versions), how promoters were defined (TSS −1000/+500), how E-boxes were defined (exact <code>CACGTG</code> <i>and</i> PWM ≥ 0.85, naming the matrix), the variant data (1000 Genomes 30×), the conservation scores (phyloP 470-way) and your control (CpG-matched). State every threshold.</td></tr>
+<tr><th>Results</th><td>Enrichment (observed against expected), the size of the catalogue, the selection test (figure and statistic) and the shortlist. Give each number alongside what it is being compared with.</td></tr>
+<tr><th>Discussion</th><td>What the results mean, the confounding factors you noted, and what a follow-up in the 100,000 Genomes Project would test.</td></tr>
 </table>
 
-<h2>State your limitations plainly</h2>
+<h2>Limitations</h2>
 <ul>
-  <li>A PWM match and conservation <b>predict</b> a functional switch; they do not prove CLOCK:BMAL1 binds it in neurons.</li>
-  <li>The conservation signal is partly confounded by promoter position near the TSS (you controlled for CpGs, not for everything).</li>
-  <li>You used the 1000 Genomes reference populations, not patients; frequencies are population frequencies, not disease associations.</li>
-  <li>Your results depend on thresholds (PWM score, promoter window). Showing they hold at a second threshold is worth a sentence.</li>
+  <li>A PWM match and conservation <b>suggest</b> that a site is functional; they don't prove that CLOCK:BMAL1 binds it in neurons.</li>
+  <li>Part of the conservation signal may come from position within the promoter, close to the TSS (you controlled for CpGs, but not for everything).</li>
+  <li>You used reference populations from the 1000 Genomes Project, not patients, so the frequencies are population frequencies, not evidence of disease association.</li>
+  <li>Your results depend on the thresholds you chose (the PWM cut-off and the promoter window). If they still hold at a second threshold, say so.</li>
 </ul>
 
 <h2>What to hand in</h2>
 <ul>
-  <li>Your notebook(s), downloaded as <code>.ipynb</code> (Notebook tab → Download), with the Markdown records.</li>
-  <li>Your output files — <code>eboxes_canonical.bed</code>, <code>catalogue.csv</code>, <code>positions.csv</code>, your figure — via <b>My files</b> (top right) → download all as a <code>.zip</code>.</li>
-  <li>The written report.</li>
+  <li>Your notebooks, downloaded as <code>.ipynb</code> files (Notebook tab → Download), including your Markdown notes.</li>
+  <li>Your output files (<code>eboxes_canonical.bed</code>, <code>catalogue.csv</code>, <code>positions.csv</code> and your figure), downloaded together as a <code>.zip</code> file from <b>My files</b> (top right).</li>
+  <li>Your written report.</li>
 </ul>
 
 <div class="callout warn">
   <div class="co-t">Back up your work</div>
-  <p>Everything is saved only in <b>this browser on this computer</b>. Download your work at the end of every session, and especially before using a shared machine. Nothing is on a server.</p>
+  <p>Your work is saved only in <b>this browser on this computer</b>, not on a server. Download it at the end of every session, especially if you are using a shared computer.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-next">Next: where you could take it →</button></div>
 </article>
 <article class="help-page" id="h-next" data-title="Where next" data-group="5 · Shortlist and write-up" data-group-page="h-shortlist" data-keys="extensions next ideas further tandem e-box expression gtex" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12l-5.5-2L10 8.5z"/><path d="M19 17l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>Where you could take it</h1>
-<p class="lede">If the core project goes well and you want more, here are natural extensions — each reuses the skills you already have.</p>
+<p class="lede">If the main project goes well and you want to do more, here are some possible extensions. Each one uses skills you already have.</p>
 
 <ul>
-  <li><b>Tandem E-boxes.</b> The strongest circadian switches are often <i>two</i> E-boxes about 6–7 bases apart. Search your E-box list for pairs with that spacing — are the tandem ones even more conserved?</li>
-  <li><b>Does function predict constraint?</b> Plot PWM score against phyloP for every E-box. If high-scoring sites are the most conserved, that is strong evidence they are real.</li>
-  <li><b>Other non-canonical E-boxes.</b> You focused on <code>CACGTG</code> and the PWM. Try the near-relatives <code>CACGTT</code> and <code>CATGTG</code> — enriched? conserved?</li>
-  <li><b>Expression timing.</b> Cross your genes against a database of rhythmically expressed human genes (Ruben et al.) — do the genes with conserved E-boxes tend to be the rhythmic ones?</li>
-  <li><b>A different gene set.</b> The whole pipeline is a function of the gene list. Swap in a cardiac panel (closer to the group's SCN5A work) or a neurodevelopmental one and compare.</li>
-  <li><b>gnomAD.</b> Check your top variants in gnomAD v4 (over 800,000 people, about 76,000 of them with whole genomes) for a much finer frequency and any constraint signal.</li>
+  <li><b>Tandem E-boxes.</b> The strongest circadian control sites are often <i>two</i> E-boxes about 6–7 bases apart. Search your E-box list for pairs with that spacing. Are the tandem ones even more conserved?</li>
+  <li><b>Does site strength predict constraint?</b> Plot PWM score against phyloP for every E-box. If the highest-scoring sites are also the most conserved, that is good evidence that they are functional.</li>
+  <li><b>Other non-canonical E-boxes.</b> You concentrated on <code>CACGTG</code> and the PWM. Try the related sequences <code>CACGTT</code> and <code>CATGTG</code>. Are they enriched, or conserved?</li>
+  <li><b>Timing of expression.</b> Compare your genes with a database of rhythmically expressed human genes (Ruben et al.). Do the genes with conserved E-boxes tend to be the rhythmic ones?</li>
+  <li><b>A different gene set.</b> The whole analysis starts from the gene list, so you can swap in a cardiac panel (closer to the group's work on <i>SCN5A</i>) or a neurodevelopmental one and compare.</li>
+  <li><b>gnomAD.</b> Look up your top variants in gnomAD v4 (over 800,000 people, about 76,000 of them with whole genomes) for much more precise frequencies and any sign of constraint.</li>
 </ul>
 
 <div class="callout concept">
-  <div class="co-t">The transferable point</div>
-  <p>Every extension is the same shape: define regions, find a motif, overlay variation, test against a control. You now know that shape — it is a large part of regulatory genomics. The specific question (clocks in brain genes) is new; the method is yours to reuse.</p>
+  <div class="co-t">The general method</div>
+  <p>All of these extensions follow the same pattern: define regions, find a motif, overlay variation and test against a control. That pattern covers a large part of regulatory genomics. The question here, about the clock in brain genes, is new, but the method works for many others.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-reading">The reading list →</button></div>
 </article>
 <article class="help-page" id="h-tools" data-title="The tools" data-group="Reference" data-group-page="h-tools" data-keys="tools programs samtools bcftools bedtools seqtk python r versions help" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.8-.6-.6-2.8z"/></svg>The tools, and getting help</h1>
-<p class="lede">A short reference to the programs this project uses. They are the real tools, compiled to run in your browser (<a href="https://doi.org/10.1093/gigascience/giab008" target="_blank" rel="noopener">Danecek et al. 2021</a>; <a href="https://doi.org/10.1093/bioinformatics/btq033" target="_blank" rel="noopener">Quinlan and Hall 2010</a>; <a href="https://doi.org/10.1093/bioinformatics/btac830" target="_blank" rel="noopener">Robinson et al. 2023</a>; <a href="https://biowasm.com" target="_blank" rel="noopener">Biowasm</a>; <a href="https://pyodide.org" target="_blank" rel="noopener">Pyodide</a>; <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a>); your commands really run on real files, on this computer.</p>
+<p class="lede">A short reference to the programs used in this project. They are the standard tools, compiled to run in your browser (<a href="https://doi.org/10.1093/gigascience/giab008" target="_blank" rel="noopener">Danecek et al. 2021</a>; <a href="https://doi.org/10.1093/bioinformatics/btq033" target="_blank" rel="noopener">Quinlan and Hall 2010</a>; <a href="https://doi.org/10.1093/bioinformatics/btac830" target="_blank" rel="noopener">Robinson et al. 2023</a>; <a href="https://biowasm.com" target="_blank" rel="noopener">Biowasm</a>; <a href="https://pyodide.org" target="_blank" rel="noopener">Pyodide</a>; <a href="https://docs.r-wasm.org/webr/latest/" target="_blank" rel="noopener">webR</a>), so the commands you type run on the actual data files, on your own computer.</p>
 
 <table class="table">
-<tr><th><code>samtools faidx</code></th><td>Pull a named sequence (a promoter) out of a FASTA file.</td></tr>
-<tr><th><code>bcftools</code></th><td>Read, filter and query VCF variant files (<code>view</code>, <code>query</code>).</td></tr>
-<tr><th><code>bedtools intersect</code></th><td>Find overlaps between two sets of genomic regions (variants × E-boxes).</td></tr>
+<tr><th><code>samtools faidx</code></th><td>Pulls a named sequence (here, a promoter) out of a FASTA file.</td></tr>
+<tr><th><code>bcftools</code></th><td>Reads, filters and queries VCF variant files (<code>view</code>, <code>query</code>).</td></tr>
+<tr><th><code>bedtools intersect</code></th><td>Finds overlaps between two sets of genomic regions (here, variants and E-boxes).</td></tr>
 <tr><th><code>seqtk</code></th><td>Quick sequence statistics, such as GC content (<code>seqtk comp</code>).</td></tr>
-<tr><th>Python</th><td>In the Notebook tab: <code>pandas</code> for tables, <code>matplotlib</code> for plots, <code>scipy</code> for statistics. Your motif scanning and the catalogue live here.</td></tr>
-<tr><th>R</th><td>Also in the Notebook tab: <code>ggplot2</code> for publication-style figures and built-in statistical tests.</td></tr>
-<tr><th>Databases</th><td>Live Ensembl / NCBI lookups to check a gene or variant.</td></tr>
-<tr><th>Genome browser</th><td>IGV: your variants, E-boxes and conservation along the genome (<a href="#h-genome">The genome browser</a>).</td></tr>
+<tr><th>Python</th><td>In the Notebook tab: <code>pandas</code> for tables, <code>matplotlib</code> for plots and <code>scipy</code> for statistics. Most of the motif scanning and the catalogue are done in Python.</td></tr>
+<tr><th>R</th><td>Also in the Notebook tab: <code>ggplot2</code> for publication-quality figures, and R's built-in statistical tests.</td></tr>
+<tr><th>Databases</th><td>Live Ensembl and NCBI searches, for checking a gene or a variant.</td></tr>
+<tr><th>Genome browser</th><td>IGV, for viewing your variants, E-boxes and conservation along the genome (see <a href="#h-genome">The genome browser</a>).</td></tr>
 </table>
 
-<h2>Getting help on a program</h2>
-<p>In the terminal, <code>help</code> lists every program, and most take <code>--help</code> (bedtools prints its help as if it were an error, so <code>2&gt;&amp;1</code> sends it through <code>head</code> with the rest):</p>
+<h2>Getting help with a program</h2>
+<p>In the terminal, <code>help</code> lists every program, and most programs accept <code>--help</code>. (bedtools prints its help as if it were an error message, so <code>2&gt;&amp;1</code> is needed to pass it through <code>head</code> with everything else.)</p>
 <pre class="code" data-run="term"><code>help
 bcftools --help
 bedtools intersect --help 2&gt;&amp;1 | head -40</code></pre>
-<p>Record the version you used — it belongs in your methods:</p>
+<p>Record the versions you used, because they belong in your methods:</p>
 <pre class="code" data-run="term"><code>samtools --version | head -1
 bcftools --version | head -1
 bedtools --version</code></pre>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-genome">Next: the genome browser →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>, and the versions of the programs in <a href="#h-tools">The tools</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>. <a href="#h-tools">The tools</a> shows how to find the versions of the programs to cite with them.</p>
 <dl class="cite-list">
 <dt>Software in the workbench</dt>
 <dd>Danecek P, Bonfield JK, Liddle J, et al. (2021) Twelve years of SAMtools and BCFtools. <i>GigaScience</i> 10: giab008. <a href="https://doi.org/10.1093/gigascience/giab008" target="_blank" rel="noopener">doi:10.1093/gigascience/giab008</a></dd>
@@ -956,63 +956,63 @@ bedtools --version</code></pre>
 </article>
 <article class="help-page" id="h-genome" data-title="The genome browser" data-group="Reference" data-group-page="h-tools" data-keys="igv genome browser track bed vcf phylop hg38 grch38 locus conservation image" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v4M14 10v4M11 16v4"/></svg>The genome browser</h1>
-<p class="lede">The <b>Genome browser</b> tab is IGV (<a href="https://doi.org/10.1093/bioinformatics/btac830" target="_blank" rel="noopener">Robinson et al. 2023</a>), showing the human reference genome <b>GRCh38 (hg38)</b> — the same build as all the project data. The genome comes from the IGV team's servers, so this tab needs the internet.</p>
+<p class="lede">The <b>Genome browser</b> tab runs IGV (<a href="https://doi.org/10.1093/bioinformatics/btac830" target="_blank" rel="noopener">Robinson et al. 2023</a>) with the human reference genome <b>GRCh38 (hg38)</b>, the same build as all the project data. The genome is loaded from the IGV team's servers, so this tab needs an internet connection.</p>
 
 <h2>What you see</h2>
-<p>Above the genome's own gene track (<i>Refseq All</i>, at the bottom), three tracks of this project are shown:</p>
+<p>Three project tracks are shown above the genome's own gene track (<i>Refseq All</i>, at the bottom):</p>
 <table class="table">
-<tr><th>Project promoters (TSS −1000/+500)</th><td>The 641 promoter windows, from <code>/data/examples/genes/promoters.bed</code>. Click a box for its gene.</td></tr>
-<tr><th>1000 Genomes promoter SNVs</th><td>Every promoter variant, from <code>/data/examples/variants/promoter_variants.vcf.gz</code>. Click a variant for its allele frequencies (<code>AF</code>, <code>AF_EUR</code> …).</td></tr>
-<tr><th>phyloP 470-way (mammals)</th><td>Conservation at every base: bars above the line mark positions held still across mammals, bars below it fast-changing ones. It is read, a piece at a time, from UCSC's copy of the genome-wide file — the same scores as <code>conservation/phylop_promoters.csv.gz</code>.</td></tr>
+<tr><th>Project promoters (TSS −1000/+500)</th><td>The 641 promoter windows, from <code>/data/examples/genes/promoters.bed</code>. Click a box to see its gene.</td></tr>
+<tr><th>1000 Genomes promoter SNVs</th><td>Every promoter variant, from <code>/data/examples/variants/promoter_variants.vcf.gz</code>. Click a variant to see its allele frequencies (<code>AF</code>, <code>AF_EUR</code> and so on).</td></tr>
+<tr><th>phyloP 470-way (mammals)</th><td>Conservation at every base. Bars above the line are positions that have changed little across mammals; bars below it are positions that have changed quickly. The scores are read a section at a time from UCSC's copy of the genome-wide file, and are the same as those in <code>conservation/phylop_promoters.csv.gz</code>.</td></tr>
 </table>
 
-<h2>Go somewhere</h2>
-<p>Type a gene (<code>SCN1A</code>) or a position (<code>chr2:166,127,520-166,129,020</code>) in the box at the top of the browser and press Enter. Drag sideways to move, and use + and − to zoom: close in, the letters of the sequence appear. For example:</p>
+<h2>Moving around</h2>
+<p>Type a gene (<code>SCN1A</code>) or a position (<code>chr2:166,127,520-166,129,020</code>) into the box at the top of the browser and press Enter. Drag sideways to move along the genome, and use + and − to zoom. When you zoom in far enough, the individual bases appear. For example:</p>
 <div class="tryrow"><button class="do" type="button" data-igv="chr2:166127220-166129320">The SCN1A promoter</button> <button class="do" type="button" data-igv="chr17:75979355-75979560">An E-box in ACOX1</button></div>
 
 <h2>Add your own tracks</h2>
-<p>Files you make — your E-boxes, your catalogue as a BED file — can be shown as tracks too. In the Genome browser tab, <b>Add my files…</b> lists the BED, VCF and bedGraph files in your home folder; or use the button below once you have made <code>eboxes_canonical.bed</code> in <a href="#h-ebox-find">Find the E-boxes</a>. Their chromosome names must be written as here (<code>chr2</code>, not <code>2</code>) and their positions must be GRCh38.</p>
+<p>Files you have made, such as your E-boxes or your catalogue saved as a BED file, can be shown as tracks too. In the Genome browser tab, <b>Add my files…</b> lists the BED, VCF and bedGraph files in your home folder. Once you have made <code>eboxes_canonical.bed</code> in <a href="#h-ebox-find">Find the E-boxes</a>, you can also use the button below. Chromosome names must be written the same way as here (<code>chr2</code>, not <code>2</code>), and positions must be on GRCh38.</p>
 <div class="tryrow"><button class="do" type="button" data-igv-track="~/eboxes_canonical.bed">Show my E-boxes in the genome browser</button></div>
 
-<h2>Keep a picture</h2>
-<p><b>Save image</b> downloads the current view as a PNG file — useful for your report (say which region it shows).</p>
+<h2>Saving a picture</h2>
+<p><b>Save image</b> downloads the current view as a PNG file, which is useful for your report (say which region it shows).</p>
 
 <div class="callout warn">
-  <div class="co-t">If it does not start</div>
-  <p>The genome and the conservation track come over the internet. If the tab says the genome browser could not start, check your connection and press <b>Try again</b>, or reload the page. The rest of the workbench works without it.</p>
+  <div class="co-t">If it doesn't load</div>
+  <p>The genome and the conservation track are loaded over the internet. If the tab says the genome browser could not start, check your connection and press <b>Try again</b>, or reload the page. The rest of the workbench works without it.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-data">Next: the project data →</button></div>
 </article>
 <article class="help-page" id="h-data" data-title="The project data" data-group="Reference" data-group-page="h-tools" data-keys="data files reference promoters variants conservation motif provenance" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>The project data</h1>
-<p class="lede">Everything you need is in <code>/data/examples</code>, read-only. It was prepared from public sources (listed below) so you never have to download anything large. Here is each file.</p>
+<p class="lede">Everything you need is in <code>/data/examples</code>, which is read-only. It was prepared from the public sources listed below, so you never need to download anything large. These are the files:</p>
 
 <table class="table">
-<tr><th><code>genes/brain_channelopathy.tsv</code></th><td>21 green genes of the PanelApp "Brain channelopathy" panel, with Ensembl ID, chromosome, strand, TSS and promoter window.</td></tr>
-<tr><th><code>genes/epilepsy_all.tsv</code></th><td>All 641 genes of the project: the 632 green genes of "Early-onset or syndromic epilepsy" together with the 21 channelopathy genes, each once, without one mitochondrial gene; the <code>panel</code> column says which list each belongs to.</td></tr>
+<tr><th><code>genes/brain_channelopathy.tsv</code></th><td>The 21 green genes of the PanelApp "Brain channelopathy" panel, with Ensembl ID, chromosome, strand, TSS and promoter window.</td></tr>
+<tr><th><code>genes/epilepsy_all.tsv</code></th><td>All 641 genes in the project: the 632 green genes of the "Early-onset or syndromic epilepsy" panel plus the 21 channelopathy genes, each listed once, without one mitochondrial gene. The <code>panel</code> column says which list each gene comes from.</td></tr>
 <tr><th><code>genes/promoters.bed</code></th><td>The 641 promoter windows (TSS −1000/+500, 1501 bases each), as a BED file on GRCh38.</td></tr>
-<tr><th><code>reference/promoters.fa</code> (+ <code>.fai</code>)</th><td>The DNA of every promoter (forward strand). Each header records the gene, its chromosome:start-end and strand.</td></tr>
-<tr><th><code>variants/promoter_variants.vcf.gz</code> (+ <code>.tbi</code>)</th><td>Every single-letter variant in the promoters, from 1000 Genomes 30×, with overall and per-super-population allele frequencies in <code>INFO</code>.</td></tr>
-<tr><th><code>conservation/phylop_promoters.csv.gz</code></th><td>phyloP conservation (470-way mammalian and 100-way vertebrate) for every promoter base.</td></tr>
-<tr><th><code>motif/ARNTL_MA0603.2.jaspar</code></th><td>The BMAL1 (Arntl) binding matrix from JASPAR, for the PWM scan.</td></tr>
+<tr><th><code>reference/promoters.fa</code> (+ <code>.fai</code>)</th><td>The DNA sequence of every promoter (forward strand). Each header gives the gene, its chromosome:start-end, its strand and its TSS.</td></tr>
+<tr><th><code>variants/promoter_variants.vcf.gz</code> (+ <code>.tbi</code>)</th><td>Every single-base variant in the promoters, from the 1000 Genomes 30× data, with overall and super-population allele frequencies in <code>INFO</code>.</td></tr>
+<tr><th><code>conservation/phylop_promoters.csv.gz</code></th><td>phyloP conservation scores (470-way mammalian and 100-way vertebrate) for every promoter base.</td></tr>
+<tr><th><code>motif/ARNTL_MA0603.2.jaspar</code></th><td>The BMAL1 (Arntl) binding matrix from JASPAR, used for the PWM scan.</td></tr>
 </table>
 
 <h2>GRCh38 throughout</h2>
-<p>Every coordinate here is on the <b>GRCh38</b> human reference. If you ever bring in outside data, check it is GRCh38 too — mixing genome builds is a classic and silent source of wrong answers.</p>
+<p>All the coordinates here are on the <b>GRCh38</b> human reference genome. If you bring in data from elsewhere, check that it is on GRCh38 too. Mixing genome builds is a common cause of wrong answers, and nothing will warn you when it happens.</p>
 
-<h2>Where it came from</h2>
+<h2>Sources</h2>
 <ul>
-  <li>Gene panels — Genomics England PanelApp (<a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">Martin et al. 2019</a>).</li>
-  <li>Gene models, promoter coordinates and sequence — Ensembl / GENCODE (<a href="https://doi.org/10.1093/nar/gkaa1087" target="_blank" rel="noopener">Frankish et al. 2021</a>; <a href="https://doi.org/10.1186/s13059-016-0974-4" target="_blank" rel="noopener">McLaren et al. 2016</a>).</li>
-  <li>Variants — the 1000 Genomes Project 30× release, 3,202 genomes (<a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">1000 Genomes Project 2015</a>; <a href="https://doi.org/10.1016/j.cell.2022.08.004" target="_blank" rel="noopener">Byrska-Bishop et al. 2022</a>).</li>
-  <li>Conservation — phyloP, Zoonomia 470-way (<a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">Pollard et al. 2010</a>; <a href="https://doi.org/10.1126/science.abn3943" target="_blank" rel="noopener">Christmas et al. 2023</a>).</li>
-  <li>Motif — JASPAR (<a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">Castro-Mondragon et al. 2022</a>).</li>
+  <li>Gene panels: Genomics England PanelApp (<a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">Martin et al. 2019</a>).</li>
+  <li>Gene models, promoter coordinates and sequence: Ensembl/GENCODE (<a href="https://doi.org/10.1093/nar/gkaa1087" target="_blank" rel="noopener">Frankish et al. 2021</a>; <a href="https://doi.org/10.1186/s13059-016-0974-4" target="_blank" rel="noopener">McLaren et al. 2016</a>).</li>
+  <li>Variants: the 1000 Genomes Project 30× release, 3,202 genomes (<a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">1000 Genomes Project 2015</a>; <a href="https://doi.org/10.1016/j.cell.2022.08.004" target="_blank" rel="noopener">Byrska-Bishop et al. 2022</a>).</li>
+  <li>Conservation: phyloP, Zoonomia 470-way (<a href="https://doi.org/10.1101/gr.097857.109" target="_blank" rel="noopener">Pollard et al. 2010</a>; <a href="https://doi.org/10.1126/science.abn3943" target="_blank" rel="noopener">Christmas et al. 2023</a>).</li>
+  <li>Motif: JASPAR (<a href="https://doi.org/10.1093/nar/gkab1113" target="_blank" rel="noopener">Castro-Mondragon et al. 2022</a>).</li>
 </ul>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-reading">Next: the reading list →</button></div>
 <h2 data-anchor="cite">References</h2>
-<p>The papers behind this page – cite the ones you use in your report (all of them are in the <a href="#h-reading">Reading list</a>):</p>
+<p>The papers behind this page. Cite the ones you use in your report; they are all in the <a href="#h-reading">Reading list</a>.</p>
 <dl class="cite-list">
 <dt>Gene panels (PanelApp)</dt>
 <dd>Martin AR, Williams E, Foulger RE, et al. (2019) PanelApp crowdsources expert knowledge to establish consensus diagnostic gene panels. <i>Nature Genetics</i> 51: 1560–1565. <a href="https://doi.org/10.1038/s41588-019-0528-2" target="_blank" rel="noopener">doi:10.1038/s41588-019-0528-2</a></dd>
@@ -1031,10 +1031,10 @@ bedtools --version</code></pre>
 </article>
 <article class="help-page" id="h-reading" data-title="Reading list" data-group="Reference" data-group-page="h-tools" data-keys="reading papers references bibliography further" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg>Reading list</h1>
-<p class="lede">Start with one or two from "The clock and E-boxes" and the group's own work, then read the rest as each part of the project needs them. Each reference that is online links to it (its DOI).</p>
+<p class="lede">Start with one or two papers from "The clock and E-boxes" and from our group's work, then read the others as you reach the parts of the project that need them. Each paper that is available online links to its DOI.</p>
 
 <h2>The clock and E-boxes</h2>
-<p>How CLOCK:BMAL1 times genes through E-boxes, from reviews to the genome-wide binding maps.</p>
+<p>How CLOCK:BMAL1 controls the timing of genes through E-boxes, from reviews to genome-wide binding maps.</p>
 <dl class="cite-list">
 <dt>The mammalian clock and E-boxes</dt>
 <dd>Takahashi JS (2017) Transcriptional architecture of the mammalian circadian clock. <i>Nature Reviews Genetics</i> 18: 164–179. <a href="https://doi.org/10.1038/nrg.2016.150" target="_blank" rel="noopener">doi:10.1038/nrg.2016.150</a></dd>
@@ -1054,7 +1054,7 @@ bedtools --version</code></pre>
 </dl>
 
 <h2>From our group</h2>
-<p>The E-box work in <i>SCN5A</i> and cardiac arrhythmia that this project grew out of, and related chronomic-medicine papers.</p>
+<p>The work on E-boxes in <i>SCN5A</i> and cardiac arrhythmia that this project grew out of, and related papers on chronomic medicine.</p>
 <dl class="cite-list">
 <dt>From our group</dt>
 <dd>Ampiah M, Hearn T (2025) Investigation of the relationship between variants in SCN5A E-box motifs and phenotype in the 100KGP Brugada syndrome cohort. <i>European Journal of Human Genetics</i> 33: 227-227.</dd>
@@ -1065,7 +1065,7 @@ bedtools --version</code></pre>
 </dl>
 
 <h2>Data and methods</h2>
-<p>The 1000 Genomes Project, gene panels, conservation scores, and the motif database — cite the ones you use in your methods.</p>
+<p>The 1000 Genomes Project, the gene panels, the conservation scores and the motif database. Cite the ones you use in your methods.</p>
 <dl class="cite-list">
 <dt>1000 Genomes data</dt>
 <dd>The 1000 Genomes Project Consortium (2015) A global reference for human genetic variation. <i>Nature</i> 526: 68–74. <a href="https://doi.org/10.1038/nature15393" target="_blank" rel="noopener">doi:10.1038/nature15393</a></dd>
@@ -1085,7 +1085,7 @@ bedtools --version</code></pre>
 </dl>
 
 <h2>The software</h2>
-<p>The programs you run, and what makes them run in a browser — with the versions you used (<a href="#h-tools">The tools</a> shows how to find them).</p>
+<p>The programs you run, and the projects that make them run in a browser. Cite them with the versions you used (<a href="#h-tools">The tools</a> shows how to find them).</p>
 <dl class="cite-list">
 <dt>Software in the workbench</dt>
 <dd>Danecek P, Bonfield JK, Liddle J, et al. (2021) Twelve years of SAMtools and BCFtools. <i>GigaScience</i> 10: giab008. <a href="https://doi.org/10.1093/gigascience/giab008" target="_blank" rel="noopener">doi:10.1093/gigascience/giab008</a></dd>
@@ -1100,58 +1100,58 @@ bedtools --version</code></pre>
 </article>
 <article class="help-page" id="h-ai" data-title="Using the AI assistant" data-group="Reference" data-group-page="h-tools" data-keys="ai assistant chatgpt gemini claude help key responsible" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>Using the AI assistant</h1>
-<p class="lede">The <b>AI</b> tab is optional. Used well, it is a patient tutor that never tires of your questions. Used badly, it writes code you don't understand and sometimes invent facts. Here is how to get the good version.</p>
+<p class="lede">The <b>AI</b> tab is optional. It can be a useful tutor, explaining an error or a piece of code as many times as you need. But it can also write code you don't understand, and it sometimes makes things up, so use it with care.</p>
 
 <h2>What it is good for</h2>
 <ul>
-  <li><b>Explaining an error.</b> Paste the red error message and ask what it means.</li>
-  <li><b>Explaining a line of code</b> in this guide you don't follow.</li>
+  <li><b>Explaining an error.</b> Paste in the red error message and ask what it means.</li>
+  <li><b>Explaining a line of code</b> in this guide that you don't follow.</li>
   <li><b>Translating between Python and R</b>, or suggesting a plot.</li>
-  <li><b>Unsticking you</b> when you know <i>what</i> you want but not the command.</li>
+  <li><b>Getting unstuck</b> when you know <i>what</i> you want to do but not which command does it.</li>
 </ul>
 
-<h2>The rules (again, because they matter)</h2>
+<h2>The rules</h2>
 <div class="callout warn">
   <ol>
-    <li><b>No personal or patient data</b> in the AI tab. This project is public data only — fine.</li>
-    <li><b>You own the result.</b> If the AI gives you a number or a conclusion, do not report it until you have produced it yourself from the data and can point to the command.</li>
-    <li><b>Read every line it writes</b> and run it yourself. If you can't explain what a line does, ask it to explain, or don't use it.</li>
-    <li><b>A key is a password.</b> You connect your own model with an API key; it stays in this browser tab only. Don't share it.</li>
+    <li><b>Never put personal or patient data into the AI tab.</b> This project uses only public data, so that shouldn't come up.</li>
+    <li><b>You are responsible for the result.</b> If the AI gives you a number or a conclusion, don't report it until you have produced it yourself from the data and can point to the command you used.</li>
+    <li><b>Read every line of code it writes</b>, and run it yourself. If you can't explain what a line does, ask it to explain, or don't use it.</li>
+    <li><b>Treat your API key like a password.</b> You connect your own AI model with an API key, which is kept only in this browser tab. Don't share it.</li>
   </ol>
 </div>
 
 <div class="callout concept">
   <div class="co-t">A good habit</div>
-  <p>When the AI writes code, ask it a follow-up: "what would break this?" or "what am I assuming here?". The goal of this project is that <i>you</i> can do regulatory genomics — the assistant is there to help you learn it, not to do it instead of you.</p>
+  <p>When the AI writes code for you, ask a follow-up question such as "what could make this go wrong?" or "what am I assuming here?". The aim of this project is for <i>you</i> to learn to do regulatory genomics. The assistant is there to help you learn, not to do the work for you.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-glossary">Next: glossary →</button></div>
 </article>
 <article class="help-page" id="h-glossary" data-title="Glossary" data-group="Reference" data-group-page="h-tools" data-keys="glossary definitions terms vocabulary jargon" hidden>
 <h1><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg>Glossary</h1>
-<p class="lede">Plain-language definitions of the words this project uses. Search the guide (top left) to jump to where each one is used.</p>
+<p class="lede">Plain-language definitions of the terms used in this project. You can search the guide (top left) to find where each one comes up.</p>
 
 <dl class="cite-list">
-  <dt>Allele frequency (AF)</dt><dd>The fraction of chromosomes in a group that carry a particular variant letter. Low = rare, high = common.</dd>
-  <dt>BED file</dt><dd>A plain-text list of genomic regions (chromosome, start, end). Counts from 0; the end is one past the last base.</dd>
-  <dt>BMAL1 / CLOCK</dt><dd>The two proteins that join and switch on clock-controlled genes by binding E-boxes.</dd>
-  <dt>Channelopathy</dt><dd>A disease caused by a faulty ion channel — many epilepsies are channelopathies.</dd>
-  <dt>Conservation</dt><dd>How little a DNA position has changed across species. Measured here by phyloP; high = constrained.</dd>
-  <dt>CpG</dt><dd>A C followed by a G. CpGs mutate faster than other DNA and behave specially — which is why they need a fair control.</dd>
-  <dt>E-box</dt><dd>The DNA switch CLOCK:BMAL1 binds. The canonical one is the palindrome <code>CACGTG</code>.</dd>
-  <dt>Enrichment</dt><dd>Finding something more often than a fair "by chance" expectation would predict.</dd>
-  <dt>FASTA</dt><dd>A text format for DNA/protein sequence: a <code>&gt;</code> header line, then the letters.</dd>
-  <dt>GRCh38</dt><dd>The current human reference genome build. All coordinates here are GRCh38.</dd>
-  <dt>phyloP</dt><dd>A per-position conservation score from comparing many species; positive = conserved, negative = fast-changing.</dd>
-  <dt>Promoter</dt><dd>The DNA just before a gene's start where its switches (including E-boxes) sit.</dd>
-  <dt>Purifying selection</dt><dd>Evolution removing harmful changes, leaving important positions conserved and depleted of variation.</dd>
-  <dt>PWM (position weight matrix)</dt><dd>A flexible description of what sequence a protein binds, scored from 0 to 1, that allows near-misses.</dd>
-  <dt>SNV</dt><dd>A single-nucleotide variant: one DNA letter changed.</dd>
-  <dt>TSS</dt><dd>Transcription start site: where a gene begins to be copied into RNA.</dd>
-  <dt>VCF</dt><dd>The standard file format for variants: position, reference letter, alternative letter, and information fields.</dd>
+  <dt>Allele frequency (AF)</dt><dd>The fraction of chromosomes in a group that carry a particular variant. Low means rare and high means common.</dd>
+  <dt>BED file</dt><dd>A plain-text list of genomic regions (chromosome, start, end). Positions are counted from 0, and the end is one past the last base.</dd>
+  <dt>BMAL1 / CLOCK</dt><dd>The two proteins that pair up and switch on clock-controlled genes by binding E-boxes.</dd>
+  <dt>Channelopathy</dt><dd>A disease caused by a faulty ion channel. Many epilepsies are channelopathies.</dd>
+  <dt>Conservation</dt><dd>How little a DNA position has changed across species. Measured here with phyloP; a high score means the position is constrained.</dd>
+  <dt>CpG</dt><dd>A C followed by a G. CpGs mutate faster than other DNA and behave differently in other ways too, which is why comparisons need a CpG-matched control.</dd>
+  <dt>E-box</dt><dd>The DNA sequence that CLOCK:BMAL1 binds. The canonical E-box is the palindrome <code>CACGTG</code>.</dd>
+  <dt>Enrichment</dt><dd>Finding something more often than a fair estimate of chance would predict.</dd>
+  <dt>FASTA</dt><dd>A text format for DNA or protein sequences: a <code>&gt;</code> header line, followed by the sequence.</dd>
+  <dt>GRCh38</dt><dd>The current human reference genome build. All the coordinates in this project are on GRCh38.</dd>
+  <dt>phyloP</dt><dd>A conservation score for each position, from comparing many species. Positive means conserved; negative means changing quickly.</dd>
+  <dt>Promoter</dt><dd>The stretch of DNA at the start of a gene that holds the sequences controlling it, including E-boxes.</dd>
+  <dt>Purifying selection</dt><dd>Evolution removing harmful changes, so that important positions stay conserved and carry little variation.</dd>
+  <dt>PWM (position weight matrix)</dt><dd>A flexible description of the sequences a protein binds, which allows near-matches as well as perfect ones. Here, sites are scored from 0 to 1.</dd>
+  <dt>SNV</dt><dd>A single-nucleotide variant: a change to one base of DNA.</dd>
+  <dt>TSS</dt><dd>Transcription start site: where a gene starts to be copied into RNA.</dd>
+  <dt>VCF</dt><dd>The standard file format for variants: position, reference base, alternative base and information fields.</dd>
 </dl>
 
-<div class="tryrow"><button class="do" type="button" data-goto="h-home">Back to the project guide home →</button></div>
+<div class="tryrow"><button class="do" type="button" data-goto="h-home">Back to the start of the guide →</button></div>
 </article>
       </div>
     </aside>

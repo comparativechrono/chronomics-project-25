@@ -1,19 +1,19 @@
-<!-- id: h-variants | title: Human variation | group: 3 · Human variation | summary: VCF, the 1000 Genomes Project, and allele frequencies | keys: vcf variant allele frequency 1000 genomes population bcftools af -->
+<!-- id: h-variants | title: Human variation | group: 3 · Human variation | summary: VCF, the 1000 Genomes Project and allele frequencies | keys: vcf variant allele frequency 1000 genomes population bcftools af -->
 <h1><!--ICON:dna-->Human variation in the promoters</h1>
-<p class="lede">Now bring in real people. The 1000 Genomes Project sequenced the genomes of thousands of individuals from around the world. You have every variant that falls in your promoters — and you can ask how common each one is, and where.</p>
+<p class="lede">The 1000 Genomes Project sequenced the genomes of thousands of people from around the world. You have every variant it found in your promoters, so you can ask how common each one is, and in which populations.</p>
 
 <h2>The data</h2>
-<p>We pulled every single-letter variant (SNV) in the 641 promoters from the <b>1000 Genomes 30× data</b> — 3,202 genomes from 26 populations (<!--CITE-SHORT: data1000g-->) — into one small file:</p>
+<p>We extracted every single-base variant (SNV) in the 641 promoters from the <b>1000 Genomes 30× data</b>, which covers 3,202 genomes from 26 populations (<!--CITE-SHORT: data1000g-->), and saved them in one small file:</p>
 <pre class="code" data-run="term"><code>zcat /data/examples/variants/promoter_variants.vcf.gz | grep -v "^##" | head -5</code></pre>
-<p>This is a <b>VCF file</b>, the standard format for variants. Each line is one variant: its chromosome and position, the reference letter (<code>REF</code>), the alternative letter (<code>ALT</code>), and an <code>INFO</code> field. We put the useful numbers in <code>INFO</code>: <code>GENE</code>, the overall allele frequency <code>AF</code>, and the frequency in each of the five super-populations (<code>AF_AFR</code>, <code>AF_AMR</code>, <code>AF_EAS</code>, <code>AF_EUR</code>, <code>AF_SAS</code>).</p>
+<p>This is a <b>VCF file</b>, the standard format for variants. Each line is one variant, with its chromosome and position, the reference base (<code>REF</code>), the alternative base (<code>ALT</code>) and an <code>INFO</code> field. We have put the useful numbers in <code>INFO</code>: <code>GENE</code>, the overall allele frequency <code>AF</code>, and the frequency in each of the five super-populations (<code>AF_AFR</code>, <code>AF_AMR</code>, <code>AF_EAS</code>, <code>AF_EUR</code> and <code>AF_SAS</code>).</p>
 
 <div class="callout concept">
-  <div class="co-t">Allele frequency, and why populations matter</div>
-  <p><b>Allele frequency</b> is the fraction of chromosomes in a group that carry the alternative letter. <code>AF=0.5</code> means half; <code>AF=0.0003</code> means it was seen on just a couple of chromosomes. A variant can be common in one population and absent in another — which is why a single global number can mislead, and why the file keeps each super-population separately.</p>
+  <div class="co-t">Allele frequency</div>
+  <p>The <b>allele frequency</b> is the fraction of chromosomes in a group that carry the alternative base. <code>AF=0.5</code> means half of them; <code>AF=0.0003</code> means it was seen on only a couple of chromosomes. A variant can be common in one population and absent from another, so a single global figure can be misleading. That is why the file keeps the super-populations separate.</p>
 </div>
 
 <h2>Count and summarise with bcftools</h2>
-<p><code>bcftools</code> is the standard tool for VCFs. How many variants are there, and how many are rare?</p>
+<p><code>bcftools</code> is the standard tool for working with VCF files. How many variants are there, and how many are rare?</p>
 <pre class="code" data-run="term"><code>bcftools view -H /data/examples/variants/promoter_variants.vcf.gz | wc -l
 # how many are rare (overall AF &lt; 0.5%)?
 bcftools query -f '%INFO/AF\n' /data/examples/variants/promoter_variants.vcf.gz \
@@ -21,11 +21,11 @@ bcftools query -f '%INFO/AF\n' /data/examples/variants/promoter_variants.vcf.gz 
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>There are about <b>22,836</b> SNVs across the 641 promoters, and the large majority are <b>rare</b>. That skew — far more rare than common variants — is normal for functional regions, and it is a clue you will use in Part 4 when you test for selection.</p>
+  <p>There are <b>22,836</b> SNVs across the 641 promoters, and most of them are <b>rare</b>. Having many more rare variants than common ones is normal for functional regions, and it will matter again in Part 4, when you test for selection.</p>
 </div>
 
-<h2>Pull the variants into a notebook</h2>
-<p>Load the variants into Python as a table so you can join them to your E-boxes next. A notebook line that starts with <code>!</code> runs a terminal command, so <code>bcftools query</code> can write the columns you want into a plain table in your home folder, and pandas then reads it:</p>
+<h2>Load the variants into a notebook</h2>
+<p>To join the variants to your E-boxes in the next step, load them into Python as a table. A notebook line that starts with <code>!</code> runs a terminal command, so here <code>bcftools query</code> writes the columns you need to a plain table in your home folder, and pandas reads it in:</p>
 <pre class="code" data-run="py"><code>!bcftools query -f '%CHROM\t%POS\t%ID\t%REF\t%ALT\t%INFO/GENE\t%INFO/AF\t%INFO/AF_AFR\t%INFO/AF_AMR\t%INFO/AF_EAS\t%INFO/AF_EUR\t%INFO/AF_SAS\n' /data/examples/variants/promoter_variants.vcf.gz &gt; /home/user/promoter_variants.tsv
 import pandas as pd
 cols = ["chrom","pos","vid","ref","alt","gene","AF","AF_AFR","AF_AMR","AF_EAS","AF_EUR","AF_SAS"]

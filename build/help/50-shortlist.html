@@ -1,17 +1,17 @@
 <!-- id: h-shortlist | title: Your shortlist | group: 5 · Shortlist and write-up | summary: Rank candidate variants to take to the 100,000 Genomes Project | keys: shortlist candidates ranking 100000 genomes priorities follow-up -->
 <h1><!--ICON:target-->Your shortlist of candidates</h1>
-<p class="lede">You now have, for every promoter variant: whether it hits an E-box, how much it changes the motif score, how conserved the position is, and how common it is. Combine these into a ranked shortlist — the variants worth taking into the patient data.</p>
+<p class="lede">For every promoter variant you now know whether it is in an E-box, how much it changes the motif score, how conserved its position is and how common it is. Combine these into a ranked shortlist of the variants most worth following up in patient data.</p>
 
 <h2>What makes a strong candidate</h2>
 <ul>
-  <li><b>It really disrupts the switch</b> — in a canonical E-box, or a large negative PWM score change.</li>
-  <li><b>The position is conserved</b> — high phyloP, so evolution cares about it.</li>
-  <li><b>It is in a relevant gene</b> — a channelopathy or epilepsy gene, ideally your close-focus 21.</li>
-  <li><b>Its frequency is informative</b> — rare variants fit a "damaging" story; a common one that still disrupts a conserved switch is a puzzle worth explaining.</li>
+  <li><b>It clearly disrupts the site</b>: it is in a canonical E-box, or it causes a large drop in PWM score.</li>
+  <li><b>The position is conserved</b>: a high phyloP score suggests evolution has kept it the same.</li>
+  <li><b>It is in a relevant gene</b>: a channelopathy or epilepsy gene, ideally one of your 21 channelopathy genes.</li>
+  <li><b>Its frequency tells you something</b>: rare variants fit the idea that disrupting the site is harmful, while a common variant that disrupts a conserved site is a puzzle worth explaining.</li>
 </ul>
 
 <h2>Build the ranking</h2>
-<p>Join your motif-effect table (<code>eff</code>) to conservation and gene set, score, and sort. One simple, defensible score:</p>
+<p>Join your table of motif effects (<code>eff</code>) to the conservation scores and the gene list, give each variant a score, and sort. This is one simple scoring rule that is easy to justify:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 chan = set(pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")["gene"])
 ph = phylop.reset_index().rename(columns={"phyloP470":"phylop"})
@@ -25,16 +25,16 @@ shortlist[["gene","chrom","pos","ref","alt","AF","delta","phylop","channelopathy
 
 <div class="callout info">
   <div class="co-t">What a good shortlist looks like</div>
-  <p>Your top rows should be disrupting variants in conserved positions of channelopathy or epilepsy genes. In our run, candidates in genes such as <b>CHD4, CUX2, ARFGEF2, TRPM7</b> rose to the top. There is no single right ranking — the point is that your rule is <b>explicit and reproducible</b>, so someone else can see why a variant is on the list.</p>
+  <p>The top rows should be disrupting variants at conserved positions in channelopathy or epilepsy genes. When we ran it, candidates in genes such as <b>CHD4, CUX2, ARFGEF2 and TRPM7</b> came near the top. There is no single right ranking. What matters is that your rule is <b>explicit and reproducible</b>, so that someone else can see why each variant is on the list.</p>
 </div>
 
-<h2>Sanity-check your top hit</h2>
-<p>Take your number-one candidate and look at it three ways: its line in the VCF (frequencies), its position in the genome browser (is it really in a promoter E-box?), and the gene in Ensembl (what does the gene do?).</p>
+<h2>Check your top candidate</h2>
+<p>Look at your top candidate in three ways: its line in the VCF (its frequencies), its position in the genome browser (is it really in a promoter E-box?), and the gene in Ensembl (what does the gene do?).</p>
 <div class="tryrow"><button class="do" type="button" data-bench="igv">Open the genome browser</button> <button class="do" type="button" data-bench="apis">Open Databases (Ensembl)</button></div>
 
 <div class="callout concept">
-  <div class="co-t">What happens next (beyond this page)</div>
-  <p>In the real project these candidates would be tested in the <b>100,000 Genomes Project</b> epilepsy patients, inside Genomics England's secure environment: are disrupting E-box variants seen more often, or alongside more severe disease? That work needs information-governance training and is not done here — but your shortlist, and the reproducible method behind it, is exactly what makes it possible.</p>
+  <div class="co-t">What happens next</div>
+  <p>In the full project, these candidates would be tested in the epilepsy patients of the <b>100,000 Genomes Project</b>, inside Genomics England's secure environment. Are E-box-disrupting variants seen more often in patients, or in people with more severe disease? That work needs information governance training and isn't part of this guide, but it depends on a shortlist like yours, and on a reproducible method for making it.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-writeup">Next: write it up →</button></div>

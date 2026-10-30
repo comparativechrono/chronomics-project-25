@@ -1,15 +1,15 @@
-<!-- id: h-phylop | title: Conservation | group: 4 · Conservation and selection | summary: phyloP, mammals, and reading conservation at a position | keys: conservation phylop zoonomia evolution constraint mammals -->
-<h1><!--ICON:tree-->Conservation: has evolution kept this letter still?</h1>
-<p class="lede">If an E-box really is an important switch, breaking it should have been bad for our ancestors too — so evolution should have kept those letters unchanged across species. A <b>conservation score</b> measures exactly that.</p>
+<!-- id: h-phylop | title: Conservation | group: 4 · Conservation and selection | summary: phyloP, mammals and reading conservation at a position | keys: conservation phylop zoonomia evolution constraint mammals -->
+<h1><!--ICON:tree-->Conservation</h1>
+<p class="lede">If an E-box is an important control site, damaging it would have been harmful to our ancestors as well, so evolution should have kept its sequence the same across species. A <b>conservation score</b> measures this.</p>
 
 <h2>What phyloP is</h2>
-<p><b>phyloP</b> compares the same position across many species' genomes and asks whether it has changed <i>less</i> (conserved — positive score) or <i>more</i> (fast-evolving — negative score) than neutral DNA (<!--CITE-SHORT: phylop-->). We use the <b>470-way mammalian</b> alignment from the Zoonomia project, the state of the art for spotting constrained regulatory DNA (<!--CITE-SHORT: phylop-->). A score above ~2 means a position has been held unusually still across mammals.</p>
+<p><b>phyloP</b> compares the same position across the genomes of many species and asks whether it has changed <i>less</i> than neutral DNA (it is conserved, and gets a positive score) or <i>more</i> (it is evolving quickly, and gets a negative score) (<!--CITE-SHORT: phylop-->). We use the <b>470-way mammalian</b> alignment from the Zoonomia project, currently one of the best resources for finding constrained regulatory DNA (<!--CITE-SHORT: phylop-->). A score above about 2 means a position has changed unusually little across mammals.</p>
 
-<p>We saved phyloP for every base of every promoter so you don't have to download the huge genome-wide file:</p>
+<p>We saved the phyloP score for every base of every promoter, so you don't need to download the very large genome-wide file:</p>
 <pre class="code" data-run="term"><code>zcat /data/examples/conservation/phylop_promoters.csv.gz | head -3</code></pre>
 
-<h2>Read conservation at an E-box</h2>
-<p>Load the table and look at the scores under one of your E-boxes. Pick a canonical E-box from your list and read the six positions:</p>
+<h2>Conservation at an E-box</h2>
+<p>Load the table and look at the scores for the six positions of one of your canonical E-boxes:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 phylop = pd.read_csv("/data/examples/conservation/phylop_promoters.csv.gz")
 # a few promoters overlap (two genes that start close together), so some positions are listed twice: keep each once
@@ -18,11 +18,11 @@ phylop = phylop.drop_duplicates(["chrom","pos"]).set_index(["chrom","pos"]).sort
 chrom, s, e, gene = eboxes[0]          # first E-box (BED: 0-based s)
 for p in range(s+1, e+1):
     print(p, gene, phylop.loc[(chrom, p), "phyloP470"])</code></pre>
-<p>Are those six numbers high (conserved) or low? Try a few E-boxes, then a few random promoter positions, and get a feel for the difference before you measure it properly in the next step.</p>
+<p>Are those six numbers high (conserved) or low? Try a few more E-boxes, then a few random promoter positions, to get a feel for the difference before you measure it properly in the next step.</p>
 
 <div class="callout concept">
-  <div class="co-t">Why conservation adds something new</div>
-  <p>The PWM score (Part 3) is a <i>prediction</i> from a laboratory matrix. phyloP is <i>independent evidence</i> from evolution: it knows nothing about CLOCK:BMAL1, only about what has survived millions of years. When a predicted switch is also deeply conserved, the case that it is real gets much stronger.</p>
+  <div class="co-t">Why conservation helps</div>
+  <p>The PWM score from Part 3 is a <i>prediction</i> based on a matrix measured in the lab. phyloP is <i>independent evidence</i> from evolution: it knows nothing about CLOCK:BMAL1, only which positions have stayed the same over millions of years. If a predicted site is also highly conserved, the case that it is a working site is much stronger.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-selection">Next: the selection test →</button></div>

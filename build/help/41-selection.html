@@ -1,12 +1,12 @@
-<!-- id: h-selection | title: The selection test | group: 4 · Conservation and selection | summary: E-boxes vs matched controls — conservation and variation | keys: selection purifying control cpg conservation variation mann-whitney test statistics -->
+<!-- id: h-selection | title: The selection test | group: 4 · Conservation and selection | summary: E-boxes against matched controls: conservation and variation | keys: selection purifying control cpg conservation variation mann-whitney test statistics -->
 <h1><!--ICON:flask-->The selection test</h1>
-<p class="lede">This is the heart of the project. If E-boxes are functional switches kept intact by selection, then compared with fair control positions they should be <b>more conserved</b> and carry <b>fewer, rarer variants</b>. Here you measure both — carefully.</p>
+<p class="lede">This is the central test of the project. If E-boxes are working control sites that selection keeps intact, then compared with fair control positions they should be <b>more conserved</b> and carry <b>fewer, rarer variants</b>. On this page you measure both.</p>
 
 <h2>Choosing a fair control</h2>
-<p>You cannot compare E-boxes with "all promoter DNA", because <code>CACGTG</code> contains a <b>CpG</b>, and CpGs behave differently from ordinary DNA (they mutate faster and are themselves often conserved near promoters). The fair comparison is <b>E-box positions versus other CpG positions in the same promoters</b>. Then any difference you see is about the E-box, not about CpGs in general.</p>
+<p>You can't simply compare E-boxes with all promoter DNA, because <code>CACGTG</code> contains a <b>CpG</b>, and CpGs behave differently from ordinary DNA: they mutate faster, and near promoters they are often conserved themselves. The fair comparison is between <b>E-box positions and other CpG positions in the same promoters</b>. Any difference you then see is down to the E-box, not to CpGs in general.</p>
 
-<h2>Tag every position</h2>
-<p>Mark each promoter base as <code>ebox</code>, <code>cpg_control</code> (a CpG not in an E-box), or <code>other</code>, and attach its phyloP score and whether a variant was seen there. Run in Python (reuses <code>records</code>, <code>eboxes</code>, <code>var</code>, and the <code>phylop</code> table):</p>
+<h2>Label every position</h2>
+<p>Label each promoter base as <code>ebox</code>, <code>cpg_control</code> (a CpG that is not in an E-box) or <code>other</code>, and add its phyloP score and whether a variant was seen there. Run this in Python (it reuses <code>records</code>, <code>eboxes</code>, <code>var</code> and the <code>phylop</code> table):</p>
 <pre class="code" data-run="py"><code>import pandas as pd, numpy as np
 ebox_pos = set()
 for chrom, s, e, gene in eboxes:
@@ -27,14 +27,14 @@ pos_df = pd.DataFrame(rows, columns=["chrom","pos","cls","variant"])
 pos_df = pos_df.merge(phylop.reset_index(), on=["chrom","pos"], how="left")
 pos_df["cls"].value_counts()</code></pre>
 
-<h2>Result 1 — conservation</h2>
+<h2>Result 1: conservation</h2>
 <pre class="code" data-run="py"><code>pos_df.groupby("cls")["phyloP470"].mean()</code></pre>
 
-<h2>Result 2 — how much variation</h2>
+<h2>Result 2: variation</h2>
 <pre class="code" data-run="py"><code>(pos_df.groupby("cls")["variant"].mean()*1000).round(2)   # segregating SNVs per 1000 bp</code></pre>
 
-<h2>Is the difference real? A statistical test</h2>
-<p>Compare the phyloP of E-box positions with CpG-control positions using a Mann–Whitney U test (it doesn't assume a bell-curve):</p>
+<h2>Is the difference real?</h2>
+<p>Compare the phyloP scores of E-box positions and CpG-control positions with a Mann–Whitney U test, which doesn't assume the scores are normally distributed:</p>
 <pre class="code" data-run="py"><code>from scipy.stats import mannwhitneyu
 a = pos_df.loc[pos_df.cls=="ebox", "phyloP470"].dropna()
 b = pos_df.loc[pos_df.cls=="cpg_control", "phyloP470"].dropna()
@@ -42,15 +42,15 @@ U, p = mannwhitneyu(a, b, alternative="greater")
 print(f"E-box median {a.median():.2f} vs CpG-control {b.median():.2f};  p = {p:.1e}")</code></pre>
 
 <div class="callout info">
-  <div class="co-t">Checkpoint — the result</div>
-  <p>You should find E-box positions are <b>much more conserved</b> (mean phyloP470 ≈ <b>2.7</b>) than control CpGs (≈ <b>−0.2</b>; the "other" promoter positions sit in between, ≈ 0.9); the Mann–Whitney test gives <b>p &lt; 1e-100</b>. And E-boxes carry <b>about half the variants per base</b> of control CpGs (≈ <b>22</b> vs ≈ <b>43</b> per 1000 bp). Both point the same way: <b>purifying selection</b> has been keeping these switches intact. That is your main finding.</p>
+  <div class="co-t">Checkpoint</div>
+  <p>E-box positions should be <b>much more conserved</b> than control CpGs: a mean phyloP470 of about <b>2.7</b>, against about <b>−0.2</b> for the controls, with the "other" promoter positions in between at about 0.9. The Mann–Whitney test gives <b>p &lt; 1e-100</b>. E-boxes also carry <b>about half as many variants per base</b> as control CpGs (about <b>22</b> against <b>43</b> per 1000 bp). Both results point the same way, to <b>purifying selection</b> keeping these sites intact, and this is your main finding.</p>
 </div>
 
-<h2>Draw it (R, for a publication-style figure)</h2>
-<p>First save the table from Python, so that R can read it (the two share your files):</p>
+<h2>Plot it in R</h2>
+<p>First save the table from Python, so that R can read it (they share your files):</p>
 <pre class="code" data-run="py"><code>pos_df[["cls","phyloP470"]].dropna().to_csv("/home/user/positions.csv", index=False)
 print("wrote /home/user/positions.csv")</code></pre>
-<p>Now make a boxplot in R — a good moment to meet <code>ggplot2</code>. A notebook runs one language, so <b>Add to notebook</b> puts this R code into an R notebook of its own (it opens one for you); the first run downloads R and ggplot2, which takes a minute:</p>
+<p>Now draw a boxplot in R, which is a good chance to try <code>ggplot2</code>. Each notebook runs one language, so <b>Add to notebook</b> puts this R code into a separate R notebook, which it opens for you. The first run downloads R and ggplot2, which takes about a minute:</p>
 <pre class="code" data-run="r"><code>install.packages("ggplot2")
 library(ggplot2)
 d &lt;- read.csv("/home/user/positions.csv")      # written by Python just now
@@ -59,8 +59,8 @@ ggplot(d, aes(cls, phyloP470, fill=cls)) + geom_boxplot(outlier.size=0.3) +
   theme_minimal() + theme(legend.position="none")</code></pre>
 
 <div class="callout concept">
-  <div class="co-t">Be honest about the confounds</div>
-  <p>E-boxes near a TSS could be conserved because <i>that part of the promoter</i> is conserved, not because it is an E-box. Your CpG-control helps, but write down this limitation. A stronger follow-up (Part 5) is to check whether the conserved, variation-depleted E-boxes are also the ones with the highest PWM scores — function predicting constraint.</p>
+  <div class="co-t">Confounding</div>
+  <p>E-boxes near a TSS might be conserved because <i>that part of the promoter</i> is conserved, rather than because they are E-boxes. The CpG control helps, but note this limitation in your write-up. A stronger follow-up (one of the extensions in Part 5) is to check whether the conserved E-boxes with little variation are also the ones with the highest PWM scores, which would mean that the strength of a site predicts how constrained it is.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-shortlist">Start Part 5: your shortlist →</button></div>

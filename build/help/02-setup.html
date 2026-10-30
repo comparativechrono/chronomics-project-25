@@ -1,44 +1,44 @@
-<!-- id: h-setup | title: Your workbench | group: Start here | summary: The tabs, the data, how to save, and the AI | keys: setup tools tabs terminal notebook files genome browser save ai data -->
+<!-- id: h-setup | title: Your workbench | group: Start here | summary: The tabs, the data, saving your work and the AI assistant | keys: setup tools tabs terminal notebook files genome browser save ai data -->
 <h1><!--ICON:terminal-->Your workbench</h1>
-<p class="lede">On the right are the tools you will use. They all share the same files, so something you make in the terminal can be read in a notebook a moment later. Spend ten minutes here before Part 1.</p>
+<p class="lede">The tools you will use are on the right. They all share the same files, so a file you make in the terminal can be opened in a notebook straight away. It is worth spending ten minutes on this page before you start Part 1.</p>
 
 <h2>The tabs</h2>
 <table class="table">
-<tr><th>Notebook</th><td>Write and run <b>Python</b> and <b>R</b> in cells, with plots and tables. This is where most of your analysis and figures will live.</td></tr>
-<tr><th>Terminal</th><td>A Linux command line with real genomics programs — <code>samtools</code>, <code>bcftools</code>, <code>bedtools</code>, <code>seqtk</code> — running in your browser.</td></tr>
-<tr><th>Files</th><td>Your home folder and the read-only project data. Viewers for tables, sequences and text; an editor.</td></tr>
-<tr><th>Databases</th><td>Live lookups in <b>Ensembl</b>, NCBI and others. You will use it to check a gene or a variant.</td></tr>
-<tr><th>Genome browser</th><td><b>IGV</b>: see your variants, E-boxes and conservation laid out along the real genome (<a href="#h-genome">how to use it</a>).</td></tr>
-<tr><th>AI</th><td>An optional assistant. See the rules below before you use it.</td></tr>
+<tr><th>Notebook</th><td>Write and run <b>Python</b> and <b>R</b> code in cells, with plots and tables. Most of your analysis and figures will be done here.</td></tr>
+<tr><th>Terminal</th><td>A Linux command line with standard genomics programs (<code>samtools</code>, <code>bcftools</code>, <code>bedtools</code> and <code>seqtk</code>), running in your browser.</td></tr>
+<tr><th>Files</th><td>Your home folder and the read-only project data, with viewers for tables, sequences and text, and an editor.</td></tr>
+<tr><th>Databases</th><td>Live searches of <b>Ensembl</b>, NCBI and other databases. You will use it to check genes and variants.</td></tr>
+<tr><th>Genome browser</th><td><b>IGV</b>, for looking at your variants, E-boxes and conservation scores along the genome (<a href="#h-genome">how to use it</a>).</td></tr>
+<tr><th>AI</th><td>An optional AI assistant. Read the rules below before you use it.</td></tr>
 </table>
 
-<h2>Where things live</h2>
-<p>Your own work goes in your home folder, <code>~</code>. The project data is read-only in <code>/data/examples</code>. Have a look:</p>
+<h2>Where your files are</h2>
+<p>Your own work goes in your home folder, <code>~</code>. The project data is in <code>/data/examples</code>, which is read-only. Have a look:</p>
 <pre class="code" data-run="term"><code>ls -R /data/examples</code></pre>
-<p>You should see folders for <code>genes</code>, <code>reference</code>, <code>variants</code>, <code>conservation</code> and <code>motif</code>. <a href="#h-data">The project data</a> describes every file. Peek at the channelopathy gene list:</p>
+<p>You should see folders called <code>genes</code>, <code>reference</code>, <code>variants</code>, <code>conservation</code> and <code>motif</code>. Every file is described in <a href="#h-data">The project data</a>. This shows the first few lines of the channelopathy gene list:</p>
 <pre class="code" data-run="term"><code>column -t -s$'\t' /data/examples/genes/brain_channelopathy.tsv | head</code></pre>
 
-<h2 data-anchor="warmups">Three small warm-ups</h2>
-<p><b>Terminal.</b> Pull one promoter's DNA out of the reference with <code>samtools</code>, then count how long it is (drop the header line, join the lines, count the letters):</p>
+<h2 data-anchor="warmups">Three quick exercises</h2>
+<p><b>Terminal.</b> Use <code>samtools</code> to pull one promoter's sequence out of the reference, then find its length. The second command drops the header line, joins the sequence lines together and counts the letters:</p>
 <pre class="code" data-run="term"><code>samtools faidx /data/examples/reference/promoters.fa SCN1A | head -3
 samtools faidx /data/examples/reference/promoters.fa SCN1A | grep -v "&gt;" | tr -d "\n" | wc -c</code></pre>
-<p><b>Notebook (Python).</b> Open a new Python notebook and read the gene list into a table:</p>
+<p><b>Notebook (Python).</b> In a Python notebook, read the gene list into a table:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 genes = pd.read_csv("/data/examples/genes/epilepsy_all.tsv", sep="\t")
 print(genes.shape)
 genes.head()</code></pre>
-<p><b>Genome browser.</b> Jump to the start of <i>SCN1A</i> to see where a promoter sits. The green box is the promoter window, the bars beneath it are the 1000 Genomes variants, and the blue track is conservation (it needs the internet, and can take a few seconds the first time):</p>
+<p><b>Genome browser.</b> Go to the start of <i>SCN1A</i> to see a promoter in its place on the genome. The green bar is the promoter window, the short marks below it are 1000 Genomes variants, and the track below those shows conservation. The genome browser needs an internet connection and can take a few seconds to load the first time.</p>
 <div class="tryrow"><button class="do" type="button" data-igv="chr2:166127220-166129320">Open the SCN1A promoter in the genome browser</button></div>
 
-<h2 data-anchor="kept">Keep your work</h2>
-<p>Everything you do is saved in <b>this browser on this computer</b> automatically. It is not on a server and nobody else can see it. To hand work in or move it: <b>Download</b> in the Notebook tab saves a notebook as <code>.ipynb</code>; <b>My files</b> (top right) downloads everything as a <code>.zip</code>. On a shared computer, download before you leave.</p>
+<h2 data-anchor="kept">Saving your work</h2>
+<p>Everything you do is saved automatically, but only in <b>this browser on this computer</b>. Nothing is stored on a server, and nobody else can see it. To hand work in or move it to another computer, use <b>Download</b> in the Notebook tab to save a notebook as an <code>.ipynb</code> file, or <b>My files</b> (top right) to download everything as a <code>.zip</code> file. On a shared computer, download your work before you leave.</p>
 
 <div class="callout warn">
-  <div class="co-t">If you use the AI assistant — three rules</div>
+  <div class="co-t">If you use the AI assistant</div>
   <ol>
-    <li><b>No personal or patient data</b> in the AI tab, ever. Public reference data only — which is all this project uses.</li>
-    <li><b>The result is yours.</b> An AI can be wrong and sound sure. Whatever you report, you must be able to point to the command and the output it came from.</li>
-    <li><b>Use it to understand, not to skip.</b> Ask it to explain an error or a line of code. If it writes code for you, read every line and run it yourself.</li>
+    <li><b>Never put personal or patient data into the AI tab.</b> This project uses only public reference data.</li>
+    <li><b>You are responsible for your results.</b> An AI can be wrong while sounding confident. For anything you report, you need to be able to point to the command you ran and the output it gave.</li>
+    <li><b>Use it to help you understand, not to skip the work.</b> Ask it to explain an error or a line of code. If it writes code for you, read every line before you run it.</li>
   </ol>
 </div>
 

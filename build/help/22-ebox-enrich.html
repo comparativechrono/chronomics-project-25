@@ -1,12 +1,12 @@
 <!-- id: h-ebox-enrich | title: More than chance? | group: 2 · Finding E-boxes | summary: Test E-box enrichment against a CpG-aware expectation | keys: enrichment expected chance cpg dinucleotide markov background baseline -->
 <h1><!--ICON:chart-->Are there more E-boxes than chance?</h1>
-<p class="lede">Finding 205 E-boxes means nothing until you know how many you would expect by chance. Getting "chance" right is the whole game here — and it is where a careful scientist earns their result.</p>
+<p class="lede">Finding 205 E-boxes tells you little until you know how many you would expect by chance. Working out that expectation properly is the most important part of this step.</p>
 
-<h2>The trap: CACGTG hides a CpG</h2>
-<p>Look at the middle of <code>CA<b>CG</b>TG</code>: it contains the dinucleotide <b>CG</b> (a "CpG"). CpGs are special in two ways — they are rarer in the genome than you'd expect, <i>and</i> they mutate faster than other sites. So a naive expectation ("four letters, each 1-in-4, so CACGTG happens 1 in 4⁶") is wrong twice over. You must compare against a background that already knows this promoter's letter <b>and dinucleotide</b> composition.</p>
+<h2>CACGTG contains a CpG</h2>
+<p>The middle of <code>CA<b>CG</b>TG</code> is the dinucleotide <b>CG</b>, known as a CpG. CpGs behave differently from other DNA: they are rarer in the genome than you would expect, <i>and</i> they mutate faster than other sites. The simple expectation (four bases, each with a one in four chance, so <code>CACGTG</code> should turn up once in every 4⁶ positions) takes no account of either. You need to compare against a background that reflects these promoters' base composition <b>and</b> their dinucleotide composition.</p>
 
 <h2>A fair expectation</h2>
-<p>Fit a simple model to the promoters themselves — how often each letter follows each other letter — then ask how many <code>CACGTG</code> it predicts. Run in Python (reuse <code>records</code>):</p>
+<p>Fit a simple model to the promoters themselves, which records how often each base is followed by each other base, and ask how many copies of <code>CACGTG</code> it predicts. Run this in Python (it reuses <code>records</code>):</p>
 <pre class="code" data-run="py"><code>from collections import Counter
 pool = "".join(seq for _, seq in records)
 base = Counter(c for c in pool if c in "ACGT"); N = sum(base.values())
@@ -26,20 +26,20 @@ print(f"observed {observed} | expected ~{expected:.0f} | ratio {observed/expecte
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>You should see about <b>205 observed vs ~123 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are enriched roughly <b>1.7-fold</b> in these promoters, even after accounting for CpG content — a real signal that the clock pathway reaches these genes. (Try the same for <code>CACGTT</code>, a near-relative that CLOCK:BMAL1 binds weakly — is it enriched?)</p>
+  <p>You should see about <b>205 observed against ~123 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are roughly <b>1.7 times</b> more common in these promoters than expected, even after allowing for CpG content, which is a sign that the clock pathway reaches these genes. (Try the same calculation for <code>CACGTT</code>, a related sequence that CLOCK:BMAL1 binds only weakly. Is it enriched?)</p>
 </div>
 
 <div class="callout concept">
-  <div class="co-t">Why this matters more than the number</div>
-  <p>If you had used the naive 1-in-4⁶ expectation you would have claimed a much bigger enrichment — and a reviewer would have thrown it out, because CpG content alone could explain it. Choosing the honest baseline is the difference between a finding and an artefact. Write down, in your notes, exactly which baseline you used and why.</p>
+  <div class="co-t">Why the baseline matters</div>
+  <p>With the simple 1 in 4⁶ expectation you would have reported a much larger enrichment, and a reviewer would rightly have rejected it, because CpG content alone could explain it. A fair baseline is what separates a finding from an artefact. Write down in your notes which baseline you used and why.</p>
 </div>
 
-<h2>See one on the genome</h2>
-<p>Put your own E-boxes on the genome: this adds <code>~/eboxes_canonical.bed</code> (from the find step) to the genome browser as a track of its own. Then jump to one of them — the first in your list is in the <i>ACOX1</i> promoter — and see it sitting inside the promoter window, with the conservation track beneath it:</p>
+<h2>Look at an E-box on the genome</h2>
+<p>You can add your own E-boxes to the genome browser. The first button below shows <code>~/eboxes_canonical.bed</code> (from the find step) as a track of its own. The second takes you to the first E-box in your list, in the <i>ACOX1</i> promoter, where you can see it inside the promoter window with the conservation track below:</p>
 <div class="tryrow"><button class="do" type="button" data-igv-track="~/eboxes_canonical.bed">Show my E-boxes in the genome browser</button> <button class="do" type="button" data-igv="chr17:75979355-75979560">Go to the first E-box (ACOX1)</button></div>
-<p>For contrast, look at <i>SLC2A1</i> (GLUT1 — its deficiency causes epilepsy), one of the channelopathy genes whose promoter has no exact <code>CACGTG</code> at all:</p>
+<p>For comparison, look at <i>SLC2A1</i> (GLUT1, whose deficiency causes epilepsy). It is one of the channelopathy genes, and its promoter has no exact <code>CACGTG</code> at all:</p>
 <div class="tryrow"><button class="do" type="button" data-igv="chr1:42958068-42960168">Open the SLC2A1 promoter in the genome browser</button></div>
-<p>Any BED, VCF or bedGraph file in your home folder can be shown the same way, with <b>Add my files…</b> in the Genome browser tab (<a href="#h-genome">The genome browser</a>).</p>
+<p>You can show any BED, VCF or bedGraph file from your home folder in the same way, using <b>Add my files…</b> in the Genome browser tab (see <a href="#h-genome">The genome browser</a>).</p>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-variants">Start Part 3: human variation →</button></div>
 <!--CITE: clock chronomic-->

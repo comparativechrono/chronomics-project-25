@@ -312,7 +312,7 @@
   MG.actions.igvTrack = async (path) => {
     const fs = MG.app.fs;
     const p = path.startsWith('~/') ? HOME + path.slice(1) : path;
-    if (!fs.exists(p)) throw new Error(`There is no file ${path} yet – make it with the step before this one first.`);
+    if (!fs.exists(p)) throw new Error(`There is no ${path} yet. Make it first: the guide shows how.`);
     await MG.app.igvLoad([p]);
   };
   MG.actions.newNb = async (lang) => {

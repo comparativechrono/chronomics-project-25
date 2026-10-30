@@ -1,12 +1,12 @@
-<!-- id: h-motifbreak | title: Scoring the damage | group: 3 · Human variation | summary: How much does each variant change the motif score? | keys: motifbreak delta ref alt score break create disruption pwm -->
-<h1><!--ICON:wand-->Scoring the damage a variant does</h1>
-<p class="lede">"Inside an E-box" is yes/no. Better is <i>how much</i> a variant changes the switch. Score the sequence with the reference letter, score it again with the variant's letter, and take the difference. This is exactly how published tools (like motifbreakR) work — and you can do it in a few lines.</p>
+<!-- id: h-motifbreak | title: Scoring motif changes | group: 3 · Human variation | summary: How much does each variant change the motif score? | keys: motifbreak delta ref alt score break create disruption pwm -->
+<h1><!--ICON:wand-->How much does a variant change the motif?</h1>
+<p class="lede">Whether a variant is inside an E-box is a yes-or-no question. It is more useful to know <i>how much</i> it changes the site. Score the sequence with the reference base, score it again with the variant's base, and take the difference. Published tools such as motifbreakR work in the same way, and you can do it in a few lines of code.</p>
 
-<h2>The idea</h2>
-<p>For a variant, slide the BMAL1 matrix across the DNA around it. In each window, compute the relative score with the <b>reference</b> letter and with the <b>alternative</b> letter. The window where the motif is strongest is the one that matters; the <b>change in score</b> (alt − ref) tells you whether the variant weakens the switch (negative), strengthens it, or does nothing.</p>
+<h2>How it works</h2>
+<p>For each variant, slide the BMAL1 matrix along the DNA around it. In each window, work out the relative score with the <b>reference</b> base and with the <b>alternative</b> base. The window where the motif scores highest is the one that matters, and the <b>change in score</b> (alt − ref) tells you whether the variant weakens the site (a negative change), strengthens it, or makes no difference.</p>
 
-<h2>Compute it</h2>
-<p>This reuses <code>w</code>, <code>relscore</code>, <code>best_both</code> and <code>L</code> from <a href="#h-ebox-pwm">the PWM step</a>, and <code>var</code> from <a href="#h-variants">the variants step</a>. First index the promoter sequences by gene:</p>
+<h2>The code</h2>
+<p>This reuses <code>w</code>, <code>relscore</code>, <code>best_both</code> and <code>L</code> from <a href="#h-ebox-pwm">the PWM step</a>, and <code>var</code> from <a href="#h-variants">the variants step</a>. First, index the promoter sequences by gene:</p>
 <pre class="code" data-run="py"><code>gene_seq = {}
 for header, seq in records:
     gene  = header.split()[0]
@@ -29,7 +29,7 @@ def motif_effect(gene, pos, ref, alt):
     rr, ra = best
     return round(rr,3), round(ra,3), round(ra-rr,3)</code></pre>
 
-<p>Apply it to every variant and classify each one (threshold 0.85, as before):</p>
+<p>Then apply it to every variant and classify each one, using the same 0.85 cut-off as before:</p>
 <pre class="code" data-run="py"><code>THR = 0.85
 rows = []
 for r in var.itertuples():
@@ -50,12 +50,12 @@ eff.sort_values("delta").head(10)        # the biggest disruptions</code></pre>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>You should find on the order of <b>212</b> variants that <b>break</b> a strong site and <b>210</b> that <b>create</b> one, plus many that weaken or strengthen. This is a far richer catalogue than the exact-match one, and it reaches the channelopathy genes. These "break" variants — especially in channelopathy genes — are your candidate list for Part 5.</p>
+  <p>You should find about <b>212</b> variants that <b>break</b> a strong site and about <b>210</b> that <b>create</b> one, plus a few dozen that weaken or strengthen one. This catalogue is much larger than the exact-match one, and it includes the channelopathy genes. The "break" variants, especially those in channelopathy genes, are your candidates for Part 5.</p>
 </div>
 
 <div class="callout concept">
   <div class="co-t">A caution</div>
-  <p>A score change is a <b>prediction</b>, not proof the switch is really used in the brain. CLOCK:BMAL1 may not even bind this particular site in neurons. That is why the next step — is the position conserved and depleted of variation? — adds independent evidence, and why the real test is in patients.</p>
+  <p>A change in score is a <b>prediction</b>. It doesn't show that the site is actually used in the brain, and CLOCK:BMAL1 may not bind this particular site in neurons at all. That is why the next part, which asks whether the position is conserved and short of variation, adds independent evidence, and why the final test has to be done in patients.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-phylop">Start Part 4: conservation →</button></div>

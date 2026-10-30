@@ -1,8 +1,8 @@
 <!-- id: h-overlap | title: Variants that hit an E-box | group: 3 · Human variation | summary: Intersect variants with E-boxes and build the catalogue | keys: bedtools intersect overlap disrupt break create catalogue population -->
 <h1><!--ICON:align-->Variants that hit an E-box</h1>
-<p class="lede">You have E-boxes (positions on the genome) and variants (other positions on the genome). The question is simple: which variants land inside an E-box? That is a job for <code>bedtools</code>.</p>
+<p class="lede">You now have two sets of positions on the genome: your E-boxes and the variants. The question is which variants fall inside an E-box, and that is a job for <code>bedtools</code>.</p>
 
-<h2>Intersect, the standard way</h2>
+<h2>Finding overlaps with bedtools</h2>
 <p><code>bedtools intersect</code> finds overlaps between two sets of genomic regions. Overlap your canonical E-boxes with the variants:</p>
 <pre class="code" data-run="term"><code>cd ~
 bedtools intersect -a eboxes_canonical.bed -b /data/examples/variants/promoter_variants.vcf.gz -wa -wb \
@@ -12,12 +12,12 @@ bedtools intersect -a eboxes_canonical.bed -b /data/examples/variants/promoter_v
   | wc -l</code></pre>
 
 <div class="callout concept">
-  <div class="co-t">In a canonical E-box, every variant breaks it</div>
-  <p><code>CACGTG</code> is the <i>best</i> sequence. Any single-letter change inside it makes it something else, so every SNV that lands in a canonical E-box <b>weakens or destroys</b> the switch (you can confirm this with the PWM score in the next step). Occasionally a variant does the opposite — it turns a near-miss into a perfect <code>CACGTG</code>, <b>creating</b> a switch. Both are interesting.</p>
+  <div class="co-t">Any change to CACGTG weakens it</div>
+  <p><code>CACGTG</code> is the best possible sequence, so any single-base change inside it turns it into something weaker. Every SNV in a canonical E-box therefore <b>weakens or destroys</b> the site (you can check this with the PWM score in the next step). Occasionally a variant does the opposite and turns a near-match into a perfect <code>CACGTG</code>, <b>creating</b> a new site. Both kinds are interesting.</p>
 </div>
 
 <h2>Build your catalogue in Python</h2>
-<p>Join the variants table (<code>var</code>, from the last step) to your E-boxes so each E-box variant carries its gene and its population frequencies. One clean way: mark every genomic position that is inside a canonical E-box, then select variants at those positions:</p>
+<p>Join the variants table (<code>var</code>, from the last step) to your E-boxes, so that each E-box variant comes with its gene and its population frequencies. A simple way to do this is to mark every genomic position inside a canonical E-box, then pick out the variants at those positions:</p>
 <pre class="code" data-run="py"><code>ebox_pos = set()
 for chrom, s, e, gene in eboxes:          # from the find step (BED: 0-based s, end e)
     for p in range(s+1, e+1):             # 1-based genomic positions
@@ -29,13 +29,13 @@ print("variants inside a canonical E-box:", len(catalogue))
 catalogue.sort_values("AF", ascending=False).head(10)</code></pre>
 
 <h2>Look at the population columns</h2>
-<p>For each catalogue variant, compare <code>AF_AFR … AF_SAS</code>. Are any common in one group and rare in another? A variant that breaks a clock switch but is common somewhere is especially worth a look.</p>
+<p>For each variant in the catalogue, compare <code>AF_AFR … AF_SAS</code>. Are any of them common in one population and rare in another? A variant that disrupts a clock E-box but is common in some population deserves a closer look.</p>
 <pre class="code" data-run="py"><code>cols = ["gene","pos","ref","alt","AF","AF_AFR","AF_AMR","AF_EAS","AF_EUR","AF_SAS"]
 catalogue[cols].sort_values("AF", ascending=False).head(12)</code></pre>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>About <b>27</b> variants fall inside a canonical E-box. Most are rare — which is exactly what you would expect if breaking the switch is usually mildly harmful and selection keeps such variants down. You will test that properly in Part 4. Save your catalogue (<code>catalogue.to_csv("/home/user/catalogue.csv", index=False)</code>).</p>
+  <p><b>27</b> variants fall inside a canonical E-box. Most of them are rare, which is what you would expect if disrupting an E-box is usually mildly harmful, so that selection keeps such variants at low frequency. You will test this properly in Part 4. Save your catalogue with <code>catalogue.to_csv("/home/user/catalogue.csv", index=False)</code>.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-motifbreak">Next: score how much a variant changes the motif →</button></div>

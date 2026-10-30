@@ -1,54 +1,54 @@
-<!-- id: h-project | title: The research question | group: Start here | summary: The clock, E-boxes, and why brain genes | keys: background hypothesis clock bmal1 ebox circadian epilepsy aim -->
+<!-- id: h-project | title: The research question | group: Start here | summary: The clock, E-boxes and why brain genes | keys: background hypothesis clock bmal1 ebox circadian epilepsy aim -->
 <h1><!--ICON:dna-->The research question</h1>
-<p class="lede">The background you need, and the exact question you will answer. Read this once; come back to it whenever you want to remember <i>why</i> a step matters.</p>
+<p class="lede">The background you need, and the question you will answer. Come back to this page whenever you lose track of why a step matters.</p>
 
-<h2>1 · Almost every cell keeps time</h2>
-<p>Humans have a circadian clock in nearly every cell. At its core, two proteins — <b>CLOCK</b> and <b>BMAL1</b> — join together and switch other genes on. They do this by sticking to a short, specific run of DNA letters in front of a gene, called an <b>E-box</b>. The strongest circadian E-box is the six-letter palindrome <b>CACGTG</b>. Genes with an E-box in their promoter can be turned up and down across the 24-hour day; a large fraction of the genome is timed this way (<!--CITE-SHORT: clock-->).</p>
+<h2>1 · The circadian clock</h2>
+<p>Nearly every cell in the body has its own circadian clock. At its centre are two proteins, <b>CLOCK</b> and <b>BMAL1</b>, which pair up and switch other genes on. They do this by binding a short DNA sequence near the start of a gene, called an <b>E-box</b>. The strongest circadian E-box is the six-base palindrome <b>CACGTG</b>. Genes with an E-box in their promoter can be turned up and down over the 24-hour day, and a large fraction of the genome is controlled in this way (<!--CITE-SHORT: clock-->).</p>
 
 <div class="callout concept">
-  <div class="co-t">Promoter, TSS and E-box — the words you need</div>
+  <div class="co-t">Promoter, TSS and E-box</div>
   <ul>
     <li>A gene is <b>transcribed</b> (copied into RNA) starting at its <b>transcription start site (TSS)</b>.</li>
-    <li>The <b>promoter</b> is the stretch of DNA just before the TSS where the switches that control the gene sit. In this project we use the window from <b>1000 letters before to 500 letters after</b> each TSS.</li>
-    <li>An <b>E-box</b> is one such switch: the sequence <code>CACGTG</code> that CLOCK:BMAL1 binds. If a variant changes those letters, the switch may stop working.</li>
+    <li>The <b>promoter</b> is the stretch of DNA around the TSS that holds most of the sequences controlling the gene. In this project we use the region from <b>1000 bases before</b> each TSS to <b>500 bases after</b> it.</li>
+    <li>An <b>E-box</b> is one of those control sequences: <code>CACGTG</code>, the site CLOCK:BMAL1 binds. A variant that changes any of its six bases may stop it working.</li>
   </ul>
 </div>
 
-<h2>2 · Chronomic medicine: the clock meets genetic disease</h2>
-<p>Our group studies what happens when the clock meets rare genetic disease — <b>chronomic medicine</b>. A variant that changes <i>when</i> a disease gene is switched on, rather than the protein it makes, could change how severe the disease is, or be missed entirely because it sits outside the protein-coding part of the gene. The group has already found that variants in E-boxes of the heart gene <i>SCN5A</i> may matter in the arrhythmia disorder Brugada syndrome (<!--CITE-SHORT: group-->). This project asks the same kind of question, but in the <b>brain</b>.</p>
+<h2>2 · Chronomic medicine</h2>
+<p>Our group works on what happens where the clock meets rare genetic disease, which we call <b>chronomic medicine</b>. A variant that changes <i>when</i> a disease gene is switched on, rather than the protein it makes, could make the disease milder or more severe. It could also be missed altogether, because it lies outside the protein-coding part of the gene. We have already found that variants in E-boxes of the heart gene <i>SCN5A</i> may matter in the arrhythmia disorder Brugada syndrome (<!--CITE-SHORT: group-->). This project asks the same kind of question about genes that matter in the <b>brain</b>.</p>
 
 <h2>3 · Why epilepsy and brain channelopathy genes?</h2>
-<p>Seizures are famously tied to the clock and to sleep: many epilepsies are worse at particular times of day or after sleep loss (<!--CITE-SHORT: chronomic-->). The genes behind many of these conditions are <b>ion channels</b> and transporters — so-called <b>channelopathies</b>. If the clock helps time these genes, their promoters should carry E-boxes, and the DNA letters of those E-boxes should be protected from change. That is what you will test.</p>
+<p>Seizures are closely linked to sleep and the clock: many epilepsies are worse at particular times of day or after a night of poor sleep (<!--CITE-SHORT: chronomic-->). Many of the genes behind these conditions encode <b>ion channels</b> and transporters, and the diseases they cause are known as <b>channelopathies</b>. If the clock helps to control when these genes are active, their promoters should contain E-boxes, and the bases in those E-boxes should be protected from change. That is what you will test.</p>
 <p>You will work with two gene lists, both from <b>Genomics England PanelApp</b> (<!--CITE-SHORT: panelapp-->):</p>
 <ul>
-  <li><b>Brain channelopathy</b> — 21 well-established ("green") genes, including <i>SCN1A</i>, <i>SCN8A</i>, <i>CACNA1A</i>, <i>KCNQ2</i> and <i>SLC2A1</i>. This is your close-focus set.</li>
-  <li><b>Early-onset or syndromic epilepsy</b> — 632 green genes. This larger set gives you the numbers to test ideas statistically.</li>
+  <li><b>Brain channelopathy</b>: 21 well-established ("green") genes, including <i>SCN1A</i>, <i>SCN8A</i>, <i>CACNA1A</i>, <i>KCNQ2</i> and <i>SLC2A1</i>. These are the genes you will look at most closely.</li>
+  <li><b>Early-onset or syndromic epilepsy</b>: 632 green genes. This larger set gives you enough data for statistical tests.</li>
 </ul>
 
-<h2>4 · Your hypothesis and your question</h2>
+<h2>4 · Hypothesis and questions</h2>
 <div class="callout info">
   <div class="co-t">Hypothesis</div>
-  <p>If CLOCK:BMAL1 timing matters for these genes, then E-boxes in their promoters will be (a) <b>present more often than chance</b>, (b) <b>unusually conserved</b> across mammals, and (c) <b>carry fewer and rarer human variants</b> than comparable positions — the signature of <b>purifying selection</b> removing changes that break the switch.</p>
+  <p>If timing by CLOCK:BMAL1 matters for these genes, the E-boxes in their promoters should (a) <b>occur more often than expected by chance</b>, (b) be <b>unusually well conserved</b> across mammals, and (c) <b>carry fewer, and rarer, human variants</b> than comparable positions. The last two together would be the signature of <b>purifying selection</b>, which removes changes that damage the site.</p>
 </div>
-<p>Concretely, you will answer:</p>
+<p>In practice, you will answer four questions:</p>
 <ol>
   <li>Where are the E-boxes in these promoters, and are there more than you would expect by chance?</li>
-  <li>Which human variants (from the 1000 Genomes Project) break or make an E-box, and how common are they in different populations?</li>
-  <li>Are E-box positions more conserved, and less variable, than matched control positions — as selection would predict?</li>
-  <li>Which variants are the best candidates to follow up in the 100,000 Genomes Project epilepsy patients?</li>
+  <li>Which human variants (from the 1000 Genomes Project) destroy or create an E-box, and how common are they in different populations?</li>
+  <li>Are E-box positions more conserved, and less variable, than matched control positions, as selection would predict?</li>
+  <li>Which variants are the best candidates to follow up in the epilepsy patients of the 100,000 Genomes Project?</li>
 </ol>
 
 <h2>5 · What you will produce</h2>
 <ul>
-  <li>A <b>catalogue</b> of E-box-changing variants in these promoters, with population frequencies.</li>
-  <li>A <b>figure and a statistic</b> for the conservation/selection test.</li>
-  <li>A ranked <b>shortlist</b> of candidate variants, and a short written report that someone else could reproduce.</li>
+  <li>A <b>catalogue</b> of the variants that change E-boxes in these promoters, with their frequencies in different populations.</li>
+  <li>A <b>figure and a statistical test</b> for conservation and selection.</li>
+  <li>A ranked <b>shortlist</b> of candidate variants, and a short written report that would let someone else reproduce your results.</li>
 </ul>
-<p>Every one of those is a real result, whichever way the numbers come out. A clean "no signal" answer, properly shown, is a finding too.</p>
+<p>Each of these is a result whichever way the numbers come out. If you find no signal, showing that clearly is still a finding.</p>
 
 <div class="callout warn">
-  <div class="co-t">A note on what this is and isn't</div>
-  <p>You are working only with <b>public reference data</b> (the 1000 Genomes Project) — never patient data. The 100,000 Genomes Project patient analysis would come later, inside the secure Genomics England Research Environment, and is not part of this page.</p>
+  <div class="co-t">Public data only</div>
+  <p>You will only use <b>public reference data</b> (the 1000 Genomes Project), never patient data. Any analysis of 100,000 Genomes Project patients would come later, inside the secure Genomics England Research Environment, and is not part of this guide.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-setup">Next: your workbench →</button></div>

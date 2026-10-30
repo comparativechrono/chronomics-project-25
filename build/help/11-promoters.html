@@ -1,30 +1,30 @@
-<!-- id: h-promoters | title: Promoters and coordinates | group: 1 · Genes and promoters | summary: TSS, the promoter window, BED, and pulling out sequence | keys: promoter tss bed coordinates samtools faidx fasta strand sequence -->
+<!-- id: h-promoters | title: Promoters and coordinates | group: 1 · Genes and promoters | summary: TSS, the promoter window, BED files and extracting sequence | keys: promoter tss bed coordinates samtools faidx fasta strand sequence -->
 <h1><!--ICON:genome-->Promoters and coordinates</h1>
-<p class="lede">An E-box is only a circadian switch if it sits in the right place — the promoter. Here you learn how genomic positions are written down, and how to pull a promoter's DNA out of the reference genome.</p>
+<p class="lede">An E-box can only act as a circadian switch if it is in the right place, which is the promoter. This page shows how positions in the genome are written down, and how to pull a promoter's DNA sequence out of the reference genome.</p>
 
 <h2>The promoter window</h2>
-<p>For every gene we defined the promoter as the window <b>from 1000 letters before the TSS to 500 after</b> — 1501 letters in all (the 1000 before, the TSS itself, and the 500 after), measured along the direction the gene is read. Those windows are saved as a <b>BED file</b>, the standard way to write "a stretch of a chromosome":</p>
+<p>For every gene we defined the promoter as the window from <b>1000 bases before the TSS to 500 bases after it</b>, measured in the direction the gene is read. That is 1501 bases in total: the 1000 before, the TSS itself and the 500 after. The windows are saved as a <b>BED file</b>, the standard format for describing stretches of a chromosome:</p>
 <pre class="code" data-run="term"><code>head /data/examples/genes/promoters.bed</code></pre>
 <div class="callout concept">
   <div class="co-t">Reading a BED line</div>
-  <p><code>chr2&#9;166127519&#9;166129020&#9;SCN1A&#9;0&#9;-</code> is the line for gene <i>SCN1A</i>, on chromosome 2 and the <code>-</code> strand. BED counts from <b>0</b> and its end is "one past the last base", so this window runs from base 166,127,520 to base 166,129,020 in the usual 1-based counting, and its length is simply end − start = 1501 bases. Many bioinformatics mistakes are off-by-one errors from mixing the two ways of counting — watch for it. (On the <code>-</code> strand the gene is read right to left, so the 1000 bases "before" its TSS, 166,128,020, are the ones to its right.)</p>
+  <p><code>chr2&#9;166127519&#9;166129020&#9;SCN1A&#9;0&#9;-</code> is the line for <i>SCN1A</i>, which is on chromosome 2, on the <code>-</code> strand. BED coordinates start from <b>0</b>, and the end position is one past the last base. So in the usual 1-based counting this window runs from base 166,127,520 to base 166,129,020, and its length is simply end − start = 1501 bases. Mixing up the two ways of counting causes a lot of off-by-one errors in bioinformatics, so watch out for it. (Because <i>SCN1A</i> is on the <code>-</code> strand and read from right to left, the 1000 bases "before" its TSS at 166,128,020 are the ones to the right of it.)</p>
 </div>
 
 <h2>Pull out a promoter's sequence</h2>
-<p>We also saved the DNA of every promoter as a FASTA file, <code>promoters.fa</code>, one record per gene. <code>samtools faidx</code> fetches one by name:</p>
+<p>We also saved the DNA sequence of every promoter in a FASTA file, <code>promoters.fa</code>, with one record per gene. <code>samtools faidx</code> fetches a record by name:</p>
 <pre class="code" data-run="term"><code>samtools faidx /data/examples/reference/promoters.fa SCN1A</code></pre>
-<p><code>samtools faidx</code> labels what it prints with the name only (<code>&gt;SCN1A</code>). The header line in the file itself says more — where the sequence came from: the chromosome, the genomic start and end (1-based), the strand and the TSS. Look at it with <code>grep</code>:</p>
+<p><code>samtools faidx</code> labels its output with the name only (<code>&gt;SCN1A</code>). The header line in the file itself says more about where the sequence came from: the chromosome, the genomic start and end (1-based), the strand and the TSS. You can see it with <code>grep</code>:</p>
 <pre class="code" data-run="term"><code>grep "^&gt;SCN1A " /data/examples/reference/promoters.fa</code></pre>
-<p>You will need that genomic start later to turn a position <i>within</i> the promoter into a position <i>on the chromosome</i>. (The sequence is always the forward strand of the chromosome, left to right, whichever strand the gene is on.)</p>
+<p>You will need the genomic start later, to convert a position <i>within</i> the promoter into a position <i>on the chromosome</i>. (The sequence is always given on the forward strand of the chromosome, reading left to right, whichever strand the gene is on.)</p>
 
 <h2>How GC-rich are these promoters?</h2>
-<p>Promoters near a TSS are often rich in C and G. That matters for E-boxes, because <code>CACGTG</code> is itself C/G-heavy. Measure it with <code>seqtk</code>:</p>
+<p>Promoters near a TSS are often rich in C and G. That matters for E-boxes, because <code>CACGTG</code> itself is mostly C and G. Measure it with <code>seqtk</code>:</p>
 <pre class="code" data-run="term"><code>seqtk comp /data/examples/reference/promoters.fa | awk '{gc+=$4+$5; tot+=$2} END{printf "overall GC = %.1f%%\n", 100*gc/tot}'</code></pre>
-<p>Keep that number in mind: when you ask whether E-boxes are "more common than chance", chance has to mean <i>chance given this GC content</i>, not a flat 25% per letter.</p>
+<p>Keep this number in mind. When you ask whether E-boxes are more common than chance, "chance" has to take this GC content into account; you can't assume that each base turns up 25% of the time.</p>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>There are <b>641</b> promoters (the 21 channelopathy and 632 epilepsy genes, de-duplicated, with one mitochondrial gene dropped), each <b>1501</b> bases long, and the overall GC content is about <b>59%</b>. If your numbers match, your reference and your coordinates line up and you are ready to hunt for E-boxes.</p>
+  <p>There are <b>641</b> promoters (the 21 channelopathy and 632 epilepsy genes, with duplicates removed and one mitochondrial gene dropped), each <b>1501</b> bases long, and the overall GC content is about <b>59%</b>. If your numbers match, your reference and coordinates are consistent and you are ready to look for E-boxes.</p>
 </div>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-ebox-find">Next: find the E-boxes →</button></div>
