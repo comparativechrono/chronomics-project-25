@@ -50,7 +50,7 @@ for header,seq in records:
     while i<=len(seq)-L:
         if best_both(seq[i:i+L])>=THR: pwm+=1; i+=L
         else: i+=1
-print("Part2 PWM sites >=0.85:",pwm,"(expect 1081)")
+print("Part2 PWM sites >=0.85:",pwm,"(expect 1240)")
 
 # enrichment
 from collections import Counter
@@ -94,4 +94,4 @@ for header,seq in records:
         is_ebox=key in ebox_pos; is_cpg=seq[i]=="C" and seq[i+1]=="G"
         if is_ebox: ev.append(ph[key])
         elif is_cpg: cv.append(ph[key])
-print(f"Part4 phyloP mean  E-box {np.mean(ev):.2f} (expect ~2.68)  control-CpG {np.mean(cv):.2f} (expect ~0.47)")
+print(f"Part4 phyloP mean  E-box {np.mean(ev):.2f} (expect ~2.68)  control-CpG {np.mean(cv):.2f} (expect ~-0.18)")

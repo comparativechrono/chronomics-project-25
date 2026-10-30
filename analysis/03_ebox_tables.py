@@ -1,11 +1,10 @@
 import json, math, re
+from collections import Counter
 seqs=json.load(open("raw/promoter_seqs.json"))
 proms={r['ens']:r for r in json.load(open("raw/promoters.json"))}
 comp=str.maketrans("ACGT","TGCA")
-# background from promoters
-from collections import Counter
-pool="".join(seqs.values()); bc=Counter(c for c in pool if c in "ACGT"); tot=sum(bc.values())
-bg={b:bc[b]/tot for b in "ACGT"}
+# fixed background (same as the guide's student code), so counts match what the student reproduces
+bg={"A":0.295,"C":0.205,"G":0.205,"T":0.295}
 # ARNTL PWM
 d=json.load(open("raw/jaspar_MA0603.2.json")); pfm=d['pfm']; L=len(pfm['A']); pseudo=0.8
 pwm={}
@@ -35,20 +34,18 @@ for e,r in proms.items():
         can.write(f"chr{r['chrom']}\t{g0-1}\t{g0+5}\t{r['sym']}|CACGTG\t0\t+\n")
         can_rows.append(dict(sym=r['sym'],ens=e,chrom=r['chrom'],start=g0,end=g0+5,strand=r['strand'],core=r['core']))
         percan[r['sym']]+=1
-    # PWM sites (merge overlapping windows -> keep local-best)
-    hits=[]
-    for i in range(len(s)-L+1):
+    # PWM sites: scan left-to-right, keep non-overlapping hits >=THR (same method as the guide)
+    i=0
+    while i<=len(s)-L:
         sc=best_rel(s[i:i+L])
-        if sc>=THR: hits.append((i,sc))
-    # non-overlapping greedy by score
-    hits.sort(key=lambda x:-x[1]); taken=[]
-    for i,sc in hits:
-        if all(abs(i-j)>=L for j,_ in taken): taken.append((i,sc))
-    for i,sc in sorted(taken):
-        g0=r['pstart']+i
-        pw.write(f"chr{r['chrom']}\t{g0-1}\t{g0+L-1}\t{r['sym']}|pwm\t{sc:.3f}\t.\n")
-        pwm_rows.append(dict(sym=r['sym'],ens=e,chrom=r['chrom'],start=g0,end=g0+L-1,relscore=round(sc,3),core=r['core']))
-        perpwm[r['sym']]+=1
+        if sc>=THR:
+            g0=r['pstart']+i
+            pw.write(f"chr{r['chrom']}\t{g0-1}\t{g0+L-1}\t{r['sym']}|pwm\t{sc:.3f}\t.\n")
+            pwm_rows.append(dict(sym=r['sym'],ens=e,chrom=r['chrom'],start=g0,end=g0+L-1,relscore=round(sc,3),core=r['core']))
+            perpwm[r['sym']]+=1
+            i+=L
+        else:
+            i+=1
 can.close(); pw.close()
 json.dump(can_rows,open("out/eboxes_canonical.json","w"))
 json.dump(pwm_rows,open("out/eboxes_pwm.json","w"))
