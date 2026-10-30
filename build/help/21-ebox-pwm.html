@@ -1,0 +1,73 @@
+<!-- id: h-ebox-pwm | title: Flexible motifs (PWMs) | group: 2 · Finding E-boxes | summary: Score promoters with the BMAL1 matrix to find real binding sites | keys: pwm pssm jaspar motif score bmal1 arntl log-odds threshold -->
+<h1><!--ICON:target-->Flexible motifs: position weight matrices</h1>
+<p class="lede">Proteins do not demand a perfect sequence. CLOCK:BMAL1 binds <code>CACGTG</code> best, but it also binds close relatives. To find those, you use a <b>position weight matrix</b> (PWM) — the standard tool for describing what a protein likes to bind.</p>
+
+<h2>What a PWM is</h2>
+<p>A PWM comes from many real binding sites. For each position it records how often each letter appeared. We give you the experimentally measured matrix for <b>BMAL1</b> (called <i>Arntl</i>) from the <b>JASPAR</b> database (<!--CITE-SHORT: jaspar-->):</p>
+<pre class="code" data-run="term"><code>cat /data/examples/motif/ARNTL_MA0603.2.jaspar</code></pre>
+<p>Read down the columns: the matrix is 8 letters long, and its favourite letter at each position spells <code>GTCACGTG</code> — the E-box <code>CACGTG</code> with a little flank. A PWM lets a site score well even if it is not a perfect <code>CACGTG</code>.</p>
+
+<h2>Turn counts into scores, and scan</h2>
+<p>This builds a <b>log-odds</b> score (how much more a letter is liked than background), scores every window on both strands, and reports a <b>relative score</b> from 0 to 1 (1 = the matrix's perfect site). Run it in your Python notebook:</p>
+<pre class="code" data-run="py"><code>import math
+# --- read the JASPAR count matrix ---
+counts = {}
+for line in open("/data/examples/motif/ARNTL_MA0603.2.jaspar"):
+    if line.startswith(">"): continue
+    base = line[0]
+    counts[base] = [int(x) for x in line[line.index("[")+1:line.index("]")].split()]
+L = len(counts["A"])
+bg = {"A":0.295,"C":0.205,"G":0.205,"T":0.295}      # rough promoter background
+
+# log-odds weight for each base at each position (with a small pseudocount)
+w = {}
+for i in range(L):
+    tot = sum(counts[b][i] for b in "ACGT") + 4*0.8
+    for b in "ACGT":
+        w[(b,i)] = math.log2(((counts[b][i]+0.8)/tot)/bg[b])
+best = sum(max(w[(b,i)] for b in "ACGT") for i in range(L))
+worst = sum(min(w[(b,i)] for b in "ACGT") for i in range(L))
+
+def relscore(s):                       # 0..1 relative score of an 8-mer
+    if any(c not in "ACGT" for c in s): return -1
+    sc = sum(w[(c,i)] for i,c in enumerate(s))
+    return (sc - worst) / (best - worst)
+
+comp = str.maketrans("ACGT","TGCA")
+def revcomp(s): return s.translate(comp)[::-1]
+def best_both(s): return max(relscore(s), relscore(revcomp(s)))</code></pre>
+
+<p>Now scan every promoter and keep windows scoring at least <b>0.85</b> (a common, fairly strict cut-off). Reuse the <code>read_fasta</code> and <code>records</code> from the previous step:</p>
+<pre class="code" data-run="py"><code>THR = 0.85
+pwm_sites = []
+for header, seq in records:
+    gene = header.split()[0]
+    chrom = header.split()[1].split(":")[0]
+    gstart = int(header.split()[1].split(":")[1].split("-")[0])
+    i = 0
+    while i <= len(seq) - L:
+        sc = best_both(seq[i:i+L])
+        if sc >= THR:
+            pwm_sites.append((chrom, gstart+i-1, gstart+i+L-1, gene, round(sc,3)))
+            i += L            # don't double-count the same site
+        else:
+            i += 1
+print("PWM sites (score >= 0.85):", len(pwm_sites))
+
+import pandas as pd
+chan = set(pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")["gene"])
+print("channelopathy genes with >=1 PWM site:",
+      len({g for *_, g, _ in [(c,s,e,g,sc) for c,s,e,g,sc in pwm_sites] if g in chan}))</code></pre>
+
+<div class="callout info">
+  <div class="co-t">Checkpoint</div>
+  <p>At score ≥ 0.85 you should find about <b>1240</b> sites, and this time about <b>28</b> of them fall in <b>13 of the 21</b> channelopathy genes — including the ones the exact search missed. The clock did not skip them after all; the exact-string search was simply too strict. (Your exact counts can shift a little if you change the step or the threshold — say which you used.) Save these sites too (<code>pwm_sites</code> → a BED file, as before).</p>
+</div>
+
+<div class="callout concept">
+  <div class="co-t">Think about the threshold</div>
+  <p>Lower the cut-off to 0.80 and you get many more sites; raise it to 0.90 and you get far fewer. There is no single "correct" value — it trades false positives against false negatives. When you report a result, you must state the threshold you used. Try two values and see how much your later conclusions depend on it.</p>
+</div>
+
+<div class="tryrow"><button class="do" type="button" data-goto="h-ebox-enrich">Next: are there more E-boxes than chance? →</button></div>
+<!--CITE: jaspar clock-->

@@ -1,0 +1,62 @@
+<!-- id: h-motifbreak | title: Scoring the damage | group: 3 · Human variation | summary: How much does each variant change the motif score? | keys: motifbreak delta ref alt score break create disruption pwm -->
+<h1><!--ICON:wand-->Scoring the damage a variant does</h1>
+<p class="lede">"Inside an E-box" is yes/no. Better is <i>how much</i> a variant changes the switch. Score the sequence with the reference letter, score it again with the variant's letter, and take the difference. This is exactly how published tools (like motifbreakR) work — and you can do it in a few lines.</p>
+
+<h2>The idea</h2>
+<p>For a variant, slide the BMAL1 matrix across the DNA around it. In each window, compute the relative score with the <b>reference</b> letter and with the <b>alternative</b> letter. The window where the motif is strongest is the one that matters; the <b>change in score</b> (alt − ref) tells you whether the variant weakens the switch (negative), strengthens it, or does nothing.</p>
+
+<h2>Compute it</h2>
+<p>This reuses <code>w</code>, <code>relscore</code>, <code>best_both</code> and <code>L</code> from <a href="#h-ebox-pwm">the PWM step</a>, and <code>var</code> from <a href="#h-variants">the variants step</a>. First index the promoter sequences by gene:</p>
+<pre class="code" data-run="py"><code>gene_seq = {}
+for header, seq in records:
+    gene  = header.split()[0]
+    chrom = header.split()[1].split(":")[0]
+    gstart= int(header.split()[1].split(":")[1].split("-")[0])
+    gene_seq[gene] = (chrom, gstart, seq)
+
+def motif_effect(gene, pos, ref, alt):
+    chrom, gstart, seq = gene_seq[gene]
+    off = pos - gstart                       # 0-based index into the promoter sequence
+    if off < 0 or off >= len(seq) or seq[off] != ref:
+        return None                          # variant not in this window / reference mismatch
+    best = None
+    for wst in range(max(0, off-L+1), min(off, len(seq)-L)+1):
+        ref_w = seq[wst:wst+L]
+        alt_w = ref_w[:off-wst] + alt + ref_w[off-wst+1:]
+        rr, ra = best_both(ref_w), best_both(alt_w)
+        if best is None or max(rr,ra) > max(best[0],best[1]):
+            best = (rr, ra)
+    rr, ra = best
+    return round(rr,3), round(ra,3), round(ra-rr,3)</code></pre>
+
+<p>Apply it to every variant and classify each one (threshold 0.85, as before):</p>
+<pre class="code" data-run="py"><code>THR = 0.85
+rows = []
+for r in var.itertuples():
+    eff = motif_effect(r.gene, r.pos, r.ref, r.alt)
+    if not eff: continue
+    rr, ra, d = eff
+    if   rr>=THR and ra< THR: cls="break"
+    elif rr< THR and ra>=THR: cls="create"
+    elif rr>=THR and ra>=THR: cls="weaken" if d<0 else "strengthen"
+    else: cls="none"
+    if cls!="none":
+        rows.append((r.gene, r.chrom, r.pos, r.ref, r.alt, r.AF, rr, ra, d, cls))
+
+import pandas as pd
+eff = pd.DataFrame(rows, columns=["gene","chrom","pos","ref","alt","AF","pwm_ref","pwm_alt","delta","class"])
+print(eff["class"].value_counts())
+eff.sort_values("delta").head(10)        # the biggest disruptions</code></pre>
+
+<div class="callout info">
+  <div class="co-t">Checkpoint</div>
+  <p>You should find on the order of <b>169</b> variants that <b>break</b> a strong site and <b>160</b> that <b>create</b> one, plus many that weaken or strengthen. This is a far richer catalogue than the exact-match one, and it reaches the channelopathy genes. These "break" variants — especially in channelopathy genes — are your candidate list for Part 5.</p>
+</div>
+
+<div class="callout concept">
+  <div class="co-t">A caution</div>
+  <p>A score change is a <b>prediction</b>, not proof the switch is really used in the brain. CLOCK:BMAL1 may not even bind this particular site in neurons. That is why the next step — is the position conserved and depleted of variation? — adds independent evidence, and why the real test is in patients.</p>
+</div>
+
+<div class="tryrow"><button class="do" type="button" data-goto="h-phylop">Start Part 4: conservation →</button></div>
+<!--CITE: jaspar group-->

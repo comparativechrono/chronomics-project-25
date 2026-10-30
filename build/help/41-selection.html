@@ -1,0 +1,64 @@
+<!-- id: h-selection | title: The selection test | group: 4 · Conservation and selection | summary: E-boxes vs matched controls — conservation and variation | keys: selection purifying control cpg conservation variation mann-whitney test statistics -->
+<h1><!--ICON:flask-->The selection test</h1>
+<p class="lede">This is the heart of the project. If E-boxes are functional switches kept intact by selection, then compared with fair control positions they should be <b>more conserved</b> and carry <b>fewer, rarer variants</b>. Here you measure both — carefully.</p>
+
+<h2>Choosing a fair control</h2>
+<p>You cannot compare E-boxes with "all promoter DNA", because <code>CACGTG</code> contains a <b>CpG</b>, and CpGs behave differently from ordinary DNA (they mutate faster and are themselves often conserved near promoters). The fair comparison is <b>E-box positions versus other CpG positions in the same promoters</b>. Then any difference you see is about the E-box, not about CpGs in general.</p>
+
+<h2>Tag every position</h2>
+<p>Mark each promoter base as <code>ebox</code>, <code>cpg_control</code> (a CpG not in an E-box), or <code>other</code>, and attach its phyloP score and whether a variant was seen there. Run in Python (reuses <code>records</code>, <code>eboxes</code>, <code>var</code>, and the <code>phylop</code> table):</p>
+<pre class="code" data-run="py"><code>import pandas as pd, numpy as np
+ebox_pos = set()
+for chrom, s, e, gene in eboxes:
+    for p in range(s+1, e+1): ebox_pos.add((chrom, p))
+var_pos = {(c,p): af for c,p,af in zip(var.chrom, var.pos, var.AF)}
+
+rows = []
+for header, seq in records:
+    chrom  = header.split()[1].split(":")[0]
+    gstart = int(header.split()[1].split(":")[1].split("-")[0])
+    for i in range(len(seq)-1):
+        pos = gstart + i
+        is_cpg  = seq[i]=="C" and seq[i+1]=="G"
+        is_ebox = (chrom,pos) in ebox_pos
+        cls = "ebox" if is_ebox else ("cpg_control" if is_cpg else "other")
+        rows.append((chrom, pos, cls, (chrom,pos) in var_pos))
+pos_df = pd.DataFrame(rows, columns=["chrom","pos","cls","variant"])
+pos_df = pos_df.merge(phylop.reset_index(), on=["chrom","pos"], how="left")
+pos_df["cls"].value_counts()</code></pre>
+
+<h2>Result 1 — conservation</h2>
+<pre class="code" data-run="py"><code>pos_df.groupby("cls")["phyloP470"].mean()</code></pre>
+
+<h2>Result 2 — how much variation</h2>
+<pre class="code" data-run="py"><code>(pos_df.groupby("cls")["variant"].mean()*1000).round(2)   # segregating SNVs per 1000 bp</code></pre>
+
+<h2>Is the difference real? A statistical test</h2>
+<p>Compare the phyloP of E-box positions with CpG-control positions using a Mann–Whitney U test (it doesn't assume a bell-curve):</p>
+<pre class="code" data-run="py"><code>from scipy.stats import mannwhitneyu
+a = pos_df.loc[pos_df.cls=="ebox", "phyloP470"].dropna()
+b = pos_df.loc[pos_df.cls=="cpg_control", "phyloP470"].dropna()
+U, p = mannwhitneyu(a, b, alternative="greater")
+print(f"E-box median {a.median():.2f} vs CpG-control {b.median():.2f};  p = {p:.1e}")</code></pre>
+
+<div class="callout info">
+  <div class="co-t">Checkpoint — the result</div>
+  <p>You should find E-box positions are <b>much more conserved</b> (mean phyloP470 ≈ <b>2.7</b>) than control CpGs (≈ <b>−0.2</b>; the "other" promoter positions sit in between, ≈ 0.8); the Mann–Whitney test gives <b>p &lt; 1e-100</b>. And E-boxes carry <b>about half the variants per base</b> of control CpGs (≈ <b>22</b> vs ≈ <b>43</b> per 1000 bp). Both point the same way: <b>purifying selection</b> has been keeping these switches intact. That is your main finding.</p>
+</div>
+
+<h2>Draw it (R, for a publication-style figure)</h2>
+<p>Switch a cell to R and make a boxplot — a good moment to meet <code>ggplot2</code>:</p>
+<pre class="code" data-run="r"><code>install.packages("ggplot2")
+library(ggplot2)
+d &lt;- read.csv("/home/user/positions.csv")      # write pos_df from Python first
+ggplot(d, aes(cls, phyloP470, fill=cls)) + geom_boxplot(outlier.size=0.3) +
+  labs(x=NULL, y="phyloP (470-way)", title="Conservation at E-boxes vs controls") +
+  theme_minimal() + theme(legend.position="none")</code></pre>
+
+<div class="callout concept">
+  <div class="co-t">Be honest about the confounds</div>
+  <p>E-boxes near a TSS could be conserved because <i>that part of the promoter</i> is conserved, not because it is an E-box. Your CpG-control helps, but write down this limitation. A stronger follow-up (Part 5) is to check whether the conserved, variation-depleted E-boxes are also the ones with the highest PWM scores — function predicting constraint.</p>
+</div>
+
+<div class="tryrow"><button class="do" type="button" data-goto="h-shortlist">Start Part 5: your shortlist →</button></div>
+<!--CITE: phylop data1000g-->

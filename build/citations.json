@@ -1,0 +1,424 @@
+{
+ "about": "References for the Clock E-boxes in brain genes project.",
+ "refs": {
+  "tgp2015": {
+   "authors": [
+    "The 1000 Genomes Project Consortium"
+   ],
+   "corporate": "The 1000 Genomes Project Consortium",
+   "short": "1000 Genomes Project",
+   "year": 2015,
+   "title": "A global reference for human genetic variation",
+   "container": "Nature",
+   "volume": "526",
+   "pages": "68-74",
+   "doi": "10.1038/nature15393"
+  },
+  "byrska2022": {
+   "authors": [
+    "Byrska-Bishop M",
+    "Evani US",
+    "Zhao X",
+    "et al."
+   ],
+   "year": 2022,
+   "title": "High-coverage whole-genome sequencing of the expanded 1000 Genomes Project cohort including 602 trios",
+   "container": "Cell",
+   "volume": "185",
+   "pages": "3426-3440",
+   "doi": "10.1016/j.cell.2022.08.004"
+  },
+  "danecek2021": {
+   "authors": [
+    "Danecek P",
+    "Bonfield JK",
+    "Liddle J",
+    "et al."
+   ],
+   "year": 2021,
+   "title": "Twelve years of SAMtools and BCFtools",
+   "container": "GigaScience",
+   "volume": "10",
+   "pages": "giab008",
+   "doi": "10.1093/gigascience/giab008"
+  },
+  "quinlan2010": {
+   "authors": [
+    "Quinlan AR",
+    "Hall IM"
+   ],
+   "year": 2010,
+   "title": "BEDTools: a flexible suite of utilities for comparing genomic features",
+   "container": "Bioinformatics",
+   "volume": "26",
+   "pages": "841-842",
+   "doi": "10.1093/bioinformatics/btq033"
+  },
+  "pollard2010": {
+   "authors": [
+    "Pollard KS",
+    "Hubisz MJ",
+    "Rosenbloom KR",
+    "Siepel A"
+   ],
+   "year": 2010,
+   "title": "Detection of nonneutral substitution rates on mammalian phylogenies",
+   "container": "Genome Research",
+   "volume": "20",
+   "pages": "110-121",
+   "doi": "10.1101/gr.097857.109"
+  },
+  "zoonomia2023": {
+   "authors": [
+    "Christmas MJ",
+    "Kaplow IM",
+    "Genereux DP",
+    "et al."
+   ],
+   "year": 2023,
+   "title": "Evolutionary constraint and innovation across hundreds of placental mammals",
+   "container": "Science",
+   "volume": "380",
+   "pages": "eabn3943",
+   "doi": "10.1126/science.abn3943"
+  },
+  "jaspar2022": {
+   "authors": [
+    "Castro-Mondragon JA",
+    "Riudavets-Puig R",
+    "Rauluseviciute I",
+    "et al."
+   ],
+   "year": 2022,
+   "title": "JASPAR 2022: the 9th release of the open-access database of transcription factor binding profiles",
+   "container": "Nucleic Acids Research",
+   "volume": "50",
+   "pages": "D165-D173",
+   "doi": "10.1093/nar/gkab1113"
+  },
+  "panelapp2019": {
+   "authors": [
+    "Martin AR",
+    "Williams E",
+    "Foulger RE",
+    "et al."
+   ],
+   "year": 2019,
+   "title": "PanelApp crowdsources expert knowledge to establish consensus diagnostic gene panels",
+   "container": "Nature Genetics",
+   "volume": "51",
+   "pages": "1560-1565",
+   "doi": "10.1038/s41588-019-0528-2"
+  },
+  "jones2019": {
+   "authors": [
+    "Jones SE",
+    "Lane JM",
+    "Wood AR",
+    "et al."
+   ],
+   "year": 2019,
+   "title": "Genome-wide association analyses of chronotype in 697,828 individuals provides insights into circadian rhythms",
+   "container": "Nature Communications",
+   "volume": "10",
+   "pages": "343",
+   "doi": "10.1038/s41467-018-08259-7"
+  },
+  "koike2012": {
+   "authors": [
+    "Koike N",
+    "Yoo S-H",
+    "Huang H-C",
+    "et al."
+   ],
+   "year": 2012,
+   "title": "Transcriptional architecture and chromatin landscape of the core circadian clock in mammals",
+   "container": "Science",
+   "volume": "338",
+   "pages": "349-354",
+   "doi": "10.1126/science.1226339"
+  },
+  "takahashi2017": {
+   "authors": [
+    "Takahashi JS"
+   ],
+   "year": 2017,
+   "title": "Transcriptional architecture of the mammalian circadian clock",
+   "container": "Nature Reviews Genetics",
+   "volume": "18",
+   "pages": "164-179",
+   "doi": "10.1038/nrg.2016.150"
+  },
+  "partch2014": {
+   "authors": [
+    "Partch CL",
+    "Green CB",
+    "Takahashi JS"
+   ],
+   "year": 2014,
+   "title": "Molecular architecture of the mammalian circadian clock",
+   "container": "Trends in Cell Biology",
+   "volume": "24",
+   "pages": "90-99",
+   "doi": "10.1016/j.tcb.2013.07.002"
+  },
+  "mohawk2012": {
+   "authors": [
+    "Mohawk JA",
+    "Green CB",
+    "Takahashi JS"
+   ],
+   "year": 2012,
+   "title": "Central and peripheral circadian clocks in mammals",
+   "container": "Annual Review of Neuroscience",
+   "volume": "35",
+   "pages": "445-462",
+   "doi": "10.1146/annurev-neuro-060909-153128"
+  },
+  "ruben2018": {
+   "authors": [
+    "Ruben MD",
+    "Wu G",
+    "Smith DF",
+    "et al."
+   ],
+   "year": 2018,
+   "title": "A database of tissue-specific rhythmically expressed human genes has potential applications in circadian medicine",
+   "container": "Science Translational Medicine",
+   "volume": "10",
+   "pages": "eaat8806",
+   "doi": "10.1126/scitranslmed.aat8806"
+  },
+  "gnomad2024": {
+   "authors": [
+    "Chen S",
+    "Francioli LC",
+    "Goodrich JK",
+    "et al."
+   ],
+   "year": 2024,
+   "title": "A genomic mutational constraint map using variation in 76,156 human genomes",
+   "container": "Nature",
+   "volume": "625",
+   "pages": "92-100",
+   "doi": "10.1038/s41586-023-06045-0"
+  },
+  "vep2016": {
+   "authors": [
+    "McLaren W",
+    "Gil L",
+    "Hunt SE",
+    "et al."
+   ],
+   "year": 2016,
+   "title": "The Ensembl Variant Effect Predictor",
+   "container": "Genome Biology",
+   "volume": "17",
+   "pages": "122",
+   "doi": "10.1186/s13059-016-0974-4"
+  },
+  "khan2018": {
+   "authors": [
+    "Khan S",
+    "Nobili L",
+    "Khatami R",
+    "et al."
+   ],
+   "year": 2018,
+   "title": "Circadian rhythm and epilepsy",
+   "container": "The Lancet Neurology",
+   "volume": "17",
+   "pages": "1098-1108",
+   "doi": "10.1016/S1474-4422(18)30335-1"
+  },
+  "ampiah2025": {
+   "authors": [
+    "Ampiah M",
+    "Hearn T"
+   ],
+   "year": 2025,
+   "title": "Investigation of the relationship between variants in SCN5A E-box motifs and phenotype in the 100KGP Brugada syndrome cohort",
+   "container": "European Journal of Human Genetics",
+   "volume": "33",
+   "pages": "227-227"
+  },
+  "seed2021": {
+   "authors": [
+    "Seed L",
+    "Hearn T"
+   ],
+   "year": 2021,
+   "title": "A candidate genetic modifier and autosomal recessive cause of Brugada syndrome that may alter the circadian expression of SCN5A",
+   "container": "EP Europace",
+   "volume": "23",
+   "issue": "Supplement_3",
+   "pages": "euab116.001",
+   "doi": "10.1093/europace/euab116.001"
+  },
+  "malik2020": {
+   "authors": [
+    "Malik BT",
+    "Hearn TJ"
+   ],
+   "year": 2020,
+   "title": "Towards chronomic medicine: enrichment and linkage of chronotype markers with rare disease associated genes",
+   "container": "medRxiv"
+  },
+  "seed2022": {
+   "authors": [
+    "Seed LM",
+    "Hearn TJ"
+   ],
+   "year": 2022,
+   "title": "A systematic review of utilisation of diurnal timing information in clinical trial design for Long QT syndrome",
+   "container": "Frontiers in Pharmacology",
+   "volume": "13",
+   "pages": "867131",
+   "doi": "10.3389/fphar.2022.867131"
+  },
+  "mcgowen2025": {
+   "authors": [
+    "McGowen J",
+    "Ampiah M",
+    "Hearn T"
+   ],
+   "year": 2025,
+   "title": "Analysis of diagnostic yield of inherited cardiac arrhythmia gene panels across ethnic groups in the 100,000 Genomes Project",
+   "container": "BMJ Connections Clinical Genetics and Genomics",
+   "volume": "2",
+   "pages": "e000014"
+  },
+  "gencode2021": {
+   "authors": [
+    "Frankish A",
+    "Diekhans M",
+    "Jungreis I",
+    "et al."
+   ],
+   "year": 2021,
+   "title": "GENCODE 2021",
+   "container": "Nucleic Acids Research",
+   "volume": "49",
+   "pages": "D916-D923",
+   "doi": "10.1093/nar/gkaa1087"
+  },
+  "biowasm": {
+   "authors": [
+    "Aractingi R"
+   ],
+   "short": "Biowasm",
+   "title": "Biowasm: compile genomics tools to WebAssembly",
+   "url": "https://biowasm.com"
+  },
+  "pyodide": {
+   "authors": [
+    "Pyodide contributors"
+   ],
+   "short": "Pyodide",
+   "title": "Pyodide: Python with the scientific stack, compiled to WebAssembly",
+   "url": "https://pyodide.org"
+  },
+  "webr": {
+   "authors": [
+    "Stagg G",
+    "Chambers L"
+   ],
+   "short": "webR",
+   "title": "webR: R compiled to WebAssembly",
+   "url": "https://docs.r-wasm.org/webr/latest/"
+  },
+  "igvjs": {
+   "authors": [
+    "Robinson JT",
+    "Thorvaldsd\u00f3ttir H",
+    "et al."
+   ],
+   "year": 2023,
+   "title": "igv.js: an embeddable JavaScript implementation of the Integrative Genomics Viewer",
+   "container": "Bioinformatics",
+   "volume": "39",
+   "pages": "btac830",
+   "doi": "10.1093/bioinformatics/btac830"
+  }
+ },
+ "programs": {
+  "clock": {
+   "name": "The mammalian clock and E-boxes",
+   "refs": [
+    "takahashi2017",
+    "partch2014",
+    "koike2012",
+    "mohawk2012"
+   ]
+  },
+  "chronomic": {
+   "name": "Chronomic medicine",
+   "refs": [
+    "ruben2018",
+    "jones2019",
+    "malik2020",
+    "khan2018"
+   ]
+  },
+  "group": {
+   "name": "From our group",
+   "refs": [
+    "ampiah2025",
+    "seed2021",
+    "malik2020",
+    "mcgowen2025",
+    "seed2022"
+   ]
+  },
+  "data1000g": {
+   "name": "1000 Genomes data",
+   "refs": [
+    "tgp2015",
+    "byrska2022"
+   ]
+  },
+  "gnomad": {
+   "name": "gnomAD",
+   "refs": [
+    "gnomad2024"
+   ]
+  },
+  "phylop": {
+   "name": "Conservation (phyloP, Zoonomia)",
+   "refs": [
+    "pollard2010",
+    "zoonomia2023"
+   ]
+  },
+  "jaspar": {
+   "name": "Transcription-factor motifs (JASPAR)",
+   "refs": [
+    "jaspar2022"
+   ]
+  },
+  "panelapp": {
+   "name": "Gene panels (PanelApp)",
+   "refs": [
+    "panelapp2019"
+   ]
+  },
+  "genes": {
+   "name": "Gene models and annotation",
+   "refs": [
+    "gencode2021",
+    "vep2016"
+   ]
+  },
+  "tools": {
+   "name": "Software in the workbench",
+   "refs": [
+    "danecek2021",
+    "quinlan2010",
+    "igvjs",
+    "biowasm",
+    "pyodide",
+    "webr"
+   ]
+  }
+ }
+}

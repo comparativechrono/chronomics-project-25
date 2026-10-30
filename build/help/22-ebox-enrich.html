@@ -1,0 +1,42 @@
+<!-- id: h-ebox-enrich | title: More than chance? | group: 2 · Finding E-boxes | summary: Test E-box enrichment against a CpG-aware expectation | keys: enrichment expected chance cpg dinucleotide markov background baseline -->
+<h1><!--ICON:chart-->Are there more E-boxes than chance?</h1>
+<p class="lede">Finding 205 E-boxes means nothing until you know how many you would expect by chance. Getting "chance" right is the whole game here — and it is where a careful scientist earns their result.</p>
+
+<h2>The trap: CACGTG hides a CpG</h2>
+<p>Look at the middle of <code>CA<b>CG</b>TG</code>: it contains the dinucleotide <b>CG</b> (a "CpG"). CpGs are special in two ways — they are rarer in the genome than you'd expect, <i>and</i> they mutate faster than other sites. So a naive expectation ("four letters, each 1-in-4, so CACGTG happens 1 in 4⁶") is wrong twice over. You must compare against a background that already knows this promoter's letter <b>and dinucleotide</b> composition.</p>
+
+<h2>A fair expectation</h2>
+<p>Fit a simple model to the promoters themselves — how often each letter follows each other letter — then ask how many <code>CACGTG</code> it predicts. Run in Python (reuse <code>records</code>):</p>
+<pre class="code" data-run="py"><code>from collections import Counter
+pool = "".join(seq for _, seq in records)
+base = Counter(c for c in pool if c in "ACGT"); N = sum(base.values())
+di = Counter(pool[i:i+2] for i in range(len(pool)-1) if pool[i] in "ACGT" and pool[i+1] in "ACGT")
+
+def P(a): return base[a]/N
+def T(a,b):                                   # P(next=b | this=a)
+    s = sum(di[a+x] for x in "ACGT"); return di[a+b]/s if s else 0.25
+
+word = "CACGTG"
+p_word = P(word[0])
+for i in range(len(word)-1): p_word *= T(word[i], word[i+1])
+positions = sum(max(0, len(seq)-5) for _, seq in records)
+expected = p_word * positions
+observed = len(eboxes)                         # from the find step
+print(f"observed {observed} | expected ~{expected:.0f} | ratio {observed/expected:.2f}")</code></pre>
+
+<div class="callout info">
+  <div class="co-t">Checkpoint</div>
+  <p>You should see about <b>205 observed vs ~124 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are enriched roughly <b>1.7-fold</b> in these promoters, even after accounting for CpG content — a real signal that the clock pathway reaches these genes. (Try the same for <code>CACGTT</code>, a near-relative that CLOCK:BMAL1 binds weakly — is it enriched?)</p>
+</div>
+
+<div class="callout concept">
+  <div class="co-t">Why this matters more than the number</div>
+  <p>If you had used the naive 1-in-4⁶ expectation you would have claimed a much bigger enrichment — and a reviewer would have thrown it out, because CpG content alone could explain it. Choosing the honest baseline is the difference between a finding and an artefact. Write down, in your notes, exactly which baseline you used and why.</p>
+</div>
+
+<h2>See one on the genome</h2>
+<p>Pick an E-box from your list and open that region in the genome browser to see it sitting in a promoter. For example, jump to the <i>SLC2A1</i> promoter (GLUT1 — its deficiency causes epilepsy):</p>
+<div class="tryrow"><button class="do" type="button" data-igv="SLC2A1">Open SLC2A1 in the genome browser</button></div>
+
+<div class="tryrow"><button class="do" type="button" data-goto="h-variants">Start Part 3: human variation →</button></div>
+<!--CITE: clock chronomic-->

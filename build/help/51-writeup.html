@@ -1,0 +1,36 @@
+<!-- id: h-writeup | title: Write it up | group: 5 · Shortlist and write-up | summary: A reproducible report, and what to hand in | keys: report writeup reproducible methods limitations results notes hand in -->
+<h1><!--ICON:notebook-->Write it up — so someone could repeat it</h1>
+<p class="lede">A result that cannot be repeated is not yet a result. Your write-up should let another person (or you, in six months) reproduce every number. Here is how to structure it, and what to hand in.</p>
+
+<h2>Keep a running record as you go</h2>
+<p>Don't leave this to the end. In your notebook, after each step, write a short Markdown cell: what you did, which file and which command, and the number you got. Those cells <i>are</i> your methods section. The habit — recording how each result was produced — is the single most valued skill in computational biology (and the focus of our group's work on reproducibility).</p>
+
+<h2>Structure of the report</h2>
+<table class="table">
+<tr><th>Introduction</th><td>The clock, E-boxes, and why epilepsy/channelopathy genes. One paragraph, citing the reading list.</td></tr>
+<tr><th>Methods</th><td>Gene panels (PanelApp, versions), promoter definition (TSS −1000/+500), E-box definition (exact <code>CACGTG</code> <i>and</i> PWM ≥ 0.85, say which matrix), variant source (1000 Genomes 30×), conservation (phyloP 470-way), and your control (CpG-matched). State every threshold.</td></tr>
+<tr><th>Results</th><td>Enrichment (observed vs expected), the catalogue size, the selection test (figure + statistic), and the shortlist. Report numbers with what they are compared to.</td></tr>
+<tr><th>Discussion</th><td>What it means, the confounds you noted, and what the 100KGP follow-up would test.</td></tr>
+</table>
+
+<h2>State your limitations plainly</h2>
+<ul>
+  <li>A PWM match and conservation <b>predict</b> a functional switch; they do not prove CLOCK:BMAL1 binds it in neurons.</li>
+  <li>The conservation signal is partly confounded by promoter position near the TSS (you controlled for CpGs, not for everything).</li>
+  <li>You used the 1000 Genomes reference populations, not patients; frequencies are population frequencies, not disease associations.</li>
+  <li>Your results depend on thresholds (PWM score, promoter window). Showing they hold at a second threshold is worth a sentence.</li>
+</ul>
+
+<h2>What to hand in</h2>
+<ul>
+  <li>Your notebook(s), downloaded as <code>.ipynb</code> (Notebook tab → Download), with the Markdown records.</li>
+  <li>Your output files — <code>eboxes_canonical.bed</code>, <code>catalogue.csv</code>, <code>positions.csv</code>, your figure — via <b>My files</b> (top right) → download all as a <code>.zip</code>.</li>
+  <li>The written report.</li>
+</ul>
+
+<div class="callout warn">
+  <div class="co-t">Back up your work</div>
+  <p>Everything is saved only in <b>this browser on this computer</b>. Download your work at the end of every session, and especially before using a shared machine. Nothing is on a server.</p>
+</div>
+
+<div class="tryrow"><button class="do" type="button" data-goto="h-next">Next: where you could take it →</button></div>
