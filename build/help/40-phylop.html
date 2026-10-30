@@ -12,7 +12,8 @@
 <p>Load the table and look at the scores under one of your E-boxes. Pick a canonical E-box from your list and read the six positions:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 phylop = pd.read_csv("/data/examples/conservation/phylop_promoters.csv.gz")
-phylop = phylop.set_index(["chrom","pos"])
+# a few promoters overlap (two genes that start close together), so some positions are listed twice: keep each once
+phylop = phylop.drop_duplicates(["chrom","pos"]).set_index(["chrom","pos"]).sort_index()
 
 chrom, s, e, gene = eboxes[0]          # first E-box (BED: 0-based s)
 for p in range(s+1, e+1):

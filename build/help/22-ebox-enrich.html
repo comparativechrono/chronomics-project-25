@@ -26,7 +26,7 @@ print(f"observed {observed} | expected ~{expected:.0f} | ratio {observed/expecte
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>
-  <p>You should see about <b>205 observed vs ~124 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are enriched roughly <b>1.7-fold</b> in these promoters, even after accounting for CpG content — a real signal that the clock pathway reaches these genes. (Try the same for <code>CACGTT</code>, a near-relative that CLOCK:BMAL1 binds weakly — is it enriched?)</p>
+  <p>You should see about <b>205 observed vs ~123 expected</b>, a ratio of about <b>1.66</b>. Canonical E-boxes are enriched roughly <b>1.7-fold</b> in these promoters, even after accounting for CpG content — a real signal that the clock pathway reaches these genes. (Try the same for <code>CACGTT</code>, a near-relative that CLOCK:BMAL1 binds weakly — is it enriched?)</p>
 </div>
 
 <div class="callout concept">
@@ -35,8 +35,11 @@ print(f"observed {observed} | expected ~{expected:.0f} | ratio {observed/expecte
 </div>
 
 <h2>See one on the genome</h2>
-<p>Pick an E-box from your list and open that region in the genome browser to see it sitting in a promoter. For example, jump to the <i>SLC2A1</i> promoter (GLUT1 — its deficiency causes epilepsy):</p>
-<div class="tryrow"><button class="do" type="button" data-igv="SLC2A1">Open SLC2A1 in the genome browser</button></div>
+<p>Put your own E-boxes on the genome: this adds <code>~/eboxes_canonical.bed</code> (from the find step) to the genome browser as a track of its own. Then jump to one of them — the first in your list is in the <i>ACOX1</i> promoter — and see it sitting inside the promoter window, with the conservation track beneath it:</p>
+<div class="tryrow"><button class="do" type="button" data-igv-track="~/eboxes_canonical.bed">Show my E-boxes in the genome browser</button> <button class="do" type="button" data-igv="chr17:75979355-75979560">Go to the first E-box (ACOX1)</button></div>
+<p>For contrast, look at <i>SLC2A1</i> (GLUT1 — its deficiency causes epilepsy), one of the channelopathy genes whose promoter has no exact <code>CACGTG</code> at all:</p>
+<div class="tryrow"><button class="do" type="button" data-igv="chr1:42958068-42960168">Open the SLC2A1 promoter in the genome browser</button></div>
+<p>Any BED, VCF or bedGraph file in your home folder can be shown the same way, with <b>Add my files…</b> in the Genome browser tab (<a href="#h-genome">The genome browser</a>).</p>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-variants">Start Part 3: human variation →</button></div>
 <!--CITE: clock chronomic-->

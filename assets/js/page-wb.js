@@ -307,6 +307,14 @@
     } else fs.copy(src, dest);
     toast(`Copied to <b>${esc(fs.pretty(dest))}</b> – your own copy, which you can change.`, 'ok');
   };
+  /* (chronomics-project-25) data-igv-track="~/eboxes_canonical.bed": a file of the workbench → a track of the genome
+     browser */
+  MG.actions.igvTrack = async (path) => {
+    const fs = MG.app.fs;
+    const p = path.startsWith('~/') ? HOME + path.slice(1) : path;
+    if (!fs.exists(p)) throw new Error(`There is no file ${path} yet – make it with the step before this one first.`);
+    await MG.app.igvLoad([p]);
+  };
   MG.actions.newNb = async (lang) => {
     await MG.app.showWorkbench('notebook');
     await MG.app.nbApp.newNotebook(lang === 'r' ? 'r' : 'python');

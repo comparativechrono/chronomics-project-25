@@ -1,6 +1,7 @@
 """Reproduce the guide's checkpoints using ONLY the shipped bundle + the guide's own code."""
-import re, math, gzip, csv, io, subprocess, sys
-EX="/home/claude/chronomics-project-25/data/examples"
+import re, math, gzip, csv, io, os, subprocess, sys
+# the shipped bundle, next to this folder (data/examples)
+EX=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"data","examples")
 import pysam
 
 # ---- Part 1: promoters.fa faidx-able; count & GC ----

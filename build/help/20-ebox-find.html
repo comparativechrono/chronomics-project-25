@@ -25,7 +25,7 @@ records = read_fasta("/data/examples/reference/promoters.fa")
 eboxes = []
 for header, seq in records:
     gene = header.split()[0]
-    region = header.split()[1]            # e.g. chr2:166127020-166128519
+    region = header.split()[1]            # e.g. chr2:166127520-166129020
     chrom = region.split(":")[0]
     gstart = int(region.split(":")[1].split("-")[0])   # 1-based genomic start of the window
     for m in re.finditer("(?=CACGTG)", seq):           # (?=...) finds overlapping hits too

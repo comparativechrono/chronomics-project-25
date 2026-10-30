@@ -33,6 +33,12 @@ The headline findings the guide leads them to (the "answer key" is built into th
 
 Notebook (Python + R), Terminal (`samtools`, `bcftools`, `bedtools`, `seqtk`, all real programs compiled to WebAssembly), Files, Databases (live Ensembl / NCBI), Genome browser (IGV), and an optional AI assistant. Removed from the base workbench: 3D viewer, Networks, Galaxy, IDE.
 
+Some settings in `assets/js/config.js` adapt the workbench to this project (the matching code changes are marked `chronomics-project-25` in `igv-panel.js`, `workbench.js`, `page-wb.js` and `assistant.js`):
+
+- `igvGenome` and `igvTracks` — the workbench's example genome (`data/examples/reads/`) is not shipped here, so the Genome browser starts on the human genome hg38 hosted by the IGV team (it needs the internet), with the project's promoters, variants and phyloP 470-way conservation as tracks. The guide's genome-browser buttons go there too.
+- `helpAliases` — the help buttons of the tabs, the *My files* menu and the Databases cards point at workbench help pages that this guide does not have; these name the guide pages they open instead.
+- `aiChatStarters`, `aiAgentTasks` and `aiAgentExample` — the example questions and tasks of the AI tab, which in the workbench use its own example files.
+
 ## Publish it on GitHub Pages
 
 1. This repository → **Settings → Pages → Build and deployment**: Source **Deploy from a branch**, branch **main**, folder **/ (root)**. Save.
@@ -48,7 +54,7 @@ The left-hand guide is built from the pages in `build/help/` by `build/make_page
 python3 build/make_page.py        # writes index.html
 ```
 
-Each page is one `build/help/NN-name.html` file; its first line is a comment with its id, title, group, summary and keywords. The parts (groups) and their order are the `GROUPS` list in `make_page.py`. Buttons in the guide run things in the workbench: `data-run="term|py|r"` on a `<pre class="code">` adds **Run in the terminal / Add to notebook**; `data-goto`, `data-igv`, `data-api`, `data-bench` and `data-open` drive the other tabs. The reading list uses `<!--CITE: key …-->` against `build/citations.json`.
+Each page is one `build/help/NN-name.html` file; its first line is a comment with its id, title, group, summary and keywords. The parts (groups) and their order are the `GROUPS` list in `make_page.py`. Buttons in the guide run things in the workbench: `data-run="term|py|r"` on a `<pre class="code">` adds **Run in the terminal / Add to notebook**; `data-goto`, `data-igv` (a gene or `chr:start-end` on hg38), `data-igv-track` (a file of the student's, e.g. `~/eboxes_canonical.bed`, as a genome-browser track), `data-api` (e.g. `ensembl:gene:SCN1A`), `data-bench` and `data-open` drive the other tabs. References use `<!--CITE: key …-->` (a References section), `<!--CITE-LIST: key …-->` (the list alone, as in the reading list) and `<!--CITE-SHORT: key-->` (author and year) against `build/citations.json`. `make_page.py` warns about links to pages that do not exist, links with no address, and `/data/examples` files that are not in the bundle.
 
 ## The data, and how it was made
 

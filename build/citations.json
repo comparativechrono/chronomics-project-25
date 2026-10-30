@@ -262,7 +262,8 @@
    ],
    "year": 2020,
    "title": "Towards chronomic medicine: enrichment and linkage of chronotype markers with rare disease associated genes",
-   "container": "medRxiv"
+   "container": "medRxiv",
+   "doi": "10.1101/2020.08.17.20176420"
   },
   "seed2022": {
    "authors": [
@@ -286,7 +287,8 @@
    "title": "Analysis of diagnostic yield of inherited cardiac arrhythmia gene panels across ethnic groups in the 100,000 Genomes Project",
    "container": "BMJ Connections Clinical Genetics and Genomics",
    "volume": "2",
-   "pages": "e000014"
+   "pages": "e000014",
+   "doi": "10.1136/bmjccgg-2025-000014"
   },
   "gencode2021": {
    "authors": [
@@ -407,6 +409,12 @@
    "refs": [
     "gencode2021",
     "vep2016"
+   ]
+  },
+  "igv": {
+   "name": "The genome browser (igv.js)",
+   "refs": [
+    "igvjs"
    ]
   },
   "tools": {

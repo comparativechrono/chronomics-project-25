@@ -56,8 +56,9 @@ print("PWM sites (score >= 0.85):", len(pwm_sites))
 
 import pandas as pd
 chan = set(pd.read_csv("/data/examples/genes/brain_channelopathy.tsv", sep="\t")["gene"])
-print("channelopathy genes with >=1 PWM site:",
-      len({g for *_, g, _ in [(c,s,e,g,sc) for c,s,e,g,sc in pwm_sites] if g in chan}))</code></pre>
+chan_sites = [site for site in pwm_sites if site[3] in chan]      # site = (chrom, start, end, gene, score)
+print("PWM sites in the channelopathy genes:", len(chan_sites),
+      "in", len({site[3] for site in chan_sites}), "of the 21 genes")</code></pre>
 
 <div class="callout info">
   <div class="co-t">Checkpoint</div>

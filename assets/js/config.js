@@ -50,7 +50,51 @@ window.MG_CONFIG = {
   anthropicModel: 'claude-sonnet-5-5',
   /* The AI agent: after how many seconds a step that has not ended is stopped. */
   agentCommandSeconds: 150,
+  /* The examples the AI tab offers (the workbench's own use example files that this project does not ship).
+     They help a student find their way around; none of them does a step of the project for them. */
+  aiChatStarters: [
+    'What is an E-box, and why does CLOCK:BMAL1 bind CACGTG?',
+    'How do I read the INFO field of /data/examples/variants/promoter_variants.vcf.gz with bcftools query?',
+    'Why does the enrichment test need a CpG-aware expectation rather than 1 in 4^6?',
+    'Which programs can I use in the terminal here?'
+  ],
+  aiAgentExample: 'Show me the first lines of each file in /data/examples and tell me what each file is',
+  aiAgentTasks: [
+    'Show me the first lines of each file in /data/examples and tell me what each file is',
+    'Which chromosomes are the 21 genes of /data/examples/genes/brain_channelopathy.tsv on, and on which strand?',
+    'How many promoter variants in /data/examples/variants/promoter_variants.vcf.gz does each of the five super-populations have with an allele frequency above 1%?'
+  ],
 
   /* How much the workbench may keep in this browser before it warns (megabytes). */
-  storageWarnMB: 1500
+  storageWarnMB: 1500,
+
+  /* The Genome browser. This project does not ship the workbench's example genome (data/examples/reads/), so the
+     browser starts on the human genome hosted by the IGV team (needs the internet), and the guide's genome-browser
+     buttons go there too. The tracks below are shown with it: the project's promoters and variants (from this site)
+     and phyloP 470-way conservation (the same bigWig the analysis read, from UCSC's mirror on Amazon S3). */
+  igvGenome: 'hg38',
+  igvHelpText: 'Type a gene (SCN1A) or a position (chr2:166,127,520-166,129,020) in the box to go there; drag sideways to move; + / − to zoom. Click a promoter, a variant or the conservation track for details.',
+  igvTracks: {
+    hg38: [
+      { name: 'Project promoters (TSS −1000/+500)', type: 'annotation', format: 'bed', url: 'data/examples/genes/promoters.bed', indexed: false, displayMode: 'EXPANDED', color: '#2a7f62', height: 50 },
+      { name: '1000 Genomes promoter SNVs', type: 'variant', format: 'vcf', url: 'data/examples/variants/promoter_variants.vcf.gz', indexURL: 'data/examples/variants/promoter_variants.vcf.gz.tbi', displayMode: 'EXPANDED', height: 60 },
+      { name: 'phyloP 470-way (mammals)', type: 'wig', format: 'bigwig', url: 'https://genome-browser.s3.us-east-1.amazonaws.com/goldenPath/hg38/phyloP470way/hg38.phyloP470way.bw', color: '#3d5a99', altColor: '#c0504d', height: 60 }
+    ]
+  },
+
+  /* Help pages of the workbench that this project's guide does not have: the help buttons of the tabs, menus and
+     Databases cards that point at them open these pages of the guide instead ('page' or 'page/section'; '*' for any
+     other). */
+  helpAliases: {
+    'h-files': 'h-setup/kept',
+    'h-notebook': 'h-setup/warmups',
+    'h-python': 'h-tools',
+    'h-r': 'h-tools',
+    'h-terminal': 'h-tools',
+    'h-samtools': 'h-tools',
+    'h-programs': 'h-tools',
+    'h-databases': 'h-tools',
+    'h-db-genes': 'h-tools',
+    '*': 'h-tools'
+  }
 };

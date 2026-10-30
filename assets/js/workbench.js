@@ -297,7 +297,21 @@
     });
   }
 
-  function showHelp(id, opts = {}) {
+  /* (chronomics-project-25) The tabs, menus and Databases cards link to help pages of the workbench that this site
+     does not have. config.helpAliases names the page that takes the place of each ('page' or 'page/section'; '*' for
+     any other), so that those links lead somewhere instead of doing nothing. → [id, anchor] */
+  function resolveHelp(id, anchor) {
+    if (!id || document.getElementById(id)) return [id, anchor];
+    const A = MG.config.helpAliases || {};
+    const to = A[id] || A['*'];
+    if (!to) return [id, anchor];
+    const [i, a] = to.split('/');
+    return [i, a || anchor];
+  }
+
+  function showHelp(id0, opts = {}) {
+    const [id, anchor] = resolveHelp(id0, opts.anchor);
+    opts = Object.assign({}, opts, { anchor });
     const page = document.getElementById(id);
     if (!page || !page.classList.contains('help-page')) return;
     if (opts.push && current && current.id !== id) backStack.push(current.id);
@@ -355,7 +369,8 @@
       link.addEventListener('click', () => MG.app.showHelp(link.dataset.target));
       crumbs.parentNode.insertBefore(link, crumbs.nextSibling);
     }
-    const show = target && current && current.id !== target && document.getElementById(target);
+    const page = target && resolveHelp(target)[0];
+    const show = page && current && current.id !== page && document.getElementById(page);
     link.hidden = !show;
     if (show) {
       link.dataset.target = target;
@@ -600,7 +615,8 @@
       }
       if (ds.igv) {
         await MG.app.showWorkbench('igv');
-        await busy(() => MG.app.igv.goto(ds.igv));
+        // (data-genome="hg38" on the button, else the site's genome – config.igvGenome – if it names one)
+        await busy(() => MG.app.igv.goto(ds.igv, ds.genome || MG.config.igvGenome || undefined));
       }
       if (ds.api) {
         await MG.app.showWorkbench('apis');

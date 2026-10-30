@@ -9,9 +9,11 @@
 - the first page (h-home) gets the index of all topics, grouped (<!--TOPICS-->);
 - a page with "index: yes" in its header introduces its group: <!--GROUP--> becomes the list of the group's other
   pages, and the breadcrumbs of those pages lead to it (else to the first page of the group);
-- <!--CITE: program …--> becomes the section "References" with the papers of those programs, and
-  <!--CITE-SHORT: program--> a short link to them (author, year), from build/citations.json – which is also written
-  into the page (window.WB_CITATIONS) for the tool forms of Galaxy;
+- <!--CITE: topic …--> becomes the section "References" with the papers of those topics (the entries of "programs"
+  in build/citations.json), <!--CITE-LIST: topic …--> the same list without the heading (for the reading list), and
+  <!--CITE-SHORT: topic--> a short link to them (author, year) – citations.json is also written into the page
+  (window.WB_CITATIONS) for the tool forms of Galaxy;
+- the links between pages, links with no address and the /data/examples files the pages name are checked (warnings);
 - the list of example files (site/data/examples) and of the starter notebooks (site/data/starter)
   is written into the page (window.WB_EXAMPLES, window.WB_STARTERS).
 
@@ -177,17 +179,39 @@ def cite_short(key):
         who = fam[0] if len(fam) == 1 else f'{fam[0]} and {fam[1]}' if len(fam) == 2 else f'{fam[0]} et al.'
     when = f' {r["year"]}' if r.get('year') else ''
     url = f'https://doi.org/{r["doi"]}' if r.get('doi') else r.get('url', '')
+    if not url:  # (a conference abstract with no DOI or web address: the name and year, without a link)
+        return f'<span class="cite-nolink">{html.escape(who + when)}</span>'
     return f'<a href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">{html.escape(who + when)}</a>'
 
 
-def cite_section(ids):
-    progs = CITATIONS['programs']
-    unknown = [i for i in ids if i not in progs]
+def known_programs(ids, what):
+    unknown = [i for i in ids if i not in CITATIONS['programs']]
     if unknown:
-        raise SystemExit(f'<!--CITE--> names programs that build/citations.json does not have: {unknown}')
+        raise SystemExit(f'<!--{what}--> names entries that build/citations.json does not have: {unknown}')
+
+
+def cite_list(ids):
+    """the references of the entries ids of citations.json "programs", as a list (no heading)"""
+    known_programs(ids, 'CITE-LIST')
+    progs = CITATIONS['programs']
+    out = ['<dl class="cite-list">']
+    for i in ids:
+        p = progs[i]
+        out.append(f'<dt>{html.escape(p["name"])}</dt>')
+        if p.get('note'):
+            out.append(f'<dd class="cite-note">{html.escape(p["note"])}</dd>')
+        out.extend(f'<dd>{cite_html(k)}</dd>' for k in p['refs'])
+    out.append('</dl>')
+    return '\n'.join(out)
+
+
+def cite_section(ids):
+    known_programs(ids, 'CITE')
+    progs = CITATIONS['programs']
     out = ['<h2 data-anchor="cite">References</h2>',
-           '<p>The papers to cite when you use ' + ('this program' if len(ids) == 1 else 'these programs') +
-           ' in your work – with the version you used (<a href="#h-programs">Programs and versions</a>):</p>',
+           '<p>The papers behind this page – cite the ones you use in your report (all of them are in the '
+           '<a href="#h-reading">Reading list</a>' + (', and the versions of the programs in <a href="#h-tools">The tools</a>'
+                                                       if 'tools' in ids else '') + '):</p>',
            '<dl class="cite-list">']
     for i in ids:
         p = progs[i]
@@ -206,19 +230,32 @@ def citations_json():
 
 def with_citations(body):
     body = re.sub(r'<!--CITE:\s*([^>]*?)\s*-->', lambda m: cite_section(m.group(1).split()), body)
-    return re.sub(r'<!--CITE-SHORT:\s*([^>]*?)\s*-->',
-                  lambda m: '; '.join(cite_short(k) for i in m.group(1).split() for k in CITATIONS['programs'][i]['refs']), body)
+    body = re.sub(r'<!--CITE-LIST:\s*([^>]*?)\s*-->', lambda m: cite_list(m.group(1).split()), body)
+
+    def short(m):
+        known_programs(m.group(1).split(), 'CITE-SHORT')
+        return '; '.join(cite_short(k) for i in m.group(1).split() for k in CITATIONS['programs'][i]['refs'])
+    return re.sub(r'<!--CITE-SHORT:\s*([^>]*?)\s*-->', short, body)
 
 
-def check_links(pages):
+def check_links(pages, bodies):
+    """links between the pages (href="#h-…", data-goto="h-…", in the pages as they are written into index.html, the
+    references included), empty links, and the example files the pages name"""
     ids = {p['id'] for p in pages}
+    files = {'/data/examples/' + e['p'] for e in examples()}
     bad = []
-    for p in pages:
-        for m in re.finditer(r'(?:href="#|data-goto=")(h-[\w-]+)', p['body']):
+    for p, body in zip(pages, bodies):
+        for m in re.finditer(r'(?:href="#|data-goto=")(h-[\w-]+)', body):
             if m.group(1) not in ids:
-                bad.append((p['file'], m.group(1)))
-    for f, i in bad:
-        print(f'warning: {f} links to a page that does not exist: {i}', file=sys.stderr)
+                bad.append((p['file'], f'links to a page that does not exist: {m.group(1)}'))
+        for m in re.finditer(r'href=""', body):
+            bad.append((p['file'], 'has a link with no address (href="")'))
+        for m in re.finditer(r'/data/examples/[\w./-]*\w', body):
+            f = m.group(0)
+            if f not in files and not any(x.startswith(f + '/') for x in files):
+                bad.append((p['file'], f'names a file that is not in data/examples: {f}'))
+    for f, msg in bad:
+        print(f'warning: {f} {msg}', file=sys.stderr)
     return bad
 
 
@@ -252,8 +289,10 @@ def main():
     for p in pages:
         first_of.setdefault(p['group'], p['id'])
     parts = []
+    bodies = []
     for p in pages:
         body = with_citations(p['body'].replace('<!--TOPICS-->', topics(pages)).replace('<!--GROUP-->', group_list(pages, p['group'], p['id'])))
+        bodies.append(body)
         attrs = {
             'class': 'help-page',
             'id': p['id'],
@@ -264,7 +303,7 @@ def main():
         }
         a = ' '.join(f'{k}="{html.escape(v, quote=True)}"' for k, v in attrs.items() if v)
         parts.append(f'<article {a} hidden>\n{body}\n</article>')
-    check_links(pages)
+    check_links(pages, bodies)
     out = tpl.replace('<!--HELP-->', '\n'.join(parts))
     data = (f'<script>window.WB_EXAMPLES = {json.dumps(examples(), separators=(",", ":"))};\n'
             f'window.WB_STARTERS = {json.dumps(starters(), separators=(",", ":"))};\n'

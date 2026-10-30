@@ -1,0 +1,29 @@
+<!-- id: h-genome | title: The genome browser | group: Reference | summary: The human genome, the project's tracks, and adding your own | keys: igv genome browser track bed vcf phylop hg38 grch38 locus conservation image -->
+<h1><!--ICON:genome-->The genome browser</h1>
+<p class="lede">The <b>Genome browser</b> tab is IGV (<!--CITE-SHORT: igv-->), showing the human reference genome <b>GRCh38 (hg38)</b> — the same build as all the project data. The genome comes from the IGV team's servers, so this tab needs the internet.</p>
+
+<h2>What you see</h2>
+<p>Above the genome's own gene track (<i>Refseq All</i>, at the bottom), three tracks of this project are shown:</p>
+<table class="table">
+<tr><th>Project promoters (TSS −1000/+500)</th><td>The 641 promoter windows, from <code>/data/examples/genes/promoters.bed</code>. Click a box for its gene.</td></tr>
+<tr><th>1000 Genomes promoter SNVs</th><td>Every promoter variant, from <code>/data/examples/variants/promoter_variants.vcf.gz</code>. Click a variant for its allele frequencies (<code>AF</code>, <code>AF_EUR</code> …).</td></tr>
+<tr><th>phyloP 470-way (mammals)</th><td>Conservation at every base: bars above the line mark positions held still across mammals, bars below it fast-changing ones. It is read, a piece at a time, from UCSC's copy of the genome-wide file — the same scores as <code>conservation/phylop_promoters.csv.gz</code>.</td></tr>
+</table>
+
+<h2>Go somewhere</h2>
+<p>Type a gene (<code>SCN1A</code>) or a position (<code>chr2:166,127,520-166,129,020</code>) in the box at the top of the browser and press Enter. Drag sideways to move, and use + and − to zoom: close in, the letters of the sequence appear. For example:</p>
+<div class="tryrow"><button class="do" type="button" data-igv="chr2:166127220-166129320">The SCN1A promoter</button> <button class="do" type="button" data-igv="chr17:75979355-75979560">An E-box in ACOX1</button></div>
+
+<h2>Add your own tracks</h2>
+<p>Files you make — your E-boxes, your catalogue as a BED file — can be shown as tracks too. In the Genome browser tab, <b>Add my files…</b> lists the BED, VCF and bedGraph files in your home folder; or use the button below once you have made <code>eboxes_canonical.bed</code> in <a href="#h-ebox-find">Find the E-boxes</a>. Their chromosome names must be written as here (<code>chr2</code>, not <code>2</code>) and their positions must be GRCh38.</p>
+<div class="tryrow"><button class="do" type="button" data-igv-track="~/eboxes_canonical.bed">Show my E-boxes in the genome browser</button></div>
+
+<h2>Keep a picture</h2>
+<p><b>Save image</b> downloads the current view as a PNG file — useful for your report (say which region it shows).</p>
+
+<div class="callout warn">
+  <div class="co-t">If it does not start</div>
+  <p>The genome and the conservation track come over the internet. If the tab says the genome browser could not start, check your connection and press <b>Try again</b>, or reload the page. The rest of the workbench works without it.</p>
+</div>
+
+<div class="tryrow"><button class="do" type="button" data-goto="h-data">Next: the project data →</button></div>

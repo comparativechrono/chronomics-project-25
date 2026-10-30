@@ -24,14 +24,12 @@ bcftools query -f '%INFO/AF\n' /data/examples/variants/promoter_variants.vcf.gz 
   <p>There are about <b>22,836</b> SNVs across the 641 promoters, and the large majority are <b>rare</b>. That skew — far more rare than common variants — is normal for functional regions, and it is a clue you will use in Part 4 when you test for selection.</p>
 </div>
 
-<h2>Pull a variant into a notebook</h2>
-<p>Load the variants into Python as a table so you can join them to your E-boxes next:</p>
-<pre class="code" data-run="py"><code>import pandas as pd, subprocess
+<h2>Pull the variants into a notebook</h2>
+<p>Load the variants into Python as a table so you can join them to your E-boxes next. A notebook line that starts with <code>!</code> runs a terminal command, so <code>bcftools query</code> can write the columns you want into a plain table in your home folder, and pandas then reads it:</p>
+<pre class="code" data-run="py"><code>!bcftools query -f '%CHROM\t%POS\t%ID\t%REF\t%ALT\t%INFO/GENE\t%INFO/AF\t%INFO/AF_AFR\t%INFO/AF_AMR\t%INFO/AF_EAS\t%INFO/AF_EUR\t%INFO/AF_SAS\n' /data/examples/variants/promoter_variants.vcf.gz &gt; /home/user/promoter_variants.tsv
+import pandas as pd
 cols = ["chrom","pos","vid","ref","alt","gene","AF","AF_AFR","AF_AMR","AF_EAS","AF_EUR","AF_SAS"]
-q = "%CHROM\t%POS\t%ID\t%REF\t%ALT\t%INFO/GENE\t%INFO/AF\t%INFO/AF_AFR\t%INFO/AF_AMR\t%INFO/AF_EAS\t%INFO/AF_EUR\t%INFO/AF_SAS\n"
-out = subprocess.run(["bcftools","query","-f",q,
-      "/data/examples/variants/promoter_variants.vcf.gz"], capture_output=True, text=True).stdout
-var = pd.read_csv(pd.io.common.StringIO(out), sep="\t", names=cols, na_values=".")
+var = pd.read_csv("/home/user/promoter_variants.tsv", sep="\t", names=cols, na_values=".")
 print(var.shape); var.head()</code></pre>
 
 <div class="tryrow"><button class="do" type="button" data-goto="h-overlap">Next: which variants hit an E-box? →</button></div>

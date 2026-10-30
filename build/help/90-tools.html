@@ -10,18 +10,18 @@
 <tr><th>Python</th><td>In the Notebook tab: <code>pandas</code> for tables, <code>matplotlib</code> for plots, <code>scipy</code> for statistics. Your motif scanning and the catalogue live here.</td></tr>
 <tr><th>R</th><td>Also in the Notebook tab: <code>ggplot2</code> for publication-style figures and built-in statistical tests.</td></tr>
 <tr><th>Databases</th><td>Live Ensembl / NCBI lookups to check a gene or variant.</td></tr>
-<tr><th>Genome browser</th><td>IGV: your variants, E-boxes and conservation along the genome.</td></tr>
+<tr><th>Genome browser</th><td>IGV: your variants, E-boxes and conservation along the genome (<a href="#h-genome">The genome browser</a>).</td></tr>
 </table>
 
 <h2>Getting help on a program</h2>
-<p>In the terminal, <code>help</code> lists every program, and most take <code>--help</code>:</p>
+<p>In the terminal, <code>help</code> lists every program, and most take <code>--help</code> (bedtools prints its help as if it were an error, so <code>2&gt;&amp;1</code> sends it through <code>head</code> with the rest):</p>
 <pre class="code" data-run="term"><code>help
 bcftools --help
-bedtools intersect --help</code></pre>
+bedtools intersect --help 2&gt;&amp;1 | head -40</code></pre>
 <p>Record the version you used — it belongs in your methods:</p>
 <pre class="code" data-run="term"><code>samtools --version | head -1
 bcftools --version | head -1
 bedtools --version</code></pre>
 
-<div class="tryrow"><button class="do" type="button" data-goto="h-data">Next: the project data →</button></div>
+<div class="tryrow"><button class="do" type="button" data-goto="h-genome">Next: the genome browser →</button></div>
 <!--CITE: tools-->

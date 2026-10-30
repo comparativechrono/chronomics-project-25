@@ -8,7 +8,7 @@
 <tr><th>Terminal</th><td>A Linux command line with real genomics programs — <code>samtools</code>, <code>bcftools</code>, <code>bedtools</code>, <code>seqtk</code> — running in your browser.</td></tr>
 <tr><th>Files</th><td>Your home folder and the read-only project data. Viewers for tables, sequences and text; an editor.</td></tr>
 <tr><th>Databases</th><td>Live lookups in <b>Ensembl</b>, NCBI and others. You will use it to check a gene or a variant.</td></tr>
-<tr><th>Genome browser</th><td><b>IGV</b>: see your variants, E-boxes and conservation laid out along the real genome.</td></tr>
+<tr><th>Genome browser</th><td><b>IGV</b>: see your variants, E-boxes and conservation laid out along the real genome (<a href="#h-genome">how to use it</a>).</td></tr>
 <tr><th>AI</th><td>An optional assistant. See the rules below before you use it.</td></tr>
 </table>
 
@@ -18,19 +18,19 @@
 <p>You should see folders for <code>genes</code>, <code>reference</code>, <code>variants</code>, <code>conservation</code> and <code>motif</code>. <a href="#h-data">The project data</a> describes every file. Peek at the channelopathy gene list:</p>
 <pre class="code" data-run="term"><code>column -t -s$'\t' /data/examples/genes/brain_channelopathy.tsv | head</code></pre>
 
-<h2>Three small warm-ups</h2>
-<p><b>Terminal.</b> Pull one promoter's DNA out of the reference with <code>samtools</code> and count how long it is:</p>
+<h2 data-anchor="warmups">Three small warm-ups</h2>
+<p><b>Terminal.</b> Pull one promoter's DNA out of the reference with <code>samtools</code>, then count how long it is (drop the header line, join the lines, count the letters):</p>
 <pre class="code" data-run="term"><code>samtools faidx /data/examples/reference/promoters.fa SCN1A | head -3
-grep -c . /data/examples/reference/promoters.fa</code></pre>
+samtools faidx /data/examples/reference/promoters.fa SCN1A | grep -v "&gt;" | tr -d "\n" | wc -c</code></pre>
 <p><b>Notebook (Python).</b> Open a new Python notebook and read the gene list into a table:</p>
 <pre class="code" data-run="py"><code>import pandas as pd
 genes = pd.read_csv("/data/examples/genes/epilepsy_all.tsv", sep="\t")
 print(genes.shape)
 genes.head()</code></pre>
-<p><b>Genome browser.</b> Jump to the start of <i>SCN1A</i> to see where a promoter sits:</p>
-<div class="tryrow"><button class="do" type="button" data-igv="SCN1A">Open SCN1A in the genome browser</button></div>
+<p><b>Genome browser.</b> Jump to the start of <i>SCN1A</i> to see where a promoter sits. The green box is the promoter window, the bars beneath it are the 1000 Genomes variants, and the blue track is conservation (it needs the internet, and can take a few seconds the first time):</p>
+<div class="tryrow"><button class="do" type="button" data-igv="chr2:166127220-166129320">Open the SCN1A promoter in the genome browser</button></div>
 
-<h2>Keep your work</h2>
+<h2 data-anchor="kept">Keep your work</h2>
 <p>Everything you do is saved in <b>this browser on this computer</b> automatically. It is not on a server and nobody else can see it. To hand work in or move it: <b>Download</b> in the Notebook tab saves a notebook as <code>.ipynb</code>; <b>My files</b> (top right) downloads everything as a <code>.zip</code>. On a shared computer, download before you leave.</p>
 
 <div class="callout warn">

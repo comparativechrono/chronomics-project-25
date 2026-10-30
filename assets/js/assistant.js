@@ -650,11 +650,14 @@
      ------------------------------------------------------------------ */
   const CHAT_HELLO =
     'Ask me about your code, an error message, a program or a method. With your question I get the code of the open notebook, the names of your files and your last terminal commands – as you choose under the box – but never what is in your data files. Code in my answers goes into a notebook or the terminal with one click.\n\n**Check what I give you**: run it and look at the result – AI models make mistakes, and sound sure when they do. Never paste personal or patient data here.';
+  /* (chronomics-project-25) config.aiAgentExample, config.aiChatStarters and config.aiAgentTasks replace the examples
+     below, which use the workbench's example files – a site that ships other data names its own */
+  const AI_CFG = MG.config || {};
   const AGENT_HELLO =
-    'Give me a whole task – for example *“Map the example reads to the reference, call the variants and tell me how many there are”* – and I will carry it out in the Terminal, one command at a time, in a folder of my own (`~/ai-agent/run-…`). You see every command and its output; **Stop** ends the task.\n\nI may read your files, but what I change outside my folder is undone. Further tasks continue in the same folder until you press **New**. Each run is kept as a notebook in its folder (`agent-record.ipynb`) – check my results there, not only my report.';
-  const CHAT_STARTERS = ['How do I count the sequences in a FASTA file with Biopython?', 'What does the output of samtools flagstat tell me?', 'Plot protein length against abundance from /data/examples/tables/yeast_genes.csv with ggplot2', 'Which programs can I use in the terminal here?'];
+    `Give me a whole task – for example *“${AI_CFG.aiAgentExample || 'Map the example reads to the reference, call the variants and tell me how many there are'}”* – and I will carry it out in the Terminal, one command at a time, in a folder of my own (\`~/ai-agent/run-…\`). You see every command and its output; **Stop** ends the task.\n\nI may read your files, but what I change outside my folder is undone. Further tasks continue in the same folder until you press **New**. Each run is kept as a notebook in its folder (\`agent-record.ipynb\`) – check my results there, not only my report.`;
+  const CHAT_STARTERS = AI_CFG.aiChatStarters || ['How do I count the sequences in a FASTA file with Biopython?', 'What does the output of samtools flagstat tell me?', 'Plot protein length against abundance from /data/examples/tables/yeast_genes.csv with ggplot2', 'Which programs can I use in the terminal here?'];
   const agentTasks = () =>
-    [
+    AI_CFG.aiAgentTasks || [
       'Map the reads in /data/examples/reads to reference.fa with minimap2, sort and index the BAM file, and report how many reads mapped',
       'Call the variants from those reads with bcftools and tell me how many SNPs and indels there are',
       MG.shellTools && MG.shellTools.kalign && MG.shellTools.fasttree ? 'Align the proteins in /data/examples/sequences/myoglobins.fasta and make a tree from the alignment' : null,
@@ -844,12 +847,14 @@
         });
         return h('label', { title: tip }, i, ' ' + label);
       };
+      // (chronomics-project-25: only for the tabs this page has – the Networks and IDE tabs may have been removed)
+      const hasTab = (name) => !!document.querySelector(`.wb-tab[data-wb="${name}"]`);
       R.append(
         cb('nb', 'the open notebook’s code', 'The code cells of the notebook that is open in the Notebook tab – not their outputs, and not your data. Not with a question from the IDE tab, which sends the IDE’s code instead.'),
         cb('files', 'your file names', 'The names and sizes of the files in your home folder – not what is in them'),
         cb('term', 'your last commands', 'When you come from the Terminal: your last three commands and the end of what they printed'),
-        cb('net', 'the open network', 'When you come from the Networks tab: the name, size and columns of the network that is open, its best-connected nodes, what is selected and the latest results'),
-        cb('ide', 'your code in the IDE', 'When you come from the IDE tab: the script open in RStudio or Spyder (or the lines you have selected in it), the end of its console and the names and types of its variables, but not their values. What a console shows can include values from your data.')
+        hasTab('networks') ? cb('net', 'the open network', 'When you come from the Networks tab: the name, size and columns of the network that is open, its best-connected nodes, what is selected and the latest results') : '',
+        hasTab('ide') ? cb('ide', 'your code in the IDE', 'When you come from the IDE tab: the script open in RStudio or Spyder (or the lines you have selected in it), the end of its console and the names and types of its variables, but not their values. What a console shows can include values from your data.') : ''
       );
     }
     newConversation() {

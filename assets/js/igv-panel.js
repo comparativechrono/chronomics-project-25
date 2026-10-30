@@ -27,6 +27,20 @@
   const peakFormat = (name) => PEAKS.exec(name)[1].toLowerCase();
   const abs = (u) => new URL(u, location.href).href;
   const LOAD_MS = 60000; // the longest a genome may take to load
+  /* (chronomics-project-25) A site built on the workbench may not ship the example genome (data/examples/reads/):
+     then its option is not offered, and the genome browser starts on config.igvGenome (a hosted genome such as
+     hg38) instead. config.igvTracks names tracks shown with a hosted genome: { hg38: [igv.js track configs] }. */
+  const CFG = MG.config || {};
+  const hasExample = () => !!(MG.app.fs && MG.app.fs.exists(EX + '/reads/reference.fa'));
+  /** the genome to start on, and to come back to when another cannot be loaded */
+  const homeGenome = () => (hasExample() ? 'examples' : CFG.igvGenome || 'hg38');
+  /** the tracks that come with a hosted genome (config.igvTracks), with their URLs made absolute */
+  const hostedTracks = (id) =>
+    ((CFG.igvTracks || {})[id] || []).map((t) => {
+      const c = Object.assign({}, t);
+      for (const k of ['url', 'indexURL']) if (typeof c[k] === 'string') c[k] = abs(c[k]);
+      return c;
+    });
 
   /* There is one igv.js browser at a time. It is made for a genome, and a change of genome makes a new one in place of
      the old one (igv.js can change the genome of a browser, but when that is under way while it is still drawing it
@@ -37,7 +51,8 @@
       this.root = root;
       this.opts = opts || {};
       this.browser = null;
-      this.genomeId = store.get('igvGenome', 'examples');
+      this.genomeId = store.get('igvGenome', null) || homeGenome();
+      if (this.genomeId === 'examples' && !hasExample()) this.genomeId = homeGenome();
       // the tracks shown on the genome (their configurations): if a change of genome fails, the genome that was shown
       // comes back with them
       this.tracks = [];
@@ -75,13 +90,13 @@
         pick
       );
       this.host = h('div.igv-host');
-      this.help = h('p.igv-help', { html: 'Type a gene or a position (chr10:96,541,616) in the box to go there; drag sideways to move; + / − to zoom. Click a read or a variant for details.' });
+      this.help = h('p.igv-help', { html: CFG.igvHelpText || 'Type a gene or a position (chr10:96,541,616) in the box to go there; drag sideways to move; + / − to zoom. Click a read or a variant for details.' });
       this.root.append(this.bar, this.host, this.help);
     }
     _fillGenomes() {
       const S = this.genomeSel;
       S.innerHTML = '';
-      S.appendChild(h('option', { value: 'examples' }, 'Example: CYP2C19 / CYP2C9 slices (the example reads)'));
+      if (hasExample()) S.appendChild(h('option', { value: 'examples' }, 'Example: CYP2C19 / CYP2C9 slices (the example reads)'));
       const og = h('optgroup', { label: 'Hosted by the IGV team (needs the internet)' });
       HOSTED.forEach(([id, label]) => og.appendChild(h('option', { value: id }, label)));
       S.appendChild(og);
@@ -95,7 +110,7 @@
       mine.appendChild(h('option', { value: 'pick' }, 'Choose a FASTA file…'));
       S.appendChild(mine);
       S.value = this.genomeId;
-      if (S.value !== this.genomeId) S.value = 'examples';
+      if (S.value !== this.genomeId) S.value = homeGenome();
     }
     /** the igv.js configuration of a genome */
     async _genomeConfig(id) {
@@ -124,7 +139,7 @@
         if (this._local && this._local.id === id) return { reference: this._local.reference };
         throw new Error('That genome came from your computer: choose its FASTA file and its .fai again with “From my computer…”.');
       }
-      return { genome: id };
+      return { genome: id, tracks: hostedTracks(id) };
     }
     /** fn runs when what was asked before it has finished (making the browser, changing the genome) */
     _serial(fn) {
@@ -185,7 +200,7 @@
           this._fillGenomes();
           return false;
         }
-        id = 'examples';
+        id = homeGenome();
         g = await this._genomeConfig(id);
       }
       try {
@@ -194,7 +209,7 @@
         return true;
       } catch (e) {
         console.error(e);
-        const back = before ? before.id : id !== 'examples' ? 'examples' : null;
+        const back = before ? before.id : id !== homeGenome() ? homeGenome() : null;
         const name = (x) => (x === 'examples' ? 'the example genome' : (HOSTED.find(([k]) => k === x) || [x, x.replace(/^(file|local):/, '')])[1]);
         toast(`That genome could not be loaded: ${esc(e.message || e)}${g.genome ? ' (the hosted genomes need the internet)' : ''}.${back ? ` The genome browser shows ${esc(name(back))} again.` : ''}`, 'error', 9000);
         if (!back) {
@@ -280,7 +295,7 @@
     /** the genome id is shown: remember it (a genome picked from the computer cannot come back after a reload) */
     _settle(id) {
       this.genomeId = id;
-      store.set('igvGenome', id.startsWith('local:') ? 'examples' : id);
+      store.set('igvGenome', id.startsWith('local:') ? homeGenome() : id);
       this._fillGenomes();
       bus.emit('igv:genome', { id });
     }

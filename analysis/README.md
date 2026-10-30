@@ -23,8 +23,8 @@ Scope note: genes on non-nuclear contigs are dropped (one mitochondrial gene, `M
 
 ## The answer key (what the student should get)
 
-- **641** promoters, 1500 bp each, GC ≈ 59%.
-- Canonical `CACGTG` E-boxes: **205** (0 in the 21 channelopathy genes); enriched **1.66×** over a CpG-aware expectation (205 vs ~124).
+- **641** promoters, 1501 bp each (TSS −1000 to +500, both ends included), GC ≈ 59%.
+- Canonical `CACGTG` E-boxes: **205** (0 in the 21 channelopathy genes); enriched **1.66×** over a CpG-aware expectation (205 vs ~123).
 - PWM sites (ARNTL, rel-score ≥ 0.85, left-to-right non-overlapping): **≈ 1240**, of which **≈ 28** in **13** of the 21 channelopathy genes.
 - Promoter SNVs (1000 Genomes 30×): **22,836**; **27** fall inside a canonical E-box; PWM-break **212**, PWM-create **210**.
 - **Selection:** mean phyloP470 at E-box positions **2.68** vs **−0.18** at control CpGs (vs 0.81 over all positions); Mann–Whitney p ≈ 3 × 10⁻¹³⁴. Variant density **22.0** vs **42.9** per 1000 bp at control CpGs (odds ratio ≈ 0.50). E-boxes are conserved and depleted of variation — the signature of purifying selection.

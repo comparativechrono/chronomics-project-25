@@ -4,8 +4,8 @@
 
 <table class="table">
 <tr><th><code>genes/brain_channelopathy.tsv</code></th><td>21 green genes of the PanelApp "Brain channelopathy" panel, with Ensembl ID, chromosome, strand, TSS and promoter window.</td></tr>
-<tr><th><code>genes/epilepsy_all.tsv</code></th><td>632 green genes of "Early-onset or syndromic epilepsy" (includes the 21).</td></tr>
-<tr><th><code>genes/promoters.bed</code></th><td>The 641 promoter windows (TSS −1000/+500), as a BED file on GRCh38.</td></tr>
+<tr><th><code>genes/epilepsy_all.tsv</code></th><td>All 641 genes of the project: the 632 green genes of "Early-onset or syndromic epilepsy" together with the 21 channelopathy genes, each once, without one mitochondrial gene; the <code>panel</code> column says which list each belongs to.</td></tr>
+<tr><th><code>genes/promoters.bed</code></th><td>The 641 promoter windows (TSS −1000/+500, 1501 bases each), as a BED file on GRCh38.</td></tr>
 <tr><th><code>reference/promoters.fa</code> (+ <code>.fai</code>)</th><td>The DNA of every promoter (forward strand). Each header records the gene, its chromosome:start-end and strand.</td></tr>
 <tr><th><code>variants/promoter_variants.vcf.gz</code> (+ <code>.tbi</code>)</th><td>Every single-letter variant in the promoters, from 1000 Genomes 30×, with overall and per-super-population allele frequencies in <code>INFO</code>.</td></tr>
 <tr><th><code>conservation/phylop_promoters.csv.gz</code></th><td>phyloP conservation (470-way mammalian and 100-way vertebrate) for every promoter base.</td></tr>

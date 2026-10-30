@@ -43,14 +43,17 @@ print(f"E-box median {a.median():.2f} vs CpG-control {b.median():.2f};  p = {p:.
 
 <div class="callout info">
   <div class="co-t">Checkpoint — the result</div>
-  <p>You should find E-box positions are <b>much more conserved</b> (mean phyloP470 ≈ <b>2.7</b>) than control CpGs (≈ <b>−0.2</b>; the "other" promoter positions sit in between, ≈ 0.8); the Mann–Whitney test gives <b>p &lt; 1e-100</b>. And E-boxes carry <b>about half the variants per base</b> of control CpGs (≈ <b>22</b> vs ≈ <b>43</b> per 1000 bp). Both point the same way: <b>purifying selection</b> has been keeping these switches intact. That is your main finding.</p>
+  <p>You should find E-box positions are <b>much more conserved</b> (mean phyloP470 ≈ <b>2.7</b>) than control CpGs (≈ <b>−0.2</b>; the "other" promoter positions sit in between, ≈ 0.9); the Mann–Whitney test gives <b>p &lt; 1e-100</b>. And E-boxes carry <b>about half the variants per base</b> of control CpGs (≈ <b>22</b> vs ≈ <b>43</b> per 1000 bp). Both point the same way: <b>purifying selection</b> has been keeping these switches intact. That is your main finding.</p>
 </div>
 
 <h2>Draw it (R, for a publication-style figure)</h2>
-<p>Switch a cell to R and make a boxplot — a good moment to meet <code>ggplot2</code>:</p>
+<p>First save the table from Python, so that R can read it (the two share your files):</p>
+<pre class="code" data-run="py"><code>pos_df[["cls","phyloP470"]].dropna().to_csv("/home/user/positions.csv", index=False)
+print("wrote /home/user/positions.csv")</code></pre>
+<p>Now make a boxplot in R — a good moment to meet <code>ggplot2</code>. A notebook runs one language, so <b>Add to notebook</b> puts this R code into an R notebook of its own (it opens one for you); the first run downloads R and ggplot2, which takes a minute:</p>
 <pre class="code" data-run="r"><code>install.packages("ggplot2")
 library(ggplot2)
-d &lt;- read.csv("/home/user/positions.csv")      # write pos_df from Python first
+d &lt;- read.csv("/home/user/positions.csv")      # written by Python just now
 ggplot(d, aes(cls, phyloP470, fill=cls)) + geom_boxplot(outlier.size=0.3) +
   labs(x=NULL, y="phyloP (470-way)", title="Conservation at E-boxes vs controls") +
   theme_minimal() + theme(legend.position="none")</code></pre>
